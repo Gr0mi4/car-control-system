@@ -1,6 +1,6 @@
 const {Router} = require('express')
 
-const User = require('../client/src/models/User')
+const User = require('../models/User')
 const router = Router()
 
 router.post('/check', async(req,res) => {
@@ -10,10 +10,8 @@ router.post('/check', async(req,res) => {
     const candidate = await User.findOne({ username })
 
     if (candidate) {
-      console.log('found')
       res.status(200).json({ message: 'User Found'})
     } else {
-      console.log('not found', username)
       res.status(200).json({ message: 'No such user'})
     }
     // // const hashedPassword = await bcrypt.hash(password, 12)
@@ -39,6 +37,7 @@ router.post('/register',async (req,res) => {
     res.status(201).json({message: "User created"})
 
   } catch (e) {
+    console.log(e)
     res.status(500).json({message: "Something went wrong"})
   }})
 
