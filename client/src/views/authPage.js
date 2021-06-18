@@ -1,22 +1,23 @@
 import {useHttp} from "../hooks/http.hook";
 import {useState} from "react";
 import {Redirect} from 'react-router-dom'
-// import {useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
+import {setUser} from "../store/reducer";
 
 export const AuthPage = () => {
   const [username, setUsername] = useState('Incognito')
   const [result, setResult] = useState(null)
   const {request} = useHttp()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const usernameChangeHandler = event => {
-    // setResult(null)
+    setResult(null)
     setUsername(event.target.value)
   }
 
   const onSubmit = async (evt) => {
     evt.preventDefault()
-    // dispatch(setUsername(username))
+    dispatch(setUser(username))
     await request('/api/auth/check', 'POST', {username})
       .then(res => {
         setResult(JSON.parse(res).message)

@@ -1,11 +1,11 @@
 // import {useHttp} from "../hooks/http.hook";
 // import {useEffect} from "react";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 
 export const MainScreen = () => {
   // const {request} = useHttp()
-  // const user = useSelector(state => state.counter.value)
+  const user = useSelector(state => state.user.value)
 
   // const getUser = async () => {
   //   try {
@@ -21,7 +21,7 @@ export const MainScreen = () => {
   // const vehicleList = user.vehicles.map((item, index) => <li key={index}>{item.name}</li>)
   return (
     <div>
-      <h1>Welcome to your Garage !</h1>
+      <h1>Welcome to your Garage {user}!</h1>
       <h2>Choose your vehicle or add new one</h2>
       <button>+</button>
     </div>
