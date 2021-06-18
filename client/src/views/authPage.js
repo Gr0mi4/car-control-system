@@ -1,10 +1,13 @@
 import {useHttp} from "../hooks/http.hook";
 import {useState} from "react";
+import {Redirect} from 'react-router-dom'
+// import {useDispatch} from "react-redux";
 
 export const AuthPage = () => {
   const [username, setUsername] = useState('Incognito')
   const [result, setResult] = useState(null)
   const {request} = useHttp()
+  // const dispatch = useDispatch()
 
   const usernameChangeHandler = event => {
     // setResult(null)
@@ -13,7 +16,7 @@ export const AuthPage = () => {
 
   const onSubmit = async (evt) => {
     evt.preventDefault()
-    console.log(username)
+    // dispatch(setUsername(username))
     await request('/api/auth/check', 'POST', {username})
       .then(res => {
         setResult(JSON.parse(res).message)
@@ -38,6 +41,9 @@ export const AuthPage = () => {
         <button type='submit'>Proceed</button>
       </form>
       <h2>{result}</h2>
+      {(result === 'User Found' || result === 'User Created') &&
+      <Redirect to="/home/"/>
+      }
       {result === 'No such user' &&
       <div>
         <h3>Do you want to create user with name {username}?</h3>

@@ -1,10 +1,11 @@
 // import {useHttp} from "../hooks/http.hook";
-import {useState, useEffect} from "react";
-import {} from "react-router-dom"
+// import {useEffect} from "react";
+// import {useSelector} from "react-redux";
+
 
 export const MainScreen = () => {
   // const {request} = useHttp()
-  const [user] = useState({username: 'Incognito', vehicles: []})
+  // const user = useSelector(state => state.counter.value)
 
   // const getUser = async () => {
   //   try {
@@ -13,16 +14,16 @@ export const MainScreen = () => {
   //   } catch (e) {}
   // }
 
-  useEffect(() => {
-    // getUser()
-  }, [])
+  // useEffect(() => {
+  //   // getUser()
+  // }, [])
 
-  const vehicleList = user.vehicles.map((item, index) => <li key={index}>{item.name}</li>)
+  // const vehicleList = user.vehicles.map((item, index) => <li key={index}>{item.name}</li>)
   return (
     <div>
-      <h1>Welcome to your Garage {user.username}!</h1>
-      <h2>Choose your vehicle to proceed</h2>
-      <ul>{vehicleList}</ul>
+      <h1>Welcome to your Garage !</h1>
+      <h2>Choose your vehicle or add new one</h2>
+      <button>+</button>
     </div>
   )
 }

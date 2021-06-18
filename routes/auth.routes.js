@@ -10,6 +10,7 @@ router.post('/check', async(req,res) => {
     const candidate = await User.findOne({ username })
 
     if (candidate) {
+      console.log(candidate)
       res.status(200).json({ message: 'User Found'})
     } else {
       res.status(200).json({ message: 'No such user'})
@@ -34,7 +35,7 @@ router.post('/register',async (req,res) => {
     //
     await user.save()
     //
-    res.status(201).json({message: "User created"})
+    res.status(201).json({message: "User Created"})
 
   } catch (e) {
     console.log(e)
