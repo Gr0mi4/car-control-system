@@ -17,9 +17,10 @@ export const AuthPage = () => {
 
   const onSubmit = async (evt) => {
     evt.preventDefault()
-    dispatch(setUser(username))
     await request('/api/auth/check', 'POST', {username})
       .then(res => {
+        dispatch(setUser({name: username, id: JSON.parse(res).id }))
+        console.log(JSON.parse(res))
         setResult(JSON.parse(res).message)
       })
   }
