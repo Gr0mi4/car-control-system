@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .main-logo {
+    margin: 10px;
+    width: 125px;
+  }
+
+  .username {
+    margin-left: 10px;
+    font-size: 18px;
+  }
+
+  .exit-button {
+    margin: 10px;
+  }
+}

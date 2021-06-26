@@ -1,17 +1,29 @@
-import {useHttp} from "../hooks/http.hook";
+import {useHttp} from "../../hooks/http.hook";
+
+import {Redirect} from 'react-router-dom'
+
 import {useEffect} from "react";
 import {useState} from "react";
+
 import {useSelector, useDispatch} from "react-redux";
-import {setVehicleList} from "../store/reducers/vehicleListSlice";
-import {AddNewVehicleModal} from "../components/mainScreen/AddNewVehicleModal";
+
+import {setVehicleList} from "../../store/reducers/vehicleListSlice";
+import {AddNewVehicleModal} from "../../components/mainScreen/AddNewVehicleModal/AddNewVehicleModal";
+import {Header} from "../../components/Header/Header";
+import {VehicleList} from "../../components/mainScreen/VehicleList/VehicleList";
+
+import {Button} from "@material-ui/core";
+
+import './style.scss'
 
 
 export const MainScreen = () => {
-  const {request} = useHttp()
   const [showAddNewVehicleModal, setAddShowNewVehicleModal] = useState(false)
-  const user = useSelector(state => state.user.value.name)
+
   const userId = useSelector(state => state.user.value.id)
   const vehicleList = useSelector(state => state.vehicleList.value)
+
+  const {request} = useHttp()
   const dispatch = useDispatch()
 
   function handleAddNewVehicleClick () {
@@ -28,7 +40,6 @@ export const MainScreen = () => {
         .then(res => {
           const results = JSON.parse(res)
           dispatch(setVehicleList(results))
-          console.log('dataVehicles', results, vehicleList)
         })
     } catch (e) {
 
@@ -39,17 +50,18 @@ export const MainScreen = () => {
     getUserVehicles()
   }, [])
 
-  const vehicleListMap = vehicleList.map((item, index) =>
-      <li key={index}>{item.brand} {item.model}</li>)
   return (
     <div>
-      <h1>Welcome to your Garage {user}!</h1>
+      {!userId && <Redirect to="/auth" />}
+      <Header/>
       <h2>Choose your vehicle or add new one</h2>
-        {vehicleList.length > 0 &&
-        <ul>
-            {vehicleListMap}
-        </ul>}
-      <button onClick={handleAddNewVehicleClick}>+</button>
+        {vehicleList.length > 0 && <VehicleList/>}
+      <Button
+        className='add-vehicle-button'
+        variant='outlined'
+        color='primary' onClick={handleAddNewVehicleClick}>
+        Add new Vehicle
+      </Button>
       <AddNewVehicleModal
           showNewVehicleModal={showAddNewVehicleModal}
           closeAddNewVehicleModal={closeAddNewVehicleModal}

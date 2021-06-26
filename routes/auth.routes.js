@@ -45,7 +45,6 @@ router.post('/getUserVehicles', async (req, res) => {
   try {
     const {userId} = req.body
     const userVehicles = await Vehicle.find({userId: userId})
-    console.log(userVehicles)
     if (userVehicles.length > 0) {
       res.status(200).json(userVehicles)
     }

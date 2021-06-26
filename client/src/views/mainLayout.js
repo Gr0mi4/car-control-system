@@ -1,6 +1,6 @@
 import {Switch, Route} from "react-router-dom"
 import AuthPage from "./authPage";
-import MainScreen from "./mainScreen";
+import MainScreen from "./mainScreen/mainScreen";
 
 export const MainLayout = () => {
   return (

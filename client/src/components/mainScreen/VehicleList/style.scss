@@ -1,0 +1,10 @@
+.vehicle-list {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .vehicle-card {
+    margin: 10px;
+    cursor: pointer;
+  }
+}
