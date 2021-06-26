@@ -1,63 +1,59 @@
 import {useHttp} from "../hooks/http.hook";
 import {useEffect} from "react";
 import {useState} from "react";
-import {useSelector} from "react-redux";
-import {Dialog, DialogContent, DialogTitle} from "@material-ui/core";
-import {Button} from "@material-ui/core";
-import {TextField} from "@material-ui/core";
-import {setUser} from "../store/reducer";
+import {useSelector, useDispatch} from "react-redux";
+import {setVehicleList} from "../store/reducers/vehicleListSlice";
+import {AddNewVehicleModal} from "../components/mainScreen/AddNewVehicleModal";
 
 
 export const MainScreen = () => {
   const {request} = useHttp()
-  const [showNewVehicleModal, setShowNewVehicleModal] = useState(false)
+  const [showAddNewVehicleModal, setAddShowNewVehicleModal] = useState(false)
   const user = useSelector(state => state.user.value.name)
   const userId = useSelector(state => state.user.value.id)
+  const vehicleList = useSelector(state => state.vehicleList.value)
+  const dispatch = useDispatch()
 
   function handleAddNewVehicleClick () {
-    setShowNewVehicleModal(true)
+    setAddShowNewVehicleModal(true)
   }
 
   function closeAddNewVehicleModal () {
-    setShowNewVehicleModal(false)
+    setAddShowNewVehicleModal(false)
   }
 
   const getUserVehicles = async () => {
     try {
-      const data = await request('/api/auth/getUserVehicles', 'POST', {userId})
+      await request('/api/auth/getUserVehicles', 'POST', {userId})
         .then(res => {
-          console.log('dataVehicles', JSON.parse(res))
+          const results = JSON.parse(res)
+          dispatch(setVehicleList(results))
+          console.log('dataVehicles', results, vehicleList)
         })
     } catch (e) {
 
     }
   }
 
-  useEffect(() => {getUserVehicles()}, [])
+  useEffect(() => {
+    getUserVehicles()
+  }, [])
 
-  function saveNewVehicle() {
-    console.log('save new vehicle')
-  }
-
-  // const vehicleList = user.vehicles.map((item, index) => <li key={index}>{item.name}</li>)
+  const vehicleListMap = vehicleList.map((item, index) =>
+      <li key={index}>{item.brand} {item.model}</li>)
   return (
     <div>
-      <h1>Welcome to your Garage {user}! Your id is {userId}</h1>
+      <h1>Welcome to your Garage {user}!</h1>
       <h2>Choose your vehicle or add new one</h2>
+        {vehicleList.length > 0 &&
+        <ul>
+            {vehicleListMap}
+        </ul>}
       <button onClick={handleAddNewVehicleClick}>+</button>
-      <Dialog open={showNewVehicleModal} onClose={closeAddNewVehicleModal}>
-        <DialogTitle>Here you can add new vehicle</DialogTitle>
-        <DialogContent dividers>
-            <form onSubmit={saveNewVehicle}>
-              <TextField required label="Brand"/>
-              <TextField required label="Model"/>
-              <TextField required label="Complectation"/>
-              <TextField required label="Type"/>
-            </form>
-        </DialogContent>
-        <Button onClick={saveNewVehicle}>Save Vehicle</Button>
-        <Button onClick={closeAddNewVehicleModal}>Cancel</Button>
-      </Dialog>
+      <AddNewVehicleModal
+          showNewVehicleModal={showAddNewVehicleModal}
+          closeAddNewVehicleModal={closeAddNewVehicleModal}
+      />
     </div>
   )
 }

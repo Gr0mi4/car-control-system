@@ -2,7 +2,7 @@ import {useHttp} from "../hooks/http.hook";
 import {useState} from "react";
 import {Redirect} from 'react-router-dom'
 import {useDispatch} from "react-redux";
-import {setUser} from "../store/reducer";
+import {setUser} from "../store/reducers/userSlice";
 
 export const AuthPage = () => {
   const [username, setUsername] = useState('Incognito')
