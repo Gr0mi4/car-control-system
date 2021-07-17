@@ -4,7 +4,8 @@ const schema = new Schema({
   brand: {type: String, required: true},
   model: {type: String, required: true},
   type: {type: String, required: true},
-  complectation: {type: String, required: false},
+  modification: {type: String, required: false},
+  userId: {type: String, required: true}
 })
 
 module.exports = model('Vehicle', schema)

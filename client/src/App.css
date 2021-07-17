@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+
+}
+
+.App h1, .App h2 {
+  font-family: Montserrat;
 }
 
 .App-logo {

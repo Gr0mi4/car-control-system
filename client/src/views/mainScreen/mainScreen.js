@@ -34,9 +34,21 @@ export const MainScreen = () => {
     setAddShowNewVehicleModal(false)
   }
 
+  const saveNewVehicle = async (brand, model, modification, type) => {
+    try {
+      await request('/api/vehicle/saveNewVehicle', 'POST', {userId, brand, model, modification, type})
+        .then(() => {
+          closeAddNewVehicleModal()
+          getUserVehicles()
+        })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const getUserVehicles = async () => {
     try {
-      await request('/api/auth/getUserVehicles', 'POST', {userId})
+      await request('/api/vehicle/getUserVehicles', 'POST', {userId})
         .then(res => {
           const results = JSON.parse(res)
           dispatch(setVehicleList(results))
@@ -65,6 +77,7 @@ export const MainScreen = () => {
       <AddNewVehicleModal
           showNewVehicleModal={showAddNewVehicleModal}
           closeAddNewVehicleModal={closeAddNewVehicleModal}
+          saveNewVehicle={saveNewVehicle}
       />
     </div>
   )

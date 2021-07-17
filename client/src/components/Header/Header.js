@@ -1,5 +1,4 @@
 import {useSelector} from "react-redux";
-import mainLogo from '../../assets/icons/mainLogo.png'
 import './Header.scss'
 import {Button} from "@material-ui/core";
 
@@ -8,8 +7,7 @@ export const Header = () => {
 
   return (
     <div className='header'>
-      <img className='main-logo' src={mainLogo} alt='logo'/>
-      <h1 className='username'>Hello {user}</h1>
+      <p className='username'>Hello {user}!</p>
       <Button variant='contained' color='primary' className='exit-button'>Exit</Button>
     </div>
   )
