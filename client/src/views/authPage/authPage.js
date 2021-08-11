@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux";
 
 import {setUser} from "../../store/reducers/userSlice";
 
-import {ArrowForward} from "@material-ui/icons";
+import {InputForm} from './components/InputForm/InputForm'
 
 import './style.scss'
 
@@ -50,18 +50,7 @@ export const AuthPage = () => {
         <h1 className='main-title'>Welcome to VCS Vehicle Control System!</h1>
         <h3 className='secondary-title'>Here you can manage all your vehicles in one place</h3>
       </div>
-      <form className='input-form' onSubmit={onSubmit} ref={inputFormRef}>
-        <label className='input-form-label'>Please type User name to proceed</label>
-        <div className='action-block'>
-          <input
-            className='user-name-input'
-            value={username}
-            onChange={usernameChangeHandler}
-            placeholder="Please enter your name"
-            type="text"/>
-          <button className='proceed-button'><ArrowForward fontSize='large'/></button>
-        </div>
-      </form>
+      <InputForm/>
       {(result === 'User Found' || result === 'User Created') &&
       <Redirect to="/home/"/>
       }
