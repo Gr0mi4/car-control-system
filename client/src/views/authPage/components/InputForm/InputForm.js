@@ -1,6 +1,6 @@
 import './style.scss'
 
-export const InputForm = () => {
+export const InputForm = (props) => {
   return (
     <form className='input-form'>
       <div className='input-wrapper'>
@@ -8,16 +8,23 @@ export const InputForm = () => {
         <input
           className='user-name-input'
           placeholder="Type your login"
-          type="text"/>
+          type="text"
+          onChange={props.handleUsernameChange}
+        />
       </div>
       <div className='input-wrapper'>
         <label className='password label'>Password</label>
         <input
           className='user-name-input'
           placeholder="********"
-          type="password"/>
+          type="password"
+          onChange={props.handlePasswordChange}
+        />
       </div>
-      <button className='proceed-button'>Proceed</button>
+      <button
+        className='proceed-button'
+        onClick={props.handleSendForm}
+      >Proceed</button>
     </form>
   )
 }

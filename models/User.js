@@ -2,8 +2,8 @@ const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
   username: {type: String, required: true, unique: true},
-  id: {type: String, required: true, unique: true}
-  // password: {type: String, required: true},
+  id: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
   // links: [{ type: Types.ObjectId, ref: 'Link'}]
 })
 

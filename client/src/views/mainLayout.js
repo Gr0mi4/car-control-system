@@ -8,7 +8,7 @@ export const MainLayout = () => {
       <Route path="/auth">
         <AuthPage/>
       </Route>
-      <Route path="/home">
+      <Route path="/mainScreen">
         <MainScreen/>
       </Route>
     </Switch>

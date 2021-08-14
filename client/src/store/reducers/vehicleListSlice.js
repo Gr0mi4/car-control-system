@@ -7,7 +7,6 @@ export const vehicleListSlice = createSlice({
     },
     reducers: {
         setVehicleList: (state, action) => {
-            console.log(action.payload, 'reducer')
             state.value = action.payload
 
         }

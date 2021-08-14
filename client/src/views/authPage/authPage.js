@@ -1,6 +1,7 @@
 import {useHttp} from "../../hooks/http.hook";
+import {useAuth} from "../../hooks/auth.hook";
 
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 
 import {Redirect} from 'react-router-dom'
 
@@ -14,33 +15,58 @@ import './style.scss'
 
 export const AuthPage = () => {
   const [username, setUsername] = useState('Incognito')
+  const [password, setPassword] = useState('')
   const [result, setResult] = useState(null)
-  const inputFormRef = useRef(null)
+
   const {request} = useHttp()
   const dispatch = useDispatch()
 
+  const {login} = useAuth()
+
+
+  const checkIfUserIsLoggedIn = function () {
+    const storageName = 'userData'
+    const data = JSON.parse(localStorage.getItem(storageName))
+    if (data && data.token) {
+      setResult('User Found')
+      dispatch(setUser({name: data.username, id: data.id}))
+    }
+  }
+
   const usernameChangeHandler = event => {
     setResult(null)
-    inputFormRef.current.style.marginTop = '200px'
     setUsername(event.target.value)
   }
 
-  const onSubmit = async (evt) => {
-    evt.preventDefault()
-    await request('/api/auth/check', 'POST', {username})
+  const passwordChangeHandler = event => {
+    setResult(null)
+    setPassword(event.target.value)
+  }
+
+  useEffect(() => {
+    checkIfUserIsLoggedIn()
+  }, [])
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    await request('/api/auth/check', 'POST', {username, password})
       .then(res => {
-        dispatch(setUser({name: username, id: JSON.parse(res).id}))
-        if (JSON.parse(res).message === 'No such user') {
-          inputFormRef.current.style.marginTop = '42px'
-        }
+        const result = JSON.parse(res)
+        dispatch(setUser({name: username, id: result.id}))
+        login(result.token, result.id, result.username)
         setResult(JSON.parse(res).message)
       })
   }
 
   const createUser = async () => {
-    await request('/api/auth/register', 'POST', {username})
+    await request('/api/auth/register', 'POST', {username, password, id: Math.random()})
       .then(res => {
-        setResult(JSON.parse(res).message)
+        const result = JSON.parse(res)
+        dispatch(setUser({name: result.username, id: result.id}))
+        login(result.token, result.id, result.username)
+      })
+      .then(() => {
+        setResult('User Created')
       })
   }
 
@@ -50,9 +76,14 @@ export const AuthPage = () => {
         <h1 className='main-title'>Welcome to VCS Vehicle Control System!</h1>
         <h3 className='secondary-title'>Here you can manage all your vehicles in one place</h3>
       </div>
-      <InputForm/>
+      <section className='action-block'>
+      <InputForm
+        handleSendForm={handleLogin}
+        handleUsernameChange={usernameChangeHandler}
+        handlePasswordChange={passwordChangeHandler}
+      />
       {(result === 'User Found' || result === 'User Created') &&
-      <Redirect to="/home/"/>
+      <Redirect to="/mainScreen/"/>
       }
       {result === 'No such user' &&
       <div className='create-user-block'>
@@ -63,6 +94,7 @@ export const AuthPage = () => {
         <button className='create-user-button' onClick={createUser}>Create User</button>
       </div>
       }
+      </section>
     </div>
   )
 }
