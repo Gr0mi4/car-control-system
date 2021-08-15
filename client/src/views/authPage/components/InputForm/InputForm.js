@@ -20,6 +20,7 @@ export const InputForm = (props) => {
           type="password"
           onChange={props.handlePasswordChange}
         />
+        <p className='error password'>{props.error}</p>
       </div>
       <button
         className='proceed-button'

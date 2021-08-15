@@ -7,6 +7,10 @@
     align-items: flex-start;
     margin-bottom: 21px;
 
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
     .label {
       font-size: 28px;
       font-weight: 600;
@@ -23,6 +27,14 @@
       border-radius: 5px;
       outline: none;
       width: 410px;
+    }
+
+    .error {
+      margin: 10px 0 0 10px;
+      padding: 0;
+      color: #CAEB00;
+      font-weight: 400;
+      font-size: 24px;
     }
   }
 

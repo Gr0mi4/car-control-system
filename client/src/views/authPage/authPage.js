@@ -18,7 +18,7 @@ export const AuthPage = () => {
   const [password, setPassword] = useState('')
   const [result, setResult] = useState(null)
 
-  const {request} = useHttp()
+  const {request, error} = useHttp()
   const dispatch = useDispatch()
 
   const {login} = useAuth()
@@ -56,6 +56,8 @@ export const AuthPage = () => {
         login(result.token, result.id, result.username)
         setResult(JSON.parse(res).message)
       })
+      .catch(err => {
+      })
   }
 
   const createUser = async () => {
@@ -81,6 +83,7 @@ export const AuthPage = () => {
         handleSendForm={handleLogin}
         handleUsernameChange={usernameChangeHandler}
         handlePasswordChange={passwordChangeHandler}
+        error={error}
       />
       {(result === 'User Found' || result === 'User Created') &&
       <Redirect to="/mainScreen/"/>

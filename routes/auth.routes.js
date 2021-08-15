@@ -15,7 +15,7 @@ router.post('/check', async(req,res) => {
       const token = jwt.sign({id: candidate.id}, 'ivangromov', {expiresIn: '1h'})
       isMatch
         ? res.status(200).json({ message: 'User Found', id: candidate._id, token, username: candidate.username})
-        : res.status(200).json({ message: 'Password is wrong'})
+        : res.status(403).json({ message: 'Password is incorrect', type: 'password'})
     } else {
       res.status(200).json({ message: 'No such user'})
     }
