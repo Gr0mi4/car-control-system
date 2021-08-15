@@ -11,6 +11,8 @@ import {setUser} from "../../store/reducers/userSlice";
 
 import {InputForm} from './components/InputForm/InputForm'
 
+import {loginValidation, passwordValidation} from "./utils/validation";
+
 import './style.scss'
 
 export const AuthPage = () => {
@@ -18,7 +20,7 @@ export const AuthPage = () => {
   const [password, setPassword] = useState('')
   const [result, setResult] = useState(null)
 
-  const {request, error} = useHttp()
+  const {request, error, setError} = useHttp()
   const dispatch = useDispatch()
 
   const {login} = useAuth()
@@ -49,15 +51,19 @@ export const AuthPage = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    await request('/api/auth/check', 'POST', {username, password})
-      .then(res => {
-        const result = JSON.parse(res)
-        dispatch(setUser({name: username, id: result.id}))
-        login(result.token, result.id, result.username)
-        setResult(JSON.parse(res).message)
-      })
-      .catch(err => {
-      })
+    if (!loginValidation(username) && !passwordValidation(password)) {
+      await request('/api/auth/check', 'POST', {username, password})
+        .then(res => {
+          const result = JSON.parse(res)
+          dispatch(setUser({name: username, id: result.id}))
+          login(result.token, result.id, result.username)
+          setResult(JSON.parse(res).message)
+        })
+        .catch(err => {
+        })
+    } else {
+      loginValidation(username) ? setError(loginValidation(username)) : setError(passwordValidation(password))
+    }
   }
 
   const createUser = async () => {
