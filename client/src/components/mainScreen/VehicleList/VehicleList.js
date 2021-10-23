@@ -1,16 +1,17 @@
 import {useSelector} from "react-redux";
-import {Card, CardContent} from "@material-ui/core";
+import {Link} from 'react-router-dom'
+
+import {VehicleItem} from "./Vehicle Item/VehicleItem"
+
 import './style.scss'
 
 export const VehicleList = () => {
   const vehicleList = useSelector(state => state.vehicleList.value)
 
   const vehicleListMap = vehicleList.map((item, index) =>
-    <Card className='vehicle-card' key={index}>
-      <CardContent>
+    <Link to={`/vehicle/${item._id}`} className='vehicle-card' key={index} children={VehicleItem}>
       {item.brand} {item.model}
-      </CardContent>
-    </Card>)
+    </Link>)
   return (
     <div className='vehicle-list'>
       {vehicleListMap}
