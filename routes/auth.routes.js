@@ -7,7 +7,6 @@ const router = Router()
 router.post('/check', async(req,res) => {
   try {
     const {username, password} = req.body
-    console.log(username, password)
     const candidate = await User.findOne({ username })
 
     if (candidate) {

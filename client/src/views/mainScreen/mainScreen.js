@@ -48,7 +48,6 @@ export const MainScreen = () => {
 
   const getUserVehicles = async () => {
     try {
-      console.log('123', userId)
       await request('/api/vehicle/getUserVehicles', 'POST', {userId})
         .then(res => {
           const results = JSON.parse(res)
