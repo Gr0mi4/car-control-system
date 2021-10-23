@@ -17,6 +17,21 @@ router.post('/getUserVehicles', async (req, res) => {
   }
 })
 
+router.post('/getVehicleInfo', async (req,res) => {
+  try {
+    const {vehicleId} = req.body
+    const vehicle = await Vehicle.findOne({_id: vehicleId})
+    if (vehicle) {
+      res.status(200).json(vehicle)
+    } else {
+      res.status(201).json({message: 'Vehicle not found'})
+    }
+  } catch (e) {
+    console.log(e)
+    res.status(500).json({message: "Something went wrong"})
+  }
+})
+
 router.post('/saveNewVehicle', async (req,res) => {
   try {
     const {brand, model, modification, type, userId} = req.body
