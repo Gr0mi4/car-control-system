@@ -2,19 +2,41 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  .main-logo {
-    position: absolute;
-    margin: 20px 10px;
-    width: 125px;
-  }
+  margin: 0 62px;
+  font-family: Montserrat;
 
   .username {
-    margin-left: 180px;
-    font-size: 18px;
+    font-size: 32px;
+
+    .login {
+      font-weight: 600;
+    }
   }
 
-  .exit-button {
-    margin: 10px;
+  .button-block {
+    display: flex;
+    .back {
+      margin-right: 21px;
+      padding: 20px 12px;
+
+      .back-icon {
+        width: 44px;
+        height: 22px;
+      }
+    }
+
+
+    .exit {
+      font-size: 30px;
+      font-weight: bold;
+      padding: 6px 32px 6px 22px;
+      display: flex;
+      align-items: center;
+
+      .logout-icon {
+        width: 48px;
+        margin-right: 10px;
+      }
+    }
   }
 }

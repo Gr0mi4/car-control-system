@@ -9,10 +9,7 @@ import {useSelector, useDispatch} from "react-redux";
 
 import {setVehicleList} from "../../store/reducers/vehicleListSlice";
 import {AddNewVehicleModal} from "../../components/mainScreen/AddNewVehicleModal/AddNewVehicleModal";
-import {Header} from "../../components/Header/Header";
 import {VehicleList} from "../../components/mainScreen/VehicleList/VehicleList";
-
-import {Button} from "@material-ui/core";
 
 import './style.scss'
 
@@ -65,15 +62,13 @@ export const MainScreen = () => {
   return (
     <div>
       {!userId && <Redirect to="/auth" />}
-      <Header/>
       <h2>Choose your vehicle or add new one</h2>
         {vehicleList.length > 0 && <VehicleList/>}
-      <Button
+      <button
         className='add-vehicle-button'
-        variant='outlined'
-        color='primary' onClick={handleAddNewVehicleClick}>
+        onClick={handleAddNewVehicleClick}>
         Add new Vehicle
-      </Button>
+      </button>
       <AddNewVehicleModal
           showNewVehicleModal={showAddNewVehicleModal}
           closeAddNewVehicleModal={closeAddNewVehicleModal}

@@ -1,7 +1,10 @@
-import {Switch, Route} from "react-router-dom"
+import {Route} from "react-router-dom"
 import AuthPage from "./authPage/authPage";
 import MainScreen from "./mainScreen/mainScreen";
+
 import {VehicleItem} from "../components/mainScreen/VehicleList/Vehicle Item/VehicleItem";
+import {Header} from "../components/Header/Header";
+
 import { useEffect } from "react";
 
 export const MainLayout = () => {
@@ -17,17 +20,19 @@ export const MainLayout = () => {
 
 
     return (
-    <Switch>
+    <div>
       <Route path="/auth">
         <AuthPage/>
       </Route>
       <Route path="/mainScreen">
+        <Header/>
         <MainScreen/>
       </Route>
-        <Route path='/vehicle/:id'>
-            <VehicleItem/>
-        </Route>
-    </Switch>
+      <Route path='/vehicle/:id'>
+        <Header/>
+        <VehicleItem/>
+      </Route>
+    </div>
   )
 }
 
