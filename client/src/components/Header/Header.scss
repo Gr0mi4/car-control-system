@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 62px;
+  margin: 45px 62px 0;
   font-family: Montserrat;
 
   .username {
-    font-size: 32px;
+    font-size: 28px;
 
     .login {
       font-weight: 600;
@@ -17,25 +17,25 @@
     display: flex;
     .back {
       margin-right: 21px;
-      padding: 20px 12px;
+      padding: 13px 8px;
 
       .back-icon {
-        width: 44px;
-        height: 22px;
+        width: 30px;
+        height: 13px;
       }
     }
 
 
     .exit {
-      font-size: 30px;
+      font-size: 24px;
       font-weight: bold;
-      padding: 6px 32px 6px 22px;
+      padding: 5px 10px;
       display: flex;
       align-items: center;
 
       .logout-icon {
-        width: 48px;
-        margin-right: 10px;
+        width: 35px;
+        margin-right: 12px;
       }
     }
   }

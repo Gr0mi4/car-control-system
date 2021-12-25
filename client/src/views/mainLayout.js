@@ -7,6 +7,8 @@ import {Header} from "../components/Header/Header";
 
 import { useEffect } from "react";
 
+import './style.scss'
+
 export const MainLayout = () => {
     function redirect() {
         if (window.location.href === 'http://localhost:3000/') {
@@ -20,7 +22,7 @@ export const MainLayout = () => {
 
 
     return (
-    <div>
+    <div className='main'>
       <Route path="/auth">
         <AuthPage/>
       </Route>

@@ -1,10 +1,30 @@
 .vehicle-list {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-
+  flex-direction: column;
+  width: 50%;
   .vehicle-card {
-    margin: 10px;
-    cursor: pointer;
+    min-height: 225px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    &:nth-child(2) {
+      margin-right: 75px;
+    }
+
+    .main-image {
+      background: #fff;
+      width: 185px;
+      height: 185px;
+      border-radius: 5px;
+    }
+
+    .vehicle-details {
+      font-size: 32px;
+      margin: 0 0 0 70px;
+    }
   }
 }

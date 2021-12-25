@@ -1,8 +1,9 @@
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import { useHistory } from "react-router-dom";
 import './Header.scss'
 import {useAuth} from "../../hooks/auth.hook";
 import {setUser} from "../../store/reducers/userSlice";
-import {useDispatch} from "react-redux";
+
 import LogoutIcon from './../../assets/icons/logout.png'
 import BackIcon from './../../assets/icons/back.png'
 
@@ -11,6 +12,7 @@ export const Header = () => {
   const {logout} = useAuth()
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   function handleLogout () {
     dispatch(setUser({name: null, id: null}))
@@ -18,7 +20,7 @@ export const Header = () => {
   }
 
   function handleHigherPage() {
-
+    history.goBack()
   }
 
 

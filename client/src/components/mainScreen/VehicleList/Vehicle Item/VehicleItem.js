@@ -2,6 +2,8 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useHttp} from "../../../../hooks/http.hook";
 
+import './style.scss'
+
 export const VehicleItem = () => {
     const {id} = useParams();
     const [vehicleInfo, setVehicleInfo] = useState({})
@@ -27,13 +29,13 @@ export const VehicleItem = () => {
 
     return (
         <div>
-            <h1>Hello man!</h1>
-            {vehicleInfo.brand && <div>
-                <h2>{vehicleInfo.brand}</h2>
-                <h2>{vehicleInfo.model}</h2>
-                <h2>{vehicleInfo.type}</h2>
-                <h2>{vehicleInfo.modification}</h2>
-            </div>}
+            {Object.keys(vehicleInfo).map(vehicle => (
+                <div key={vehicle} className="card-panel">
+                    {vehicleInfo[vehicle]}
+                </div>
+            ))}
+
+            <button className='add-property button'>+</button>
         </div>
     )
 }

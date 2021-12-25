@@ -8,8 +8,11 @@ import {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {setVehicleList} from "../../store/reducers/vehicleListSlice";
+
 import {AddNewVehicleModal} from "../../components/mainScreen/AddNewVehicleModal/AddNewVehicleModal";
 import {VehicleList} from "../../components/mainScreen/VehicleList/VehicleList";
+
+import PlusIcon from "../../assets/icons/plus.png"
 
 import './style.scss'
 
@@ -60,15 +63,18 @@ export const MainScreen = () => {
   }, [])
 
   return (
-    <div>
+    <div className='main-screen'>
       {!userId && <Redirect to="/auth" />}
-      <h2>Choose your vehicle or add new one</h2>
-        {vehicleList.length > 0 && <VehicleList/>}
-      <button
-        className='add-vehicle-button'
-        onClick={handleAddNewVehicleClick}>
-        Add new Vehicle
-      </button>
+        <section className='main-section'>
+            <h1 className='title'>Chose vehicle you want to work with</h1>
+            {vehicleList.length > 0 && <VehicleList />}
+        </section>
+        <section className='footer-section'>
+            <button className='add-vehicle button' onClick={handleAddNewVehicleClick}>
+                <img src={PlusIcon} className='plus icon' alt='plus icon'/>
+            </button>
+            <label className='add-label'>Add New Vehicle</label>
+        </section>
       <AddNewVehicleModal
           showNewVehicleModal={showAddNewVehicleModal}
           closeAddNewVehicleModal={closeAddNewVehicleModal}
