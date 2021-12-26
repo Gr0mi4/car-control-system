@@ -1,17 +1,17 @@
-import {useHttp} from "../../hooks/http.hook";
-import {useAuth} from "../../hooks/auth.hook";
+import { useHttp } from '../../hooks/http.hook';
+import { useAuth } from '../../hooks/auth.hook';
 
-import {useState, useEffect} from "react";
+import { useState, useEffect } from 'react';
 
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-import {useDispatch} from "react-redux";
+import { useDispatch } from 'react-redux';
 
-import {setUser} from "../../store/reducers/userSlice";
+import { setUser } from '../../store/reducers/userSlice';
 
-import {InputForm} from './components/InputForm/InputForm'
+import { InputForm } from './components/InputForm/InputForm'
 
-import {loginValidation, passwordValidation} from "./utils/validation";
+import { loginValidation, passwordValidation } from './utils/validation';
 
 import './style.scss'
 
@@ -80,29 +80,29 @@ export const AuthPage = () => {
 
   return (
     <div>
-      <div className='main-title-block'>
-        <h1 className='main-title'>Welcome to VCS Vehicle Control System!</h1>
-        <h3 className='secondary-title'>Here you can manage all your vehicles in one place</h3>
+      <div className="main-title-block">
+        <h1 className="main-title">Welcome to VCS Vehicle Control System!</h1>
+        <h3 className="secondary-title">Here you can manage all your vehicles in one place</h3>
       </div>
-      <section className='action-block'>
-      <InputForm
-        handleSendForm={handleLogin}
-        handleUsernameChange={usernameChangeHandler}
-        handlePasswordChange={passwordChangeHandler}
-        error={error}
-      />
-      {(result === 'User Found' || result === 'User Created') &&
-      <Redirect to="/mainScreen/"/>
-      }
-      {result === 'No such user' &&
-      <div className='create-user-block'>
-        <h3 className='no-such-user-title'>
-          Sorry, we don’t have user with such name in our database.
-          Create it, or choose another one
-        </h3>
-        <button className='create-user-button' onClick={createUser}>Create User</button>
-      </div>
-      }
+      <section className="action-block">
+        <InputForm
+          handleSendForm={handleLogin}
+          handleUsernameChange={usernameChangeHandler}
+          handlePasswordChange={passwordChangeHandler}
+          error={error}
+        />
+        {(result === 'User Found' || result === 'User Created') &&
+        <Redirect to="/mainScreen/"/>
+        }
+        {result === 'No such user' &&
+        <div className="create-user-block">
+          <h3 className="no-such-user-title">
+            Sorry, we don’t have user with such name in our database.
+            Create it, or choose another one
+          </h3>
+          <button className="create-user-button" onClick={createUser}>Create User</button>
+        </div>
+        }
       </section>
     </div>
   )

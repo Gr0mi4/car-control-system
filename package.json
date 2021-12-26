@@ -1,56 +1,13 @@
 {
   "name": "car-control-system",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@reduxjs/toolkit": "^1.6.0",
-    "@testing-library/jest-dom": "^5.13.0",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "bcrypt": "^5.0.1",
-    "bcryptjs": "^2.4.3",
-    "concurrently": "^6.2.0",
-    "express": "^4.17.1",
-    "fontsource-roboto": "^4.0.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.14",
-    "nodemon": "^2.0.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "redux": "^4.1.0",
-    "typeface-montserrat": "^1.1.13",
-    "web-vitals": "^1.1.2"
-  },
-  "proxy": "http://localhost:4000",
+  "version": "1.0.0",
+  "dependencies": {},
   "scripts": {
-    "startAll": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server",
-    "client": "npm run start --prefix client",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "project": "concurrently --kill-others \"npm run client\" \"npm run server\"",
+    "client": "cd client && npm run start",
+    "server": "cd server && npm run server"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^6.5.1"
+  }
 }

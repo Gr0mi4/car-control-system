@@ -1,8 +1,8 @@
 import './App.css';
 import 'fontsource-roboto'
-import 'typeface-montserrat'
-import MainLayout from "./views/mainLayout";
-import {BrowserRouter} from "react-router-dom";
+import '@fontsource/montserrat'
+import MainLayout from './views/mainLayout';
+import { BrowserRouter } from 'react-router-dom';
 
 
 function App() {

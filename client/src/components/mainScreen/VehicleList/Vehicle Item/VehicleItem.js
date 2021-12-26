@@ -1,6 +1,6 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useHttp} from "../../../../hooks/http.hook";
+import {useParams} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useHttp} from '../../../../hooks/http.hook';
 
 import './style.scss'
 
@@ -30,7 +30,7 @@ export const VehicleItem = () => {
     return (
         <div>
             {Object.keys(vehicleInfo).map(vehicle => (
-                <div key={vehicle} className="card-panel">
+                <div key={vehicle} className='card-panel'>
                     {vehicleInfo[vehicle]}
                 </div>
             ))}

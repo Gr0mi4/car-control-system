@@ -1,18 +1,18 @@
-import {useHttp} from "../../hooks/http.hook";
+import {useHttp} from '../../hooks/http.hook';
 
 import {Redirect} from 'react-router-dom'
 
-import {useEffect} from "react";
-import {useState} from "react";
+import {useEffect} from 'react';
+import {useState} from 'react';
 
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 
-import {setVehicleList} from "../../store/reducers/vehicleListSlice";
+import {setVehicleList} from '../../store/reducers/vehicleListSlice';
 
-import {AddNewVehicleModal} from "../../components/mainScreen/AddNewVehicleModal/AddNewVehicleModal";
-import {VehicleList} from "../../components/mainScreen/VehicleList/VehicleList";
+import {AddNewVehicleModal} from '../../components/mainScreen/AddNewVehicleModal/AddNewVehicleModal';
+import {VehicleList} from '../../components/mainScreen/VehicleList/VehicleList';
 
-import PlusIcon from "../../assets/icons/plus.png"
+import PlusIcon from '../../assets/icons/plus.png'
 
 import './style.scss'
 
@@ -64,7 +64,7 @@ export const MainScreen = () => {
 
   return (
     <div className='main-screen'>
-      {!userId && <Redirect to="/auth" />}
+      {!userId && <Redirect to='/auth' />}
         <section className='main-section'>
             <h1 className='title'>Chose vehicle you want to work with</h1>
             {vehicleList.length > 0 && <VehicleList />}

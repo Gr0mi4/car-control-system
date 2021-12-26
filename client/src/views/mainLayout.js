@@ -1,28 +1,28 @@
-import {Route} from "react-router-dom"
-import AuthPage from "./authPage/authPage";
-import MainScreen from "./mainScreen/mainScreen";
+import { Route } from 'react-router-dom'
+import AuthPage from './authPage/authPage';
+import MainScreen from './mainScreen/mainScreen';
 
-import {VehicleItem} from "../components/mainScreen/VehicleList/Vehicle Item/VehicleItem";
-import {Header} from "../components/Header/Header";
+import { VehicleItem } from '../components/mainScreen/VehicleList/Vehicle Item/VehicleItem';
+import { Header } from '../components/Header/Header';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 import './style.scss'
 
 export const MainLayout = () => {
-    function redirect() {
-        if (window.location.href === 'http://localhost:3000/') {
-            window.location.href = 'http://localhost:3000/auth';
-        }
+  function redirect() {
+    if (window.location.href === 'http://localhost:3000/') {
+      window.location.href = 'http://localhost:3000/auth';
     }
+  }
 
-    useEffect(() => {
-        redirect()
-    }, [])
+  useEffect(() => {
+    redirect()
+  }, [])
 
 
-    return (
-    <div className='main'>
+  return (
+    <div className="main">
       <Route path="/auth">
         <AuthPage/>
       </Route>
@@ -30,7 +30,7 @@ export const MainLayout = () => {
         <Header/>
         <MainScreen/>
       </Route>
-      <Route path='/vehicle/:id'>
+      <Route path="/vehicle/:id">
         <Header/>
         <VehicleItem/>
       </Route>

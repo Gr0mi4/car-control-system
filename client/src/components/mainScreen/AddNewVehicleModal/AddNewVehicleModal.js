@@ -7,9 +7,9 @@ import {
     RadioGroup,
     Radio,
     FormControlLabel
-} from "@material-ui/core";
+} from '@material-ui/core';
 import './style.scss'
-import {useState} from "react";
+import {useState} from 'react';
 
 export const AddNewVehicleModal = (props) => {
 
@@ -42,11 +42,11 @@ export const AddNewVehicleModal = (props) => {
             <DialogTitle>Here you can add new vehicle</DialogTitle>
             <DialogContent dividers>
                 <form onSubmit={() => props.saveNewVehicle(brand, model, modification, type)} className='new-vehicle-form'>
-                    <TextField required label="Brand" onChange={brandChangeHandler} value={brand}/>
-                    <TextField required label="Model" onChange={modelChangeHandler} value={model}/>
-                    <TextField required label="Modification" onChange={modificationChangeHandler} value={modification}/>
+                    <TextField required label='Brand' onChange={brandChangeHandler} value={brand}/>
+                    <TextField required label='Model' onChange={modelChangeHandler} value={model}/>
+                    <TextField required label='Modification' onChange={modificationChangeHandler} value={modification}/>
                     <label className='vehicle-type-label'>Vehicle Type*</label>
-                    <RadioGroup name='vehicle-type' color="default" value={type} onChange={handleChangeVehicleType}>
+                    <RadioGroup name='vehicle-type' color='default' value={type} onChange={handleChangeVehicleType}>
                         <FormControlLabel value='car' control={<Radio />} label='Car'/>
                         <FormControlLabel value='motorcycle' control={<Radio />} label='Motorcycle'/>
                         <FormControlLabel value='bicycle' control={<Radio />} label='Bicycle'/>
