@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
-import { VehicleItem } from './Vehicle Item/VehicleItem'
+import { VehicleItem } from '../../../views/vehicleItem/VehicleItem'
 
 import WhiteSpace from './../../../assets/icons/logout.svg'
 

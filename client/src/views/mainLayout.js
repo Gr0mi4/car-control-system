@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom'
 import AuthPage from './authPage/authPage';
 import MainScreen from './mainScreen/mainScreen';
 
-import { VehicleItem } from '../components/mainScreen/VehicleList/Vehicle Item/VehicleItem';
+import { VehicleItem } from './vehicleItem/VehicleItem';
 import { Header } from '../components/Header/Header';
 
 import { useEffect } from 'react';

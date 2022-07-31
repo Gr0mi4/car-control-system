@@ -1,0 +1,94 @@
+.vehicle-info-wrapper {
+  display: flex;
+  margin: 50px 0 0 105px;
+
+  .no-image-plug {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+
+    p {
+      color: red;
+      margin-top: 180px;
+      font-size: 32px;
+    }
+  }
+
+  .details-wrapper {
+    margin-left: 60px;
+    font-size: 32px;
+    min-width: 500px;
+    max-width: 700px;
+
+    .details-header {
+      font-size: 38px;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .details-field {
+      display: flex;
+
+      .field-name {
+        text-transform: capitalize;
+        flex-shrink: 0;
+      }
+
+      .vehicle-info-input-wrapper {
+        display: flex;
+        align-items: center;
+      }
+
+      .vehicle-info-input {
+        font-family: Montserrat;
+        padding: 0 0 0 12px;
+        margin-left: 10px;
+        height: 34px;
+        font-size: 24px;
+        font-weight: 600;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        width: 300px;
+      }
+
+      .submit-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        .ok-icon {
+          width: 35px;
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+
+      .field-value {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .add-property {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    font-size: 64px;
+    width: 80px;
+    height: 80px;
+    padding: 5px;
+    border-radius: 50% !important;
+  }
+
+  .main-image {
+    border-radius: 10px;
+    box-shadow: 0 0 1px 5px white;
+  }
+}
