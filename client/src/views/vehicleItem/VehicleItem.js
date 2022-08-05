@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 
 import './style.scss'
 import OkIcon from '../../assets/icons/ok-circled.svg';
+import PlusCircled from '../../assets/icons/plus-circled.svg'
 
 export const VehicleItem = () => {
   const {id} = useParams();
@@ -24,7 +25,7 @@ export const VehicleItem = () => {
     keys.map((key, index) => {
       // Checks if we need isChanging prop for particular value (we won't be changing service fields, img and etc)
       if (!hiddenInfoFields.includes(key)) {
-        return parsedResults[key] = {value: values[index], isChanging: values[index] === ''}
+        return parsedResults[key] = {value: values[index], isChanging: false}
       } else {
         return parsedResults[key] = values[index]
       }
@@ -63,27 +64,55 @@ export const VehicleItem = () => {
   }, [])
 
   function handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
+    let value = event.target.value;
+    const fieldName = event.target.name;
+
+    const updatedVehicleInfo = {...vehicleInfo}
+    updatedVehicleInfo[fieldName].value = value
+    setVehicleInfo(updatedVehicleInfo)
 
     setNewValue(value)
   }
 
-  async function handleSendData(event) {
-    await updateVehicleInfo(event.target.name)
+  function handleSendData(fieldName) {
+    return async (event) => {
+      event.preventDefault()
+      await updateVehicleInfo(fieldName)
+    }
   }
 
-  function showInput(event) {
-    const fieldName = event.target.id
+  function showInput(fieldName) {
+    return () => {
+      const updatedVehicleInfo = {...vehicleInfo}
+      updatedVehicleInfo[fieldName].isChanging = true
+      setVehicleInfo(updatedVehicleInfo)
+    }
+  }
+
+  function handleBlur(event) {
+    const fieldName = event.target.name
     const updatedVehicleInfo = {...vehicleInfo}
-    updatedVehicleInfo[fieldName].isChanging = !vehicleInfo[fieldName].isChanging
+    updatedVehicleInfo[fieldName].isChanging = false
     setVehicleInfo(updatedVehicleInfo)
+  }
+
+  function handleInputFocus(event) {
+    setNewValue(event.target.value)
   }
 
   return (
     <div className="vehicle-info-wrapper">
       {vehicleInfo.image && <img className="main-image" src={vehicleInfo.image} width="400" alt="Vehicle Image"/>}
-      {!vehicleInfo.image && <div className="no-image-plug"><p>No photo</p></div>}
+      {!vehicleInfo.image &&
+      <div className="no-image-plug">
+        <div className="plug-text">
+          <p>No photo</p>
+          <p>Want to add one?</p>
+        </div>
+        <button className="img-add-button">
+          <img className="plus-circled" src={PlusCircled} alt="plus-circled"/>
+        </button>
+      </div>}
 
       <div className="details-wrapper">
         <div className="details-header">Vehicle details</div>
@@ -95,21 +124,25 @@ export const VehicleItem = () => {
                 <div className="field-name">{fieldName} :</div>
                 {vehicleInfo[fieldName].isChanging
                   ?
-                  (<div className="vehicle-info-input-wrapper">
+                  (<form className="vehicle-info-input-wrapper">
                     <input className="vehicle-info-input"
                            type="text"
                            onChange={handleInputChange}
+                           onFocus={handleInputFocus}
+                           onBlur={handleBlur}
+                           name={fieldName}
+                           value={vehicleInfo[fieldName].value}
+                           autoFocus
                     />
-                    <button className="submit-button" name={fieldName} onClick={handleSendData}>
-                      <img className="ok-icon" src={OkIcon} alt="ok-icon" name={fieldName}/>
+                    <button className="submit-button" onClick={handleSendData(fieldName)}>
+                      <img className="ok-icon" src={OkIcon} alt="ok-icon"/>
                     </button>
-                  </div>)
+                  </form>)
                   :
                   (<div
-                    id={fieldName}
                     className="field-value"
-                    onClick={showInput}>
-                    {vehicleInfo[fieldName].value}
+                    onClick={showInput(fieldName)}>
+                    {vehicleInfo[fieldName].value ? vehicleInfo[fieldName].value : ' No Value Provided '}
                   </div>)
                 }
               </div>

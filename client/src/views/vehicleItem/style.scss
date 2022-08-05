@@ -8,10 +8,26 @@
     background-color: white;
     border-radius: 10px;
 
-    p {
-      color: red;
-      margin-top: 180px;
+    .plug-text {
+      margin-top: 72px;
+      margin-bottom: 24px;
+      color: black;
       font-size: 32px;
+      font-weight: 500;
+    }
+
+    .img-add-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      .plus-circled {
+        width: 100px;
+
+        &:active {
+          transform: scale(0.97);
+        }
+      }
     }
   }
 
@@ -50,7 +66,7 @@
         border: none;
         border-radius: 5px;
         outline: none;
-        width: 300px;
+        width: 200px;
       }
 
       .submit-button {
