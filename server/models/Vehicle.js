@@ -5,7 +5,8 @@ const schema = new Schema({
   model: {type: String, required: true},
   type: {type: String, required: true},
   modification: {type: String, required: false},
-  userId: {type: String, required: true}
+  userId: {type: String, required: true},
+  image: {type: String, required: false},
 })
 
 module.exports = model('Vehicle', schema)

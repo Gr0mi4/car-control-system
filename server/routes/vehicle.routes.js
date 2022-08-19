@@ -1,3 +1,5 @@
+const cloudinary = require('cloudinary')
+
 const {Router} = require('express')
 
 const Vehicle = require('../models/Vehicle')
@@ -32,29 +34,29 @@ router.post('/getVehicleInfo', async (req, res) => {
   }
 })
 
-router.patch('/changeVehicleProp', async (req, res) => {
+router.post('/changeVehicleProp', async (req, res) => {
   try {
-    const {vehicleId, updatedField, newValue} = req.body
-    const vehicle = await Vehicle.findOne({_id: vehicleId})
-    vehicle[updatedField] = newValue
-    const updatedVehicle = await Vehicle.updateOne({_id: vehicleId}, vehicle)
+    const {vehicleId, updatedField, newValue} = req.body;
+    const vehicle = await Vehicle.findOne({_id: vehicleId});
+    vehicle[updatedField] = newValue;
+    const updatedVehicle = await Vehicle.updateOne({_id: vehicleId}, vehicle);
 
     if (!vehicle) {
-      res.status(500).json({message: 'Such vehicle not found'})
+      res.status(500).json({message: 'Such vehicle not found'});
     }
 
     if (!updatedVehicle) {
-      res.status(500).json({message: 'Cant be updated'})
+      res.status(500).json({message: 'Can`t be updated'});
     }
 
     if (updatedVehicle) {
-      res.status(200).json(vehicle)
+      res.status(200).json(vehicle);
     }
 
 
   } catch (e) {
-    console.log(e)
-    res.status(500).json({message: 'Something went wrong'})
+    console.log(e);
+    res.status(500).json({message: 'Something went wrong'});
   }
 })
 
@@ -69,5 +71,39 @@ router.post('/saveNewVehicle', async (req, res) => {
     res.status(500).json({message: 'Something went wrong'})
   }
 })
+
+router.post('/uploadVehicleImage', async (req, res) => {
+  try {
+    if (req.file) {
+      res.status(201).json({message: 'Image Successfully uploaded',})
+    } else {
+      res.status(500).json({message: 'Image not found'})
+    }
+
+  } catch (e) {
+    console.log(e)
+    res.status(500).json({message: 'Something went wrong'})
+  }
+})
+
+router.get('/getVariables', async (req, res) => {
+  const data = await createImageUpload()
+  if (data) {
+    res.status(201).json({message: 'Everything is ok', timestamp: data.timestamp, signature: data.signature})
+  } else {
+    res.status(500).json({message: 'Something went wrong'})
+  }
+})
+
+async function createImageUpload() {
+  const timestamp = new Date().getTime()
+  const signature = cloudinary.utils.api_sign_request(
+    {
+      timestamp,
+    },
+    'Wj4Bp15zZGPnUe11gQHfsviAFNM'
+  )
+  return {timestamp, signature}
+}
 
 module.exports = router

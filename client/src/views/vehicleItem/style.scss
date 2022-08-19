@@ -2,35 +2,6 @@
   display: flex;
   margin: 50px 0 0 105px;
 
-  .no-image-plug {
-    width: 400px;
-    height: 400px;
-    background-color: white;
-    border-radius: 10px;
-
-    .plug-text {
-      margin-top: 72px;
-      margin-bottom: 24px;
-      color: black;
-      font-size: 32px;
-      font-weight: 500;
-    }
-
-    .img-add-button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-
-      .plus-circled {
-        width: 100px;
-
-        &:active {
-          transform: scale(0.97);
-        }
-      }
-    }
-  }
-
   .details-wrapper {
     margin-left: 60px;
     font-size: 32px;
@@ -101,10 +72,5 @@
     height: 80px;
     padding: 5px;
     border-radius: 50% !important;
-  }
-
-  .main-image {
-    border-radius: 10px;
-    box-shadow: 0 0 1px 5px white;
   }
 }

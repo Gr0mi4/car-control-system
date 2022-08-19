@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 
 import './style.scss'
 import OkIcon from '../../assets/icons/ok-circled.svg';
-import PlusCircled from '../../assets/icons/plus-circled.svg'
+
+import { VehiclePhoto } from './components/VehiclePhoto/VehiclePhoto'
 
 export const VehicleItem = () => {
   const {id} = useParams();
@@ -45,10 +46,10 @@ export const VehicleItem = () => {
     }
   }
 
-  async function updateVehicleInfo(fieldName) {
+  async function updateVehicleInfo(fieldName, newValue = changingValue) {
     try {
-      await request('/api/vehicle/changeVehicleProp', 'PATCH', {
-        vehicleId: id, newValue: changingValue, updatedField: fieldName,
+      await request('/api/vehicle/changeVehicleProp', 'POST', {
+        vehicleId: id, newValue, updatedField: fieldName,
       })
         .then(res => {
           const results = JSON.parse(res)
@@ -102,17 +103,7 @@ export const VehicleItem = () => {
 
   return (
     <div className="vehicle-info-wrapper">
-      {vehicleInfo.image && <img className="main-image" src={vehicleInfo.image} width="400" alt="Vehicle Image"/>}
-      {!vehicleInfo.image &&
-      <div className="no-image-plug">
-        <div className="plug-text">
-          <p>No photo</p>
-          <p>Want to add one?</p>
-        </div>
-        <button className="img-add-button">
-          <img className="plus-circled" src={PlusCircled} alt="plus-circled"/>
-        </button>
-      </div>}
+      <VehiclePhoto src={vehicleInfo.image} getUpdatedInfo={getVehicleInfo} updateVehicleImage={updateVehicleInfo}/>
 
       <div className="details-wrapper">
         <div className="details-header">Vehicle details</div>
