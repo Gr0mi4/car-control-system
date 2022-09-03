@@ -1,20 +1,20 @@
-import {useHttp} from '../../hooks/http.hook';
+import './style.scss'
 
-import {Redirect} from 'react-router-dom'
+import { useHttp } from '../../hooks/http.hook';
 
-import {useEffect} from 'react';
-import {useState} from 'react';
+import { Redirect } from 'react-router-dom'
 
-import {useSelector, useDispatch} from 'react-redux';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-import {setVehicleList} from '../../store/reducers/vehicleListSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {AddNewVehicleModal} from '../../components/mainScreen/AddNewVehicleModal/AddNewVehicleModal';
-import {VehicleList} from '../../components/mainScreen/VehicleList/VehicleList';
+import { setVehicleList } from '../../store/reducers/vehicleListSlice';
 
 import PlusIcon from '../../assets/icons/plus.png'
 
-import './style.scss'
+import { VehicleList } from './components/VehicleList/VehicleList';
+import { AddVehicleModal } from './components/AddVehicleModal/AddVehicleModal';
 
 
 export const MainScreen = () => {
@@ -26,11 +26,11 @@ export const MainScreen = () => {
   const {request} = useHttp()
   const dispatch = useDispatch()
 
-  function handleAddNewVehicleClick () {
+  function handleAddNewVehicleClick() {
     setAddShowNewVehicleModal(true)
   }
 
-  function closeAddNewVehicleModal () {
+  function closeAddNewVehicleModal() {
     setAddShowNewVehicleModal(false)
   }
 
@@ -63,22 +63,22 @@ export const MainScreen = () => {
   }, [])
 
   return (
-    <div className='main-screen'>
-      {!userId && <Redirect to='/auth' />}
-        <section className='main-section'>
-            <h1 className='title'>Chose vehicle you want to work with</h1>
-            {vehicleList.length > 0 && <VehicleList />}
-        </section>
-        <section className='footer-section'>
-            <button className='add-vehicle button' onClick={handleAddNewVehicleClick}>
-                <img src={PlusIcon} className='plus icon' alt='plus icon'/>
-            </button>
-            <label className='add-label'>Add New Vehicle</label>
-        </section>
-      <AddNewVehicleModal
-          showNewVehicleModal={showAddNewVehicleModal}
-          closeAddNewVehicleModal={closeAddNewVehicleModal}
-          saveNewVehicle={saveNewVehicle}
+    <div className="main-screen">
+      {!userId && <Redirect to="/auth"/>}
+      <section className="main-section">
+        <h1 className="title">Chose vehicle you want to work with</h1>
+        {vehicleList.length > 0 && <VehicleList/>}
+      </section>
+      <section className="footer-section">
+        <button className="add-vehicle button" onClick={handleAddNewVehicleClick}>
+          <img src={PlusIcon} className="plus icon" alt="plus icon"/>
+        </button>
+        <label className="add-label">Add New Vehicle</label>
+      </section>
+      <AddVehicleModal
+        show={showAddNewVehicleModal}
+        onClose={closeAddNewVehicleModal}
+        onSave={saveNewVehicle}
       />
     </div>
   )

@@ -4,9 +4,38 @@ Main task: Gather all data need for car enthusiast in one place in as handy was 
 
 What data can car enthusiast need?
 
-1. Photos of the car and process of working on it (and video) aka Gallery
-2. Journal where enthusiast can describe process, thoughts, plans and etc
-3. Reference documents available - instructions and etc
-4. Shopping list - what does he need to buy, or what he actually bought, how much it costs did it fit and etc
-5. Calendar - to add some events, breaks, remember when would be new repair or maintence
-6. 
+1. Photos of the car and process of working on it (and video) aka Gallery - v1
+2. Journal where enthusiast can describe process, thoughts, plans and etc - v1
+3. Reference documents available - instructions and etc - v1.5
+4. Shopping list - what does he need to buy, or what he actually bought, how much it costs did it fit and etc v2
+5. Calendar - to add some events, breaks, remember when would be new repair or maintence - v3
+
+MVP Requirements:
+
+- Ability to Log in/Log out
+- Ability to Add/Remove Vehicles
+- Ability to Add Notes, with date
+- Ability to change Fields
+- Ability to add/change/remove custom fields
+- Ability to add several photos Basically in first version we are adding First two points of main requirements, we have
+  our vehicle, photos and notes, that can be (potentially filtered in chronological order). So some base of the calendar
+  is ready.
+
+Screens description
+
+Main Screen: Place where you are can select vehicle, that you'll be working with, add new one, delete it.
+
+Add Vehicle Modal: Place where you are adding new vehicle. Input fields:
+
+- Type (required, Select). Values: Car, Motorcycle, Bicycle, Other.
+- Brand (Input, can be Select in future).
+- Model (Same as Brand)
+- Modification
+- Nickname
+- Model Year
+- Owned From
+- Active (Radio). Values: Yes/No
+- Image
+
+VehicleItem Screen: Screen where you can have a look on a Vehicle's details, add details fields, and Notes
+

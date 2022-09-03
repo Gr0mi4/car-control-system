@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 50%;
+  max-height: 700px;
+  overflow-y: scroll;
+
   .vehicle-card {
     min-height: 225px;
     color: white;
@@ -24,7 +27,12 @@
 
     .vehicle-details {
       font-size: 32px;
-      margin: 0 0 0 70px;
+      margin: 0 0 0 50px;
+
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
   }
 }

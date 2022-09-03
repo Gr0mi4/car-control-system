@@ -66,7 +66,7 @@ export const VehiclePhoto = (props) => {
             <p>No photo</p>
             <p>Want to add one?</p>
           </div>
-          <label for="file-upload">
+          <label htmlFor="file-upload">
             <img className="plus-circled" src={PlusCircled} alt="plus-circled"/>
           </label>
           <input onChange={handleUploadImage} id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
