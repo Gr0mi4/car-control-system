@@ -1,5 +1,6 @@
 import { ModalWindow } from '../../../../components/ModalWindow/ModalWindow';
 import { useState } from 'react';
+import { VehiclePhoto } from '../../../../components/VehiclePhoto/VehiclePhoto';
 
 export const AddVehicleModal = ({show, onClose, onSave}) => {
   const [brand, setBrand] = useState('');
@@ -30,6 +31,7 @@ export const AddVehicleModal = ({show, onClose, onSave}) => {
       <input placeholder="Brand" type="text" onChange={brandChangeHandler} value={brand}/>
       <input placeholder="Model" type="text" onChange={modelChangeHandler} value={model}/>
       <input placeholder="Modification" type="text" onChange={modificationChangeHandler} value={modification}/>
+      <VehiclePhoto/>
     </div>
   const modalFooter =
     <button

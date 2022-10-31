@@ -5,7 +5,7 @@ import { useHttp } from '../../hooks/http.hook';
 import './style.scss'
 import OkIcon from '../../assets/icons/ok-circled.svg';
 
-import { VehiclePhoto } from './components/VehiclePhoto/VehiclePhoto'
+import { VehiclePhoto } from '../../components/VehiclePhoto/VehiclePhoto'
 
 export const VehicleItem = () => {
   const {id} = useParams();

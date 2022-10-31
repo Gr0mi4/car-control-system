@@ -19,6 +19,21 @@
       transform: scale(0.97);
     }
   }
+
+  .img-upload-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 80px;
+    top: 15px;
+    width: 55px;
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
 }
 
 .no-image-plug {
