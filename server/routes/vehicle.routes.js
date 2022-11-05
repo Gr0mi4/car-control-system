@@ -62,8 +62,8 @@ router.post('/changeVehicleProp', async (req, res) => {
 
 router.post('/saveNewVehicle', async (req, res) => {
   try {
-    const {brand, model, modification, type, userId} = req.body
-    const vehicle = new Vehicle({brand, model, modification, type, userId})
+    const {brand, model, modification, type, userId, image} = req.body
+    const vehicle = new Vehicle({brand, model, modification, type, userId, image})
     await vehicle.save()
     res.status(201).json({message: 'Vehicle created successfully'})
   } catch (e) {

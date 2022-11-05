@@ -12,13 +12,15 @@ What data can car enthusiast need?
 
 MVP Requirements:
 
-- Ability to Log in/Log out
+- Ability to Log in/Log out - Ok
 - Ability to Add/Remove Vehicles
 - Ability to Add Notes, with date
-- Ability to change Fields
+- Ability to change Fields - ok
 - Ability to add/change/remove custom fields
-- Ability to add several photos Basically in first version we are adding First two points of main requirements, we have
-  our vehicle, photos and notes, that can be (potentially filtered in chronological order). So some base of the calendar
+- Ability to add several photos
+
+  Basically in first version we are adding First two points of main requirements, we have
+  your vehicle, photos and notes, that can be (potentially filtered in chronological order). So some base of the calendar
   is ready.
 
 Screens description

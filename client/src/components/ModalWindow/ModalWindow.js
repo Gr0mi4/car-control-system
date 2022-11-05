@@ -20,7 +20,7 @@ export const Modal = ({header, body, footer, show, onClose}) => {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function onKeyDown(event) {
     if (event.key === KEY.ESCAPE) {

@@ -60,9 +60,18 @@ export const VehicleItem = () => {
     }
   }
 
+  async function deleteVehicle(vehicleId) {
+    console.log('Delete Vehicle click')
+    try {
+      // await request()
+    } catch (e) {
+
+    }
+  }
+
   useEffect(() => {
     getVehicleInfo()
-  }, [])
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
   function handleInputChange(event) {
     let value = event.target.value;
@@ -139,6 +148,7 @@ export const VehicleItem = () => {
               </div>
             )
           }
+          return null
         })}
       </div>
 

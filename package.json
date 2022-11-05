@@ -1,13 +1,13 @@
 {
   "name": "car-control-system",
   "version": "1.0.0",
-  "dependencies": {},
   "scripts": {
     "project": "concurrently --kill-others \"npm run client\" \"npm run server\"",
     "client": "cd client && npm run start",
     "server": "cd server && npm run server --ignore client"
   },
   "devDependencies": {
-    "concurrently": "^6.5.1"
+    "concurrently": "^6.5.1",
+    "react-error-overlay": "^6.0.9"
   }
 }

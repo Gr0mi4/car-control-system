@@ -29,6 +29,12 @@ button.button:active, .icon-button:active {
     transform: scale(0.92);
 }
 
+.input {
+    font-family: Montserrat;
+    border: none;
+    border-radius: 5px;
+}
+
 
 .App h1, .App h2 {
 }

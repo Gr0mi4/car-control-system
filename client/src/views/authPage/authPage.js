@@ -47,7 +47,7 @@ export const AuthPage = () => {
 
   useEffect(() => {
     checkIfUserIsLoggedIn()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLogin = async (event) => {
     event.preventDefault()

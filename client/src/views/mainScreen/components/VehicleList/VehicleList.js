@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { VehicleItem } from '../../../vehicleItem/VehicleItem'
 
-import WhiteSpace from '../../../../assets/icons/logout.svg'
-
 import './style.scss'
 
 export const VehicleList = () => {
@@ -16,7 +14,7 @@ export const VehicleList = () => {
       key={index}
       className="vehicle-card"
       children={VehicleItem}>
-      <img className="main-image" src={WhiteSpace} alt="vehicle-img"/>
+      { item.image && <img className="main-image" src={item.image} alt="vehicle-img"/>}
       <div className="vehicle-details">
         <p>Name: {item.brand} {item.model}</p>
         <p>Type: {item.type}</p>
