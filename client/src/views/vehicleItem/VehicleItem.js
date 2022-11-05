@@ -1,9 +1,12 @@
-import { useParams } from 'react-router-dom';
+import './style.scss'
+
+import {useHistory, useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 
-import './style.scss'
-import OkIcon from '../../assets/icons/ok-circled.svg';
+import Delete from '../../assets/icons/delete.svg'
+import UploadIcon from '../../assets/icons/ok-circled.svg';
+
 
 import { VehiclePhoto } from '../../components/VehiclePhoto/VehiclePhoto'
 
@@ -12,7 +15,9 @@ export const VehicleItem = () => {
   const [vehicleInfo, setVehicleInfo] = useState({})
   const [changingValue, setNewValue] = useState('')
 
-  const {request} = useHttp()
+  const {request} = useHttp();
+
+  let history = useHistory();
 
   // Utility fields that shouldn't be shown
   const hiddenInfoFields = ['userId', 'image', '__v', '_id']
@@ -60,12 +65,19 @@ export const VehicleItem = () => {
     }
   }
 
-  async function deleteVehicle(vehicleId) {
-    console.log('Delete Vehicle click')
+  async function deleteVehicle() {
+    console.log('Delete Vehicle click', id)
     try {
-      // await request()
+      await request('/api/vehicle/deleteVehicle', 'POST', {
+        id
+      })
+          .then(res => {
+            const result = JSON.parse(res)
+            history.push("/mainScreen")
+            console.log(result)
+          })
     } catch (e) {
-
+      console.log(e)
     }
   }
 
@@ -135,7 +147,7 @@ export const VehicleItem = () => {
                            autoFocus
                     />
                     <button className="submit-button" onClick={handleSendData(fieldName)}>
-                      <img className="ok-icon" src={OkIcon} alt="ok-icon"/>
+                      <img className="ok-icon" src={UploadIcon} alt="ok-icon"/>
                     </button>
                   </form>)
                   :
@@ -150,6 +162,9 @@ export const VehicleItem = () => {
           }
           return null
         })}
+        <button className="delete-vehicle button" onClick={deleteVehicle}>
+          <img className="delete-vehicle-icon" src={Delete} alt='delete'/>
+        </button>
       </div>
 
       <button className="add-property button">+</button>

@@ -72,6 +72,20 @@ router.post('/saveNewVehicle', async (req, res) => {
   }
 })
 
+router.post('/deleteVehicle', async (req, res) => {
+  try {
+    const { id } = req.body
+    const deletedVehicle = await Vehicle.deleteOne({_id: id})
+    if (deletedVehicle) {
+      res.status(200).json(deletedVehicle)
+    } else {
+      res.status(500).json({message: 'Something went wrong'})
+    }
+  } catch (e) {
+    console.log(e)
+  }
+})
+
 router.post('/uploadVehicleImage', async (req, res) => {
   try {
     if (req.file) {

@@ -13,7 +13,7 @@ What data can car enthusiast need?
 MVP Requirements:
 
 - Ability to Log in/Log out - Ok
-- Ability to Add/Remove Vehicles
+- Ability to Add/Remove Vehicles - ok
 - Ability to Add Notes, with date
 - Ability to change Fields - ok
 - Ability to add/change/remove custom fields
