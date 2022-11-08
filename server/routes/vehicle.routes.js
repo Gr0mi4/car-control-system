@@ -1,52 +1,52 @@
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
 
-const {Router} = require('express')
+const { Router } = require('express');
 
-const Vehicle = require('../models/Vehicle')
+const Vehicle = require('../models/Vehicle');
 
-const router = Router()
+const router = Router();
 
 router.post('/getUserVehicles', async (req, res) => {
   try {
-    const {userId} = req.body
-    const userVehicles = await Vehicle.find({userId: userId})
+    const { userId } = req.body;
+    const userVehicles = await Vehicle.find({ userId: userId });
     if (userVehicles.length > 0) {
-      res.status(200).json(userVehicles)
+      res.status(200).json(userVehicles);
     }
   } catch (e) {
-    console.log(e)
-    res.status(500).json({message: 'Something went wrong'})
+    console.log(e);
+    res.status(500).json({ message: 'Something went wrong' });
   }
-})
+});
 
 router.post('/getVehicleInfo', async (req, res) => {
   try {
-    const {vehicleId} = req.body
-    const vehicle = await Vehicle.findOne({_id: vehicleId})
+    const { vehicleId } = req.body;
+    const vehicle = await Vehicle.findOne({ _id: vehicleId });
     if (vehicle) {
-      res.status(200).json(vehicle)
+      res.status(200).json(vehicle);
     } else {
-      res.status(201).json({message: 'Vehicle not found'})
+      res.status(201).json({ message: 'Vehicle not found' });
     }
   } catch (e) {
-    console.log(e)
-    res.status(500).json({message: 'Something went wrong'})
+    console.log(e);
+    res.status(500).json({ message: 'Something went wrong' });
   }
-})
+});
 
 router.post('/changeVehicleProp', async (req, res) => {
   try {
-    const {vehicleId, updatedField, newValue} = req.body;
-    const vehicle = await Vehicle.findOne({_id: vehicleId});
+    const { vehicleId, updatedField, newValue } = req.body;
+    const vehicle = await Vehicle.findOne({ _id: vehicleId });
     vehicle[updatedField] = newValue;
-    const updatedVehicle = await Vehicle.updateOne({_id: vehicleId}, vehicle);
+    const updatedVehicle = await Vehicle.updateOne({ _id: vehicleId }, vehicle);
 
     if (!vehicle) {
-      res.status(500).json({message: 'Such vehicle not found'});
+      res.status(500).json({ message: 'Such vehicle not found' });
     }
 
     if (!updatedVehicle) {
-      res.status(500).json({message: 'Can`t be updated'});
+      res.status(500).json({ message: 'Can`t be updated' });
     }
 
     if (updatedVehicle) {
@@ -56,68 +56,68 @@ router.post('/changeVehicleProp', async (req, res) => {
 
   } catch (e) {
     console.log(e);
-    res.status(500).json({message: 'Something went wrong'});
+    res.status(500).json({ message: 'Something went wrong' });
   }
-})
+});
 
 router.post('/saveNewVehicle', async (req, res) => {
   try {
-    const {brand, model, modification, type, userId, image} = req.body
-    const vehicle = new Vehicle({brand, model, modification, type, userId, image})
-    await vehicle.save()
-    res.status(201).json({message: 'Vehicle created successfully'})
+    const { brand, model, modification, type, userId, image } = req.body;
+    const vehicle = new Vehicle({ brand, model, modification, type, userId, image });
+    await vehicle.save();
+    res.status(201).json({ message: 'Vehicle created successfully' });
   } catch (e) {
-    console.log(e)
-    res.status(500).json({message: 'Something went wrong'})
+    console.log(e);
+    res.status(500).json({ message: 'Something went wrong' });
   }
-})
+});
 
 router.post('/deleteVehicle', async (req, res) => {
   try {
-    const { id } = req.body
-    const deletedVehicle = await Vehicle.deleteOne({_id: id})
+    const { id } = req.body;
+    const deletedVehicle = await Vehicle.deleteOne({ _id: id });
     if (deletedVehicle) {
-      res.status(200).json(deletedVehicle)
+      res.status(200).json(deletedVehicle);
     } else {
-      res.status(500).json({message: 'Something went wrong'})
+      res.status(500).json({ message: 'Something went wrong' });
     }
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
-})
+});
 
 router.post('/uploadVehicleImage', async (req, res) => {
   try {
     if (req.file) {
-      res.status(201).json({message: 'Image Successfully uploaded',})
+      res.status(201).json({ message: 'Image Successfully uploaded', });
     } else {
-      res.status(500).json({message: 'Image not found'})
+      res.status(500).json({ message: 'Image not found' });
     }
 
   } catch (e) {
-    console.log(e)
-    res.status(500).json({message: 'Something went wrong'})
+    console.log(e);
+    res.status(500).json({ message: 'Something went wrong' });
   }
-})
+});
 
 router.get('/getVariables', async (req, res) => {
-  const data = await createImageUpload()
+  const data = await createImageUpload();
   if (data) {
-    res.status(201).json({message: 'Everything is ok', timestamp: data.timestamp, signature: data.signature})
+    res.status(201).json({ message: 'Everything is ok', timestamp: data.timestamp, signature: data.signature });
   } else {
-    res.status(500).json({message: 'Something went wrong'})
+    res.status(500).json({ message: 'Something went wrong' });
   }
-})
+});
 
 async function createImageUpload() {
-  const timestamp = new Date().getTime()
+  const timestamp = new Date().getTime();
   const signature = cloudinary.utils.api_sign_request(
     {
       timestamp,
     },
     'Wj4Bp15zZGPnUe11gQHfsviAFNM'
-  )
-  return {timestamp, signature}
+  );
+  return { timestamp, signature };
 }
 
-module.exports = router
+module.exports = router;
