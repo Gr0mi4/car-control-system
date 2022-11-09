@@ -7,6 +7,7 @@ const schema = new Schema({
   modification: { type: String, required: false },
   userId: { type: String, required: true },
   image: { type: String, required: false },
+  additionalFields: { type: Object, required: false },
 });
 
 module.exports = model('Vehicle', schema);

@@ -38,7 +38,15 @@ router.post('/changeVehicleProp', async (req, res) => {
   try {
     const { vehicleId, updatedField, newValue } = req.body;
     const vehicle = await Vehicle.findOne({ _id: vehicleId });
-    vehicle[updatedField] = newValue;
+
+    if (vehicle[updatedField]) {
+      vehicle[updatedField] = newValue;
+    } else {
+      if (!vehicle.additionalFields) {
+        vehicle.additionalFields = {};
+      }
+      vehicle.additionalFields[updatedField] = newValue;
+    }
     const updatedVehicle = await Vehicle.updateOne({ _id: vehicleId }, vehicle);
 
     if (!vehicle) {
@@ -57,6 +65,23 @@ router.post('/changeVehicleProp', async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: 'Something went wrong' });
+
+  }
+});
+
+router.post('/deleteCustomField', async (req, res) => {
+  try {
+    const { vehicleId, fieldName } = req.body;
+    const vehicle = await Vehicle.findOne({ _id: vehicleId });
+    if (vehicle.additionalFields[fieldName]) {
+      delete vehicle.additionalFields[fieldName];
+      await Vehicle.updateOne({ _id: vehicleId }, vehicle);
+      res.status(200).json(vehicle);
+    } else {
+      res.status(500).json('Something went wrong');
+    }
+  } catch (e) {
+    console.log(e);
   }
 });
 

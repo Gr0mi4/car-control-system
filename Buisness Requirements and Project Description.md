@@ -16,8 +16,8 @@ MVP Requirements:
 - Ability to Add/Remove Vehicles - ok
 - Ability to Add Notes, with date - ok
 - Ability to change Fields - ok
-- Ability to add/change/remove custom fields
-- Ability to add several photos
+- Ability to add/change/remove custom fields - ok
+- Ability to add several photos -
 
   Basically in first version we are adding First two points of main requirements, we have
   your vehicle, photos and notes, that can be (potentially filtered in chronological order). So some base of the

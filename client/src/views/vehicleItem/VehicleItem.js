@@ -22,6 +22,9 @@ export const VehicleItem = () => {
   const [ selectedNoteText, setSelectedNoteText ] = useState('');
   const [ selectedNoteId, setSelectedNoteId ] = useState('');
 
+  const [ customFieldName, setCustomFieldName ] = useState('');
+  const [ customFieldValue, setCustomFieldValue ] = useState('');
+  const [ customFieldInputVisible, setCustomFieldInputVisible ] = useState(false);
 
   const { request } = useHttp();
 
@@ -32,11 +35,20 @@ export const VehicleItem = () => {
 
   function parseResults(results) {
     // Needed for text/input feature to work. Adding to every value prop that decides what to show input or text
+    if (results.additionalFields && Object.values(results.additionalFields).length > 0) {
+      const additionalFields = results.additionalFields;
+      results = { ...results, ...additionalFields };
+    }
+
+
     const values = Object.values(results);
     const keys = Object.keys(results);
     const parsedResults = {};
 
     keys.map((key, index) => {
+      if (key === 'additionalFields') {
+        return null;
+      }
       // Checks if we need isChanging prop for particular value (we won't be changing service fields, img and etc)
       if (!hiddenInfoFields.includes(key)) {
         return parsedResults[key] = { value: values[index], isChanging: false };
@@ -145,7 +157,7 @@ export const VehicleItem = () => {
     setNoteEditVisible(false);
   }
 
-  async function saveNewNote(text, name) {
+  async function saveNote(text, name) {
     if (selectedNoteId) {
       await request('/api/notes/changeNote', 'POST', { id: selectedNoteId, text, name })
         .then(() => {
@@ -183,21 +195,50 @@ export const VehicleItem = () => {
     showNoteEditModal();
   }
 
-  async function updateNote() {
+  function addCustomField() {
+    updateVehicleInfo(customFieldName, customFieldValue)
+      .then(() => {
+        setCustomFieldName('');
+        setCustomFieldValue('');
+        setCustomFieldInputVisible(false);
+      });
+  }
 
-  };
+  function customFieldNameChangeHandler(event) {
+    setCustomFieldName(event.target.value);
+  }
+
+  function customFieldValueChangeHandler(event) {
+    setCustomFieldValue(event.target.value);
+  }
+
+  async function deleteCustomField(event, fieldName) {
+    event.stopPropagation();
+    await request('/api/vehicle/deleteCustomField', 'POST', { vehicleId: id, fieldName })
+      .then(() => {
+        getVehicleInfo();
+      });
+  }
+
+  function showGallery(evt) {
+    evt.stopPropagation();
+  }
+
 
   return (
     <div>
       <div className="vehicle-info-wrapper">
-        <VehiclePhoto
-          src={ vehicleInfo.image }
-          getUpdatedInfo={ getVehicleInfo }
-          updateVehicleImage={ updateVehicleInfo }
-        />
+        <div onClick={ showGallery }>
+          <VehiclePhoto
+            src={ vehicleInfo.image }
+            getUpdatedInfo={ getVehicleInfo }
+            updateVehicleImage={ updateVehicleInfo }
+            showGallery={ showGallery }
+          />
+        </div>
         <div className="details-wrapper">
           <div className="details-header">Vehicle details</div>
-          { Object.keys(vehicleInfo).map(fieldName => {
+          { Object.keys(vehicleInfo).map((fieldName, index) => {
             // Check if this field should be shown or not
             if (!hiddenInfoFields.includes(fieldName)) {
               return (
@@ -220,16 +261,32 @@ export const VehicleItem = () => {
                         </button>
                       </form>)
                     : (
-                      <div
-                        className="field-value"
-                        onClick={ showInput(fieldName) }
-                      >
+                      <div className="field-value" onClick={ showInput(fieldName) }>
                         { vehicleInfo[fieldName].value ? vehicleInfo[fieldName].value : ' No Value Provided ' }
+                        { index > 4 &&
+                          <button onClick={ (event) => deleteCustomField(event, fieldName) }>
+                            <img className="delete-vehicle-icon" src={ Delete } alt="delete"/>
+                          </button>
+                        }
                       </div>) }
                 </div>);
             }
             return null;
           }) }
+          { customFieldInputVisible &&
+            <div className="custom-field-wrapper">
+              <input className="vehicle-info-input" onChange={ customFieldNameChangeHandler }/>
+              :
+              <input className="vehicle-info-input" onChange={ customFieldValueChangeHandler }/>
+              <button className="submit-button" onClick={ addCustomField }>
+                <img className="ok-icon" src={ UploadIcon } alt="ok-icon"/>
+              </button>
+            </div>
+          }
+          <button className="button" onClick={ () => {
+            setCustomFieldInputVisible(!customFieldInputVisible);
+          } }>{ customFieldInputVisible ? 'Do not add custom field' : 'Add custom field' }
+          </button>
           <button className="delete-vehicle button" onClick={ deleteVehicle }>
             <img className="delete-vehicle-icon" src={ Delete } alt="delete"/>
           </button>
@@ -242,7 +299,7 @@ export const VehicleItem = () => {
         <NoteEditModal
           show={ showNoteEditModal }
           onClose={ closeNoteEditModal }
-          onSave={ saveNewNote }
+          onSave={ saveNote }
           noteName={ selectedNoteName }
           noteText={ selectedNoteText }
         />
