@@ -39,7 +39,7 @@ router.post('/changeVehicleProp', async (req, res) => {
     const { vehicleId, updatedField, newValue } = req.body;
     const vehicle = await Vehicle.findOne({ _id: vehicleId });
 
-    if (vehicle[updatedField]) {
+    if (vehicle[updatedField] !== undefined) {
       vehicle[updatedField] = newValue;
     } else {
       if (!vehicle.additionalFields) {

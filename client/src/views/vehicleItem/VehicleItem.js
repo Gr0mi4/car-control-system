@@ -10,6 +10,7 @@ import UploadIcon from '../../assets/icons/ok-circled.svg';
 import { VehiclePhoto } from '../../components/VehiclePhoto/VehiclePhoto';
 import { NoteList } from './components/notes/NoteList/NoteList';
 import { NoteEditModal } from './components/notes/NoteEditModal/NoteEditModal';
+import { GalleryModal } from './components/GalleryModal/GalleryModal';
 
 export const VehicleItem = () => {
   const { id } = useParams();
@@ -25,6 +26,10 @@ export const VehicleItem = () => {
   const [ customFieldName, setCustomFieldName ] = useState('');
   const [ customFieldValue, setCustomFieldValue ] = useState('');
   const [ customFieldInputVisible, setCustomFieldInputVisible ] = useState(false);
+
+  const [ galleryModalVisible, setGalleryModalVisible ] = useState(false);
+
+  const [ vehicleAdditionalImages, setVehicleAdditionalImages ] = useState([]);
 
   const { request } = useHttp();
 
@@ -71,6 +76,18 @@ export const VehicleItem = () => {
     }
   }
 
+  async function getVehicleImages() {
+    try {
+      await request('/api/images/getAdditionalImages', 'POST', { vehicleId: id })
+        .then(res => {
+          const results = JSON.parse(res);
+          setVehicleAdditionalImages(results);
+        });
+    } catch (e) {
+
+    }
+  }
+
   async function getVehicleNotes() {
     try {
       await request('/api/notes/getVehicleNotes', 'POST', { vehicleId: id })
@@ -96,6 +113,19 @@ export const VehicleItem = () => {
     }
   }
 
+  async function uploadAdditionalImage(src, name = changingValue) {
+    try {
+      await request('/api/images/uploadAdditionalImage', 'POST', {
+        vehicleId: id, src, name
+      })
+        .then(() => {
+          getVehicleImages();
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async function deleteVehicle() {
     try {
       await request('/api/vehicle/deleteVehicle', 'POST', { id })
@@ -110,6 +140,7 @@ export const VehicleItem = () => {
   useEffect(() => {
     getVehicleInfo();
     getVehicleNotes();
+    getVehicleImages();
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   function handleInputChange(event) {
@@ -171,7 +202,7 @@ export const VehicleItem = () => {
         });
     } else {
       await request('/api/notes/addNote', 'POST', { vehicleId: id, text, name })
-        .then(res => {
+        .then(() => {
           getVehicleNotes();
         })
         .finally(() => {
@@ -220,22 +251,34 @@ export const VehicleItem = () => {
       });
   }
 
-  function showGallery(evt) {
-    evt.stopPropagation();
+  function showGallery() {
+    if (vehicleAdditionalImages.length > 0) {
+      setGalleryModalVisible(true);
+    }
+  }
+
+  async function deleteAdditionalImage(imageId) {
+    try {
+      await request('/api/images/deleteAdditionalImages', 'POST', { imageId })
+        .then(() => {
+          getVehicleImages();
+        });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 
   return (
     <div>
       <div className="vehicle-info-wrapper">
-        <div onClick={ showGallery }>
-          <VehiclePhoto
-            src={ vehicleInfo.image }
-            getUpdatedInfo={ getVehicleInfo }
-            updateVehicleImage={ updateVehicleInfo }
-            showGallery={ showGallery }
-          />
-        </div>
+        <VehiclePhoto
+          src={ vehicleInfo.image }
+          getUpdatedInfo={ getVehicleInfo }
+          updateVehicleImage={ updateVehicleInfo }
+          uploadAdditionalImage={ uploadAdditionalImage }
+          showGallery={ showGallery }
+        />
         <div className="details-wrapper">
           <div className="details-header">Vehicle details</div>
           { Object.keys(vehicleInfo).map((fieldName, index) => {
@@ -302,6 +345,16 @@ export const VehicleItem = () => {
           onSave={ saveNote }
           noteName={ selectedNoteName }
           noteText={ selectedNoteText }
+        />
+      }
+      { galleryModalVisible &&
+        <GalleryModal
+          show={ showGallery }
+          imageArray={ vehicleAdditionalImages }
+          onClose={ () => {
+            setGalleryModalVisible(false);
+          } }
+          deleteAdditionalImage={ deleteAdditionalImage }
         />
       }
     </div>);

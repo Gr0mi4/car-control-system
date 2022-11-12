@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/vehicle', require('./routes/vehicle.routes'));
+app.use('/api/images', require('./routes/images.routes'));
 app.use('/api/notes', require('./routes/notes.routes'));
 
 async function start() {
