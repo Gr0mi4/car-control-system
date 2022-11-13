@@ -1,0 +1,51 @@
+.details-wrapper {
+  position: relative;
+  margin: 0 62px;
+  box-sizing: border-box;
+  padding: 0 44px 44px;
+  font-size: 28px;
+  width: 100%;
+  background-color: white;
+  color: black;
+  border-radius: 20px;
+
+  .details-header {
+    font-size: 38px;
+    font-weight: 600;
+    margin: 16px 0;
+  }
+
+  .details {
+    background-color: rgba(126, 126, 147, .32);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 12px;
+
+    .details-field {
+      display: flex;
+
+      &:hover {
+        .delete-field.button {
+          opacity: 1;
+        }
+      }
+
+      .field-name {
+        text-transform: capitalize;
+        flex-shrink: 0;
+      }
+
+      .delete-field.button {
+        opacity: 0;
+        margin-left: 16px;
+        transition: opacity .3s;
+
+        .delete-icon {
+          padding-top: 2px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+}

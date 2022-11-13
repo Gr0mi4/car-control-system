@@ -1,0 +1,40 @@
+.vehicle-info-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.field-value {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 28px;
+}
+
+.vehicle-info-input {
+  font-family: Montserrat;
+  padding: 0 0 0 12px;
+  margin-left: 10px;
+  height: 28px;
+  font-size: 24px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  width: 200px;
+}
+
+.submit-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  .ok-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
