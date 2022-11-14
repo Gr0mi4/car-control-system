@@ -1,26 +1,12 @@
 import './style.scss';
 
-import OkIcon from '../../../../assets/icons/ok-circled-black.svg';
 import Delete from '../../../../assets/icons/delete.svg';
-import { useState } from 'react';
 import { VehicleDetailsInput } from './VehicleDetailsInput/VehicleDetailsInput';
+import { CustomFieldInput } from './CustomFieldInput/CustomFieldInput';
 
 export const VehicleDetails = (props) => {
   // Utility fields that shouldn't be shown
   const hiddenInfoFields = [ 'userId', 'image', '__v', '_id' ];
-
-  const [ customFieldName, setCustomFieldName ] = useState('');
-  const [ customFieldValue, setCustomFieldValue ] = useState('');
-  const [ customFieldInputVisible, setCustomFieldInputVisible ] = useState(false);
-
-  function addCustomField() {
-    props.updateVehicleInfo(customFieldName, customFieldValue)
-      .then(() => {
-        setCustomFieldName('');
-        setCustomFieldValue('');
-        setCustomFieldInputVisible(false);
-      });
-  }
 
   return (
     <div className="details-wrapper">
@@ -48,20 +34,7 @@ export const VehicleDetails = (props) => {
           }
           return null;
         }) }
-        { customFieldInputVisible &&
-          <div className="custom-field-wrapper">
-            <input className="vehicle-info-input" onChange={ (evt) => setCustomFieldName(evt.target.value) }/>
-            :
-            <input className="vehicle-info-input" onChange={ (evt) => setCustomFieldValue(evt.target.value) }/>
-            <button className="submit-button" onClick={ addCustomField }>
-              <img className="ok-icon" src={ OkIcon } alt="ok"/>
-            </button>
-          </div>
-        }
-        <button className="button" onClick={ () => {
-          setCustomFieldInputVisible(!customFieldInputVisible);
-        } }>{ customFieldInputVisible ? 'Do not add custom field' : 'Add custom field' }
-        </button>
+        <CustomFieldInput updateVehicleInfo={ props.updateVehicleInfo }/>
       </div>
     </div>
   );

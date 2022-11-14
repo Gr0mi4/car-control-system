@@ -60,10 +60,7 @@ export const VehicleItem = () => {
   async function getVehicleInfo() {
     try {
       await request('/api/vehicle/getVehicleInfo', 'POST', { vehicleId: id })
-        .then(res => {
-          const results = JSON.parse(res);
-          setVehicleInfo(parseResults(results));
-        });
+        .then(res => setVehicleInfo(parseResults(JSON.parse(res))));
     } catch (e) {
 
     }
@@ -72,12 +69,9 @@ export const VehicleItem = () => {
   async function getVehicleImages() {
     try {
       await request('/api/images/getAdditionalImages', 'POST', { vehicleId: id })
-        .then(res => {
-          const results = JSON.parse(res);
-          setVehicleAdditionalImages(results);
-        });
+        .then(res => setVehicleAdditionalImages(JSON.parse(res)));
     } catch (e) {
-
+      console.log('getVehicleImages', e);
     }
   }
 
@@ -122,9 +116,7 @@ export const VehicleItem = () => {
   async function deleteVehicle() {
     try {
       await request('/api/vehicle/deleteVehicle', 'POST', { id })
-        .then(res => {
-          history.push("/mainScreen");
-        });
+        .then(() => history.push("/mainScreen"));
     } catch (e) {
       console.log(e);
     }
@@ -133,9 +125,7 @@ export const VehicleItem = () => {
   async function deleteCustomField(event, fieldName) {
     event.stopPropagation();
     await request('/api/vehicle/deleteCustomField', 'POST', { vehicleId: id, fieldName })
-      .then(() => {
-        getVehicleInfo();
-      });
+      .then((res) => setVehicleInfo(parseResults(JSON.parse(res))));
   }
 
   function showNoteEditModal() {

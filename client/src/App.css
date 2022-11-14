@@ -8,6 +8,7 @@ p {
 }
 
 button.button {
+    font-family: 'Montserrat';
     background-color: #fff;
     border-radius: 5px;
     color: #000;

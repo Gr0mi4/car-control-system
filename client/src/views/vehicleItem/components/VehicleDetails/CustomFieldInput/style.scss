@@ -1,0 +1,51 @@
+.custom-field-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+
+  .vehicle-info-input {
+    margin-left: 0;
+
+    &:nth-child(1n) {
+      margin-right: 4px;
+    }
+
+    &:nth-child(2) {
+      margin-left: 4px;
+    }
+  }
+
+  .submit.icon-button {
+    margin-left: 8px;
+
+    .ok-icon {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .error {
+    color: #BB4848;
+    font-size: 22px;
+    margin-left: 8px;
+    font-weight: 600;
+  }
+}
+
+.show-input.button {
+  margin-top: 16px;
+  width: 300px;
+  height: 45px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff;
+
+  &.color-red {
+    background-color: #BB4848;
+  }
+
+  &.color-blue {
+    background-color: #214B9C;
+  }
+}

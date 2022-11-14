@@ -73,9 +73,10 @@ router.post('/deleteCustomField', async (req, res) => {
   try {
     const { vehicleId, fieldName } = req.body;
     const vehicle = await Vehicle.findOne({ _id: vehicleId });
+    console.log('start', vehicle, fieldName, vehicle.additionalFields[fieldName]);
     if (vehicle.additionalFields[fieldName]) {
       delete vehicle.additionalFields[fieldName];
-      await Vehicle.updateOne({ _id: vehicleId }, vehicle);
+      await Vehicle.replaceOne({ _id: vehicleId }, vehicle);
       res.status(200).json(vehicle);
     } else {
       res.status(500).json('Something went wrong');
