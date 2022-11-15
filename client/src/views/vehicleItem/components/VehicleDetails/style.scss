@@ -24,27 +24,9 @@
     .details-field {
       display: flex;
 
-      &:hover {
-        .delete-field.button {
-          opacity: 1;
-        }
-      }
-
       .field-name {
         text-transform: capitalize;
         flex-shrink: 0;
-      }
-
-      .delete-field.button {
-        opacity: 0;
-        margin-left: 16px;
-        transition: opacity .3s;
-
-        .delete-icon {
-          padding-top: 2px;
-          width: 24px;
-          height: 24px;
-        }
       }
     }
   }

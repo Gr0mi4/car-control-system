@@ -122,8 +122,8 @@ export const VehicleItem = () => {
     }
   }
 
-  async function deleteCustomField(event, fieldName) {
-    event.stopPropagation();
+  async function deleteCustomField(fieldName) {
+    console.log(fieldName);
     await request('/api/vehicle/deleteCustomField', 'POST', { vehicleId: id, fieldName })
       .then((res) => setVehicleInfo(parseResults(JSON.parse(res))));
   }

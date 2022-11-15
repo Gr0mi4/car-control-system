@@ -21,15 +21,9 @@ export const VehicleDetails = (props) => {
                 <VehicleDetailsInput
                   value={ props.vehicleInfo[fieldName] }
                   updateValue={ (value) => props.updateVehicleInfo(fieldName, value) }
+                  canDeleteField={ index > 4 }
+                  deleteCustomField={ () => props.deleteCustomField(fieldName) }
                 />
-                { index > 4 &&
-                  <button
-                    onClick={ (event) => props.deleteCustomField(event, fieldName) }
-                    className="delete-field button"
-                  >
-                    <img className="delete-icon" src={ Delete } alt="delete"/>
-                  </button>
-                }
               </div>);
           }
           return null;
