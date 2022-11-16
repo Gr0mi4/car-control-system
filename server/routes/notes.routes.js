@@ -24,7 +24,8 @@ router.post('/addNote', async (req, res) => {
     const { vehicleId, text, name } = req.body;
     const note = new Notes({ vehicleId, text, name, date: new Date().getTime() });
     await note.save();
-    res.status(201).json({ message: 'Note created' });
+    const vehicleNotes = await Notes.find({ vehicleId });
+    res.status(201).json(vehicleNotes);
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: 'Something went wrong' });
@@ -35,7 +36,7 @@ router.post('/deleteNote', async (req, res) => {
   try {
     const { id } = req.body;
     await Notes.deleteOne({ _id: id });
-    res.status(201).json({ message: 'Note created' });
+    res.status(201).json({ message: 'Note Deleted' });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: 'Something went wrong' });
@@ -59,7 +60,9 @@ router.post('/changeNote', async (req, res) => {
     }
 
     if (updatedNote) {
-      res.status(200).json(note);
+      const vehicleId = note.vehicleId;
+      const vehicleNotes = await Notes.find({ vehicleId });
+      res.status(201).json(vehicleNotes);
     }
   } catch (e) {
     console.log(e);

@@ -17,7 +17,7 @@ MVP Requirements:
 - Ability to Add Notes, with date - ok
 - Ability to change Fields - ok
 - Ability to add/change/remove custom fields - ok
-- Ability to add several photos -
+- Ability to add several photos - ok
 
   Basically in first version we are adding First two points of main requirements, we have
   your vehicle, photos and notes, that can be (potentially filtered in chronological order). So some base of the
@@ -40,5 +40,7 @@ Add Vehicle Modal: Place where you are adding new vehicle. Input fields:
 - Active (Radio). Values: Yes/No
 - Image
 
-VehicleItem Screen: Screen where you can have a look on a Vehicle's details, add details fields, and Notes
+VehicleItem Screen: Screen where you can have a look on a Vehicle's details, add details fields, and Notes.
+
+Capitan's Journal. Place where you can create notes, add there photos, links and stuff.
 

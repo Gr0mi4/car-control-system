@@ -7,10 +7,9 @@ import { useHttp } from '../../hooks/http.hook';
 import Delete from '../../assets/icons/delete.svg';
 
 import { VehiclePhoto } from '../../components/VehiclePhoto/VehiclePhoto';
-import { NoteList } from './components/notes/NoteList/NoteList';
-import { NoteEditModal } from './components/notes/NoteEditModal/NoteEditModal';
 import { GalleryModal } from './components/GalleryModal/GalleryModal';
 import { VehicleDetails } from './components/VehicleDetails/VehicleDetails';
+import { NotesOverview } from './components/notes/NotesOverview/NotesOverview';
 
 export const VehicleItem = () => {
   const { id } = useParams();
@@ -18,10 +17,6 @@ export const VehicleItem = () => {
   const [ vehicleInfo, setVehicleInfo ] = useState({});
 
   const [ vehicleNotes, setVehicleNotes ] = useState([]);
-  const [ noteEditVisible, setNoteEditVisible ] = useState(false);
-  const [ selectedNoteName, setSelectedNoteName ] = useState('');
-  const [ selectedNoteText, setSelectedNoteText ] = useState('');
-  const [ selectedNoteId, setSelectedNoteId ] = useState('');
 
   const [ galleryModalVisible, setGalleryModalVisible ] = useState(false);
 
@@ -62,7 +57,7 @@ export const VehicleItem = () => {
       await request('/api/vehicle/getVehicleInfo', 'POST', { vehicleId: id })
         .then(res => setVehicleInfo(parseResults(JSON.parse(res))));
     } catch (e) {
-
+      console.log(e);
     }
   }
 
@@ -123,55 +118,25 @@ export const VehicleItem = () => {
   }
 
   async function deleteCustomField(fieldName) {
-    console.log(fieldName);
     await request('/api/vehicle/deleteCustomField', 'POST', { vehicleId: id, fieldName })
       .then((res) => setVehicleInfo(parseResults(JSON.parse(res))));
   }
 
-  function showNoteEditModal() {
-    setNoteEditVisible(true);
+  async function addNote(text, name) {
+    return await request('/api/notes/addNote', 'POST', { vehicleId: id, text, name });
   }
 
-  function closeNoteEditModal() {
-    setNoteEditVisible(false);
-  }
-
-  async function saveNote(text, name) {
-    if (selectedNoteId) {
-      await request('/api/notes/changeNote', 'POST', { id: selectedNoteId, text, name })
-        .then(() => {
-          getVehicleNotes();
-          setSelectedNoteId('');
-          setSelectedNoteName('');
-          setSelectedNoteText('');
-        })
-        .finally(() => {
-          closeNoteEditModal();
-        });
-    } else {
-      await request('/api/notes/addNote', 'POST', { vehicleId: id, text, name })
-        .then(() => {
-          getVehicleNotes();
-        })
-        .finally(() => {
-          closeNoteEditModal();
-        });
-    }
+  async function editNote(text, name, selectedNoteId) {
+    return await request('/api/notes/changeNote', 'POST', { id: selectedNoteId, text, name });
   }
 
   async function deleteNote(noteId) {
-    await request('/api/notes/deleteNote', 'POST', { id: noteId })
-      .then(() => {
-        getVehicleNotes();
-      });
-  }
-
-  function editNote(noteId) {
-    setSelectedNoteId(noteId);
-    const selectedNote = vehicleNotes.find(item => item._id === noteId);
-    setSelectedNoteName(selectedNote.name);
-    setSelectedNoteText(selectedNote.text);
-    showNoteEditModal();
+    try {
+      await request('/api/notes/deleteNotes', 'POST', { id: noteId })
+        .then(() => getVehicleNotes());
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   function showGallery() {
@@ -212,18 +177,13 @@ export const VehicleItem = () => {
           <img className="delete-vehicle-icon" src={ Delete } alt="delete"/>
         </button>
       </div>
-      { vehicleNotes.length &&
-        <NoteList notesArray={ vehicleNotes } deleteNote={ deleteNote } editNote={ editNote }/> }
-      <button className="button" onClick={ showNoteEditModal }>New Note</button>
-      { noteEditVisible &&
-        <NoteEditModal
-          show={ showNoteEditModal }
-          onClose={ closeNoteEditModal }
-          onSave={ saveNote }
-          noteName={ selectedNoteName }
-          noteText={ selectedNoteText }
-        />
-      }
+      <NotesOverview
+        vehicleNotes={ vehicleNotes }
+        setVehicleNotes={ setVehicleNotes }
+        editNote={ editNote }
+        deleteNote={ deleteNote }
+        addNote={ addNote }
+      />
       { galleryModalVisible &&
         <GalleryModal
           show={ showGallery }

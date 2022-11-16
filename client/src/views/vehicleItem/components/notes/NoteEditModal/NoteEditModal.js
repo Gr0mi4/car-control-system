@@ -3,10 +3,10 @@ import './style.scss';
 import { ModalWindow } from '../../../../../components/ModalWindow/ModalWindow';
 import { useState } from 'react';
 
-export const NoteEditModal = ({ show, onClose, onSave, noteName, noteText }) => {
+export const NoteEditModal = ({ show, onClose, onSave, note }) => {
 
-  const [ text, setText ] = useState(noteText);
-  const [ name, setName ] = useState(noteName);
+  const [ text, setText ] = useState(note.text || '');
+  const [ name, setName ] = useState(note.name || '');
 
   const nameChangeHandler = event => {
     setName(event.target.value);
@@ -27,14 +27,16 @@ export const NoteEditModal = ({ show, onClose, onSave, noteName, noteText }) => 
       <textarea value={ text } className="text input" onChange={ textChangeHandler }></textarea>
     </div>;
   const modalFooter =
-    <button onClick={ () => onSave(text, name) } className="save button">Save</button>;
+    <button onClick={ () => onSave(text, name, note._id) } className="save button">Save</button>;
 
-  return (<ModalWindow
-    header={ modalHeader }
-    body={ modalBody }
-    footer={ modalFooter }
-    show={ show }
-    onClose={ onClose }
-  />);
+  return (
+    <ModalWindow
+      header={ modalHeader }
+      body={ modalBody }
+      footer={ modalFooter }
+      show={ show }
+      onClose={ onClose }
+    />
+  );
 
 };
