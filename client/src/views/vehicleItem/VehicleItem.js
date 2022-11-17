@@ -132,7 +132,7 @@ export const VehicleItem = () => {
 
   async function deleteNote(noteId) {
     try {
-      await request('/api/notes/deleteNotes', 'POST', { id: noteId })
+      await request('/api/notes/deleteNote', 'POST', { id: noteId })
         .then(() => getVehicleNotes());
     } catch (e) {
       console.log(e);
@@ -158,7 +158,7 @@ export const VehicleItem = () => {
 
 
   return (
-    <div>
+    <div className="vehicle-item">
       <div className="vehicle-info-wrapper">
         <VehiclePhoto
           src={ vehicleInfo.image }

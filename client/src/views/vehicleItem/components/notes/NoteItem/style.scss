@@ -1,5 +1,66 @@
+.note {
+  width: 380px;
+  margin: 16px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
 .note-header {
   background-color: white;
   color: black;
+  height: 34px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0;
+  padding: 2px 0;
+
+  .note-name {
+    font-size: 22px;
+    margin: 0 8px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 206px;
+    text-align: left;
+  }
+}
+
+.buttons-block {
+  display: flex;
   position: relative;
+  left: 16px;
+
+  .pencil-icon, .delete-icon {
+    height: 22px;
+    padding: 0 4px;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.2s;
+    }
+  }
+}
+
+img {
+
+}
+
+.textarea {
+  padding: 12px;
+  height: 200px;
+  background-color: white;
+  border-radius: 0 0 5px 5px;
+
+  p {
+    text-align: left;
+    width: fit-content;
+    font-size: 18px;
+    color: black;
+    padding-left: 8px;
+  }
 }

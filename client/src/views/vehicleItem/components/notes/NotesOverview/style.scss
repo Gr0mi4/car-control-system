@@ -1,0 +1,26 @@
+.notes-overview {
+  background-color: #fff;
+  width: 450px;
+  margin-top: 80px;
+  border-radius: 20px;
+
+
+  .overview-header {
+    color: black;
+    margin: 0;
+    padding: 8px 0;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .add.button {
+    width: 220px;
+    height: 46px;
+    background-color: #214B9C;
+    color: white;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 16px 0;
+  }
+}

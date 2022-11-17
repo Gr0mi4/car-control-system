@@ -1,6 +1,5 @@
 import './style.scss';
 
-import Delete from '../../../../assets/icons/delete.svg';
 import { VehicleDetailsInput } from './VehicleDetailsInput/VehicleDetailsInput';
 import { CustomFieldInput } from './CustomFieldInput/CustomFieldInput';
 

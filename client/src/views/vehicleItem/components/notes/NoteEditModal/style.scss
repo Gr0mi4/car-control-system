@@ -1,11 +1,24 @@
+.note-edit-modal.modal {
+  padding: 56px 32px 32px;
+
+  .modal-footer {
+    margin-top: 16px;
+  }
+
+  .save.button {
+    width: 325px;
+    height: 60px;
+  }
+}
+
 .input {
   width: 100%;
   background-color: rgba(126, 126, 147, .32);
 
   &.name {
-    height: 54px;
+    height: 48px;
     margin-bottom: 16px;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 600;
     text-align: center;
   }
@@ -13,14 +26,25 @@
   &.text {
     color: black;
     height: 360px;
+    width: 700px;
+    font-size: 24px;
+    padding: 8px;
   }
 }
 
 .label-wrapper {
   display: flex;
   justify-content: space-between;
+  font-size: 24px;
+  font-weight: 500;
 
   .text-label {
     margin-bottom: 16px;
   }
+}
+
+.error {
+  color: #BB4848;
+  font-size: 24px;
+  font-weight: 600;
 }

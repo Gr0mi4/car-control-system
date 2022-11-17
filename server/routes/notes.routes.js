@@ -22,7 +22,7 @@ router.post('/getVehicleNotes', async (req, res) => {
 router.post('/addNote', async (req, res) => {
   try {
     const { vehicleId, text, name } = req.body;
-    const note = new Notes({ vehicleId, text, name, date: new Date().getTime() });
+    const note = new Notes({ vehicleId, text, name, date: new Date() });
     await note.save();
     const vehicleNotes = await Notes.find({ vehicleId });
     res.status(201).json(vehicleNotes);

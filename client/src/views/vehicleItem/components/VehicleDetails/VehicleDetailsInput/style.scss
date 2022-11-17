@@ -1,6 +1,12 @@
 .vehicle-info-input-wrapper {
   display: flex;
   align-items: center;
+
+  .delete-icon {
+    width: 26px;
+    height: 26px;
+    margin-left: 4px;
+  }
 }
 
 .field-value {
@@ -37,10 +43,4 @@
   &:active {
     transform: scale(0.98);
   }
-}
-
-.delete-icon {
-  width: 26px;
-  height: 26px;
-  margin-left: 4px;
 }

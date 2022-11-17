@@ -1,0 +1,30 @@
+.confirmation {
+  padding: 24px;
+
+  .header-text {
+    font-size: 32px;
+    margin: 0 0 16px;
+  }
+
+  .message {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .accept {
+    background-color: #214B9C;
+  }
+
+  .cancel {
+    margin-left: 32px;
+    background-color: #BB4848;
+  }
+
+  .accept, .cancel {
+    height: 45px;
+    width: 200px;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}

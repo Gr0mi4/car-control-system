@@ -1,4 +1,11 @@
 .notes-list {
-  max-width: 390px;
-  margin-left: 65px;
+  max-width: 420px;
+  background-color: rgba(126, 126, 147, .32);
+  box-sizing: border-box;
+  padding: 16px 20px;
+  margin: 0 auto;
+  border-radius: 5px;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
