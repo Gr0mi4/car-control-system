@@ -1,64 +1,70 @@
 .main-image-wrapper {
-  position: relative;
+  color: black;
 
   .main-image {
     width: 100%;
-    border-radius: 10px;
-  }
-
-  .img-delete-button {
-    background-color: transparent;
-    border: none;
+    border-radius: 10px 10px 0 0;
     cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-
-    &:active {
-      transform: scale(0.97);
-    }
   }
 
-  .img-upload-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    right: 80px;
-    top: 15px;
-    width: 55px;
 
-    &:active {
-      transform: scale(0.97);
-    }
-  }
-
-}
-
-.no-image-plug {
-  background-color: white;
-  border-radius: 10px;
-  height: 100%;
-  text-align: center;
-
-  input[type="file"] {
+  input {
     display: none;
   }
+}
 
-  .plug-text {
-    padding-top: 72px;
-    margin-bottom: 24px;
-    color: black;
-    font-size: 32px;
-    font-weight: 500;
+.image-panel {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  width: 460px;
+  height: 50px;
+  position: relative;
+  right: 5px;
+  border-radius: 0 0 20px 20px;
+
+  .add-image {
+    width: 45px;
+    margin-left: 5px;
   }
 
-  .plus-icon {
-    width: 100px;
+  .img-delete, .img-upload {
+    background-color: transparent;
+    border: none;
     cursor: pointer;
+    margin: 0 10px;
+
+    img {
+      width: 35px;
+    }
 
     &:active {
       transform: scale(0.97);
+    }
+  }
+
+
+  .radio-wrapper {
+    margin-top: 4px;
+    border-radius: 5px;
+
+    .label {
+      padding: 2px 4px;
+      border: 1px solid black;
+      cursor: pointer;
+
+      &:first-of-type {
+        border-radius: 5px 0 0 5px;
+      }
+
+      &:nth-of-type(2) {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+
+    [type=radio]:checked + label {
+      background-color: #000;
+      color: #fff;
     }
   }
 }
@@ -78,14 +84,4 @@
   border-radius: 20px;
   box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.25);
 
-  .no-image-plug {
-    .plug-text {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    .plus-icon {
-      width: 75px;
-    }
-  }
 }

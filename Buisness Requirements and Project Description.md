@@ -44,3 +44,7 @@ VehicleItem Screen: Screen where you can have a look on a Vehicle's details, add
 
 Capitan's Journal. Place where you can create notes, add there photos, links and stuff.
 
+Photos handling. On upload icon click you will just get windows upoload window, and by clicking save, you will
+see a gallery with ability to check results, resize photos, change names and deleted ones that you do no like.
+All photos would be stored in one array, you will select witch would be main in edit modal. By default it would be
+first one.

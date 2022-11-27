@@ -161,7 +161,7 @@ export const VehicleItem = () => {
     <div className="vehicle-item">
       <div className="vehicle-info-wrapper">
         <VehiclePhoto
-          src={ vehicleInfo.image }
+          imageLink={ vehicleInfo.image }
           getUpdatedInfo={ getVehicleInfo }
           updateVehicleImage={ updateVehicleInfo }
           uploadAdditionalImage={ uploadAdditionalImage }

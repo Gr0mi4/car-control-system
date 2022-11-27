@@ -2,16 +2,26 @@ import './style.scss';
 
 import { useHttp } from '../../hooks/http.hook';
 
-import PlusCircled from '../../assets/icons/plus-circled.svg';
+import { NoImagePlug } from './NoImagePlug/NoImagePlug';
+
 import Delete from '../../assets/icons/delete.svg';
 import Upload from '../../assets/icons/upload.svg';
+import AddImage from '../../assets/icons/add-image.svg';
 
 import { useState } from 'react';
 
 const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const API_KEY = process.env.REACT_APP_CLOUD_API_KEY;
 
-export const VehiclePhoto = (props) => {
+export const VehiclePhoto = (
+  {
+    imageLink,
+    className,
+    vehicleCreationMode,
+    updateVehicleImage,
+    uploadAdditionalImage,
+    showGallery
+  }) => {
   const { request } = useHttp();
 
   const [ src, setSrc ] = useState('');
@@ -22,7 +32,6 @@ export const VehiclePhoto = (props) => {
   const [ timestamp, setTimestamp ] = useState(null);
 
   const [ uploadedImageType, setUploadedImageType ] = useState('mainImage');
-
 
   async function handleSelectImage(event) {
     const file = event.target.files[0];
@@ -38,12 +47,12 @@ export const VehiclePhoto = (props) => {
           return { signature: results.signature, timestamp: results.timestamp };
         })
         .then(({ signature, timestamp }) => {
-          if (props.vehicleCreationMode) {
+          // Image instantly uploaded if it would be first one
+          if (vehicleCreationMode || !src && !imageLink) {
             uploadPhoto(signature, timestamp, event.target.files[0]);
+          } else {
+            
           }
-        })
-        .catch((e) => {
-          console.log(e);
         });
     } catch (e) {
       console.error(e);
@@ -63,11 +72,12 @@ export const VehiclePhoto = (props) => {
         .then(res => {
           const result = JSON.parse(res);
           if (uploadedImageType === 'mainImage') {
-            props.updateVehicleImage('image', result.secure_url);
+            updateVehicleImage('image', result.secure_url);
           } else {
-            props.uploadAdditionalImage(result.secure_url, 'someName');
+            uploadAdditionalImage(result.secure_url, 'someName');
           }
           setPreviewMode(false);
+          setSrc('');
         });
     } else {
       console.error('No signature or Timestamp', signature, timestamp);
@@ -79,7 +89,7 @@ export const VehiclePhoto = (props) => {
       setSrc('');
       setPreviewMode(false);
     } else {
-      props.updateVehicleImage('image', '');
+      updateVehicleImage('image', '');
     }
   }
 
@@ -88,60 +98,57 @@ export const VehiclePhoto = (props) => {
   }
 
   return (
-    <div className={ props.className ? props.className : 'vehicle-photo' }>
-      { props.src || src
+    <div className={ className ? className : 'vehicle-photo' }>
+      { src || imageLink
         ?
         <div>
           <div className="main-image-wrapper">
-            <img className="main-image" src={ props.src || src } alt="Vehicle" onClick={ props.showGallery }/>
-            { props.src &&
-              <div>
+            <img className="main-image" src={ src || imageLink } alt="Vehicle" onClick={ showGallery }/>
+            { imageLink &&
+              <div className="image-panel">
+                <label htmlFor="file-upload">
+                  <img src={ AddImage } alt="add-image" className="add-image icon-button"/>
+                </label>
                 <input onChange={ handleSelectImage } id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
-                <p>SaveImageLike:</p>
-                <label htmlFor="main-image-radio"> Main Image</label>
-                <input
-                  type="radio"
-                  name="mainImage"
-                  id="main-image-radio"
-                  value={ uploadedImageType }
-                  checked={ uploadedImageType === 'mainImage' }
-                  onChange={ handleRadioClick }
-                />
-                <label htmlFor="additional-image-radio">Additional Image</label>
-                <input
-                  type="radio"
-                  name="additionalImage"
-                  id="additional-image-radio"
-                  value={ uploadedImageType }
-                  checked={ uploadedImageType === 'additionalImage' }
-                  onChange={ handleRadioClick }
-                />
+                { previewMode &&
+                  <div>
+                    <p>Upload as:</p>
+                    <div className="radio-wrapper">
+                      <input
+                        type="radio"
+                        name="mainImage"
+                        id="main-image-radio"
+                        value={ uploadedImageType }
+                        checked={ uploadedImageType === 'mainImage' }
+                        onChange={ handleRadioClick }
+                      />
+                      <label htmlFor="main-image-radio" className="label">Main Image</label>
+                      <input
+                        type="radio"
+                        name="additionalImage"
+                        id="additional-image-radio"
+                        value={ uploadedImageType }
+                        checked={ uploadedImageType === 'additionalImage' }
+                        onChange={ handleRadioClick }
+                      />
+                      <label htmlFor="additional-image-radio" className="label">Additional Image</label>
+                    </div>
+                  </div>
+                }
+                <button onClick={ handleDeleteImage } className="img-delete icon-button">
+                  <img className="delete-icon" src={ Delete } alt="delete"/>
+                </button>
+                { previewMode && !vehicleCreationMode &&
+                  <button onClick={ () => uploadPhoto(signature, timestamp, file) } className="img-upload icon-button">
+                    <img className="upload-icon" src={ Upload } alt="upload"/>
+                  </button>
+                }
               </div>
-            }
-          </div>
-          <div className="image-panel">
-            <button onClick={ handleDeleteImage } className="img-delete-button">
-              <img className="delete-icon" src={ Delete } alt="delete"/>
-            </button>
-            { previewMode && !props.vehicleCreationMode &&
-              <button onClick={ () => uploadPhoto(signature, timestamp, file) } className="img-upload-button">
-                Upload
-                <img className="upload-icon" src={ Upload } alt="upload"/>
-              </button>
             }
           </div>
         </div>
         :
-        <div className="no-image-plug">
-          <div className="plug-text">
-            <p>No photo</p>
-            <p>Want to add one?</p>
-          </div>
-          <label htmlFor="file-upload">
-            <img className="plus-icon" src={ PlusCircled } alt="plus-circled"/>
-          </label>
-          <input onChange={ handleSelectImage } id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
-        </div>
+        <NoImagePlug handleSelectImage={ handleSelectImage }/>
       }
     </div>
   );

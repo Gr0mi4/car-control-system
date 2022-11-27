@@ -1,7 +1,21 @@
+.gallery.modal {
+  padding: 24px;
+}
+
 .gallery-wrapper {
+}
+
+.preview-select {
   display: flex;
+  justify-content: space-between;
 }
 
 .main-image {
   max-width: 560px;
+}
+
+.img-delete {
+  img {
+    width: 35px;
+  }
 }

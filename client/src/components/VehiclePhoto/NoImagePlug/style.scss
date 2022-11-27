@@ -1,0 +1,40 @@
+.no-image-plug {
+  background-color: white;
+  border-radius: 10px;
+  height: 100%;
+  text-align: center;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .plug-text {
+    padding-top: 72px;
+    margin-bottom: 24px;
+    color: black;
+    font-size: 32px;
+    font-weight: 500;
+  }
+
+  .plus-icon {
+    width: 100px;
+    cursor: pointer;
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+}
+
+.compact-size {
+  .no-image-plug {
+    .plug-text {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .plus-icon {
+      width: 75px;
+    }
+  }
+}
