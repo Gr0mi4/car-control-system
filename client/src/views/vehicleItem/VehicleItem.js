@@ -173,9 +173,6 @@ export const VehicleItem = () => {
           updateVehicleInfo={ updateVehicleInfo }
           deleteCustomField={ deleteCustomField }
         />
-        <button className="delete-vehicle button" onClick={ deleteVehicle }>
-          <img className="delete-vehicle-icon" src={ Delete } alt="delete"/>
-        </button>
       </div>
       <NotesOverview
         vehicleNotes={ vehicleNotes }
@@ -194,5 +191,8 @@ export const VehicleItem = () => {
           deleteAdditionalImage={ deleteAdditionalImage }
         />
       }
+      <button className="delete-vehicle button" onClick={ deleteVehicle }>
+        <img className="delete-vehicle-icon" src={ Delete } alt="delete"/>
+      </button>
     </div>);
 };

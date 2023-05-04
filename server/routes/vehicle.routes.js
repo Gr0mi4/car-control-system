@@ -1,5 +1,4 @@
 const cloudinary = require('cloudinary');
-
 const { Router } = require('express');
 
 const Vehicle = require('../models/Vehicle');
@@ -15,7 +14,7 @@ router.post('/getUserVehicles', async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: 'User vehicles can not be retrieved', e });
   }
 });
 
@@ -30,7 +29,7 @@ router.post('/getVehicleInfo', async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: 'Vehicle data can not be retrieved' });
   }
 });
 
@@ -61,11 +60,9 @@ router.post('/changeVehicleProp', async (req, res) => {
       res.status(200).json(vehicle);
     }
 
-
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: 'Something went wrong' });
-
+    res.status(500).json({ message: 'Vehicle property was not changed' });
   }
 });
 
@@ -73,7 +70,6 @@ router.post('/deleteCustomField', async (req, res) => {
   try {
     const { vehicleId, fieldName } = req.body;
     const vehicle = await Vehicle.findOne({ _id: vehicleId });
-    console.log('start', vehicle, fieldName, vehicle.additionalFields[fieldName]);
     if (vehicle.additionalFields[fieldName]) {
       delete vehicle.additionalFields[fieldName];
       await Vehicle.replaceOne({ _id: vehicleId }, vehicle);
@@ -94,7 +90,7 @@ router.post('/saveNewVehicle', async (req, res) => {
     res.status(201).json({ message: 'Vehicle created successfully' });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: 'Vehicle was not saved' });
   }
 });
 
@@ -104,25 +100,10 @@ router.post('/deleteVehicle', async (req, res) => {
     const deletedVehicle = await Vehicle.deleteOne({ _id: id });
     if (deletedVehicle) {
       res.status(200).json(deletedVehicle);
-    } else {
-      res.status(500).json({ message: 'Something went wrong' });
     }
   } catch (e) {
     console.log(e);
-  }
-});
-
-router.post('/uploadVehicleImage', async (req, res) => {
-  try {
-    if (req.file) {
-      res.status(201).json({ message: 'Image Successfully uploaded', });
-    } else {
-      res.status(500).json({ message: 'Image not found' });
-    }
-
-  } catch (e) {
-    console.log(e);
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: 'Vehicle was not deleted' });
   }
 });
 
@@ -131,7 +112,7 @@ router.get('/getVariables', async (req, res) => {
   if (data) {
     res.status(201).json({ message: 'Everything is ok', timestamp: data.timestamp, signature: data.signature });
   } else {
-    res.status(500).json({ message: 'Something went wrong' });
+    res.status(500).json({ message: 'Variables was not generated' });
   }
 });
 

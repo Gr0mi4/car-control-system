@@ -1,7 +1,6 @@
 import './style.scss';
 
 import { ModalWindow } from '../ModalWindow';
-import { useCallback } from 'react';
 
 export const ConfirmationModal = (
   {

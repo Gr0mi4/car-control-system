@@ -48,10 +48,10 @@ export const VehiclePhoto = (
         })
         .then(({ signature, timestamp }) => {
           // Image instantly uploaded if it would be first one
-          if (vehicleCreationMode || !src && !imageLink) {
+          if (vehicleCreationMode || (!src && !imageLink)) {
             uploadPhoto(signature, timestamp, event.target.files[0]);
           } else {
-            
+
           }
         });
     } catch (e) {
@@ -101,51 +101,49 @@ export const VehiclePhoto = (
     <div className={ className ? className : 'vehicle-photo' }>
       { src || imageLink
         ?
-        <div>
-          <div className="main-image-wrapper">
-            <img className="main-image" src={ src || imageLink } alt="Vehicle" onClick={ showGallery }/>
-            { imageLink &&
-              <div className="image-panel">
-                <label htmlFor="file-upload">
-                  <img src={ AddImage } alt="add-image" className="add-image icon-button"/>
-                </label>
-                <input onChange={ handleSelectImage } id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
-                { previewMode &&
-                  <div>
-                    <p>Upload as:</p>
-                    <div className="radio-wrapper">
-                      <input
-                        type="radio"
-                        name="mainImage"
-                        id="main-image-radio"
-                        value={ uploadedImageType }
-                        checked={ uploadedImageType === 'mainImage' }
-                        onChange={ handleRadioClick }
-                      />
-                      <label htmlFor="main-image-radio" className="label">Main Image</label>
-                      <input
-                        type="radio"
-                        name="additionalImage"
-                        id="additional-image-radio"
-                        value={ uploadedImageType }
-                        checked={ uploadedImageType === 'additionalImage' }
-                        onChange={ handleRadioClick }
-                      />
-                      <label htmlFor="additional-image-radio" className="label">Additional Image</label>
-                    </div>
+        <div className="main-image-wrapper">
+          <img className="main-image" src={ src || imageLink } alt="Vehicle" onClick={ showGallery }/>
+          { imageLink &&
+            <div className="image-panel">
+              <label htmlFor="file-upload">
+                <img src={ AddImage } alt="add" className="add-image icon-button"/>
+              </label>
+              <input onChange={ handleSelectImage } id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
+              { previewMode &&
+                <div>
+                  <p>Upload as:</p>
+                  <div className="radio-wrapper">
+                    <input
+                      type="radio"
+                      name="mainImage"
+                      id="main-image-radio"
+                      value={ uploadedImageType }
+                      checked={ uploadedImageType === 'mainImage' }
+                      onChange={ handleRadioClick }
+                    />
+                    <label htmlFor="main-image-radio" className="label">Main Image</label>
+                    <input
+                      type="radio"
+                      name="additionalImage"
+                      id="additional-image-radio"
+                      value={ uploadedImageType }
+                      checked={ uploadedImageType === 'additionalImage' }
+                      onChange={ handleRadioClick }
+                    />
+                    <label htmlFor="additional-image-radio" className="label">Additional Image</label>
                   </div>
-                }
-                <button onClick={ handleDeleteImage } className="img-delete icon-button">
-                  <img className="delete-icon" src={ Delete } alt="delete"/>
+                </div>
+              }
+              <button onClick={ handleDeleteImage } className="img-delete icon-button">
+                <img className="delete-icon" src={ Delete } alt="delete"/>
+              </button>
+              { previewMode && !vehicleCreationMode &&
+                <button onClick={ () => uploadPhoto(signature, timestamp, file) } className="img-upload icon-button">
+                  <img className="upload-icon" src={ Upload } alt="upload"/>
                 </button>
-                { previewMode && !vehicleCreationMode &&
-                  <button onClick={ () => uploadPhoto(signature, timestamp, file) } className="img-upload icon-button">
-                    <img className="upload-icon" src={ Upload } alt="upload"/>
-                  </button>
-                }
-              </div>
-            }
-          </div>
+              }
+            </div>
+          }
         </div>
         :
         <NoImagePlug handleSelectImage={ handleSelectImage }/>

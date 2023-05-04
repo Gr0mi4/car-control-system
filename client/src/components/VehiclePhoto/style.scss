@@ -1,12 +1,15 @@
 .main-image-wrapper {
+  display: flex;
+  background-color: #fff;
   color: black;
+  flex-direction: column;
+  padding: 15px 15px 2.5px;
+  border-radius: 20px;
 
   .main-image {
-    width: 100%;
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px;
     cursor: pointer;
   }
-
 
   input {
     display: none;
@@ -17,29 +20,21 @@
   display: flex;
   justify-content: space-between;
   background-color: #fff;
-  width: 460px;
-  height: 50px;
-  position: relative;
-  right: 5px;
   border-radius: 0 0 20px 20px;
+  padding-top: 5px;
 
   .add-image {
     width: 45px;
-    margin-left: 5px;
   }
 
   .img-delete, .img-upload {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    margin: 0 10px;
+    margin-right: 5px;
 
     img {
       width: 35px;
-    }
-
-    &:active {
-      transform: scale(0.97);
     }
   }
 
@@ -71,11 +66,6 @@
 
 .vehicle-photo {
   min-width: 450px;
-  height: 380px;
-
-  .main-image {
-    box-shadow: 0 0 1px 5px white;
-  }
 }
 
 .compact-size {
@@ -83,5 +73,4 @@
   height: 265px;
   border-radius: 20px;
   box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.25);
-
 }

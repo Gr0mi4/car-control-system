@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import 'fontsource-roboto';
 import '@fontsource/montserrat/100.css';
 import '@fontsource/montserrat/200.css';

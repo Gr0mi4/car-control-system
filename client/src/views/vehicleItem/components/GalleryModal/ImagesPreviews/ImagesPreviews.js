@@ -12,6 +12,7 @@ export const ImagesPreviews = ({ srcArray, picIndex, handleSelectImage }) => {
             onClick={ () => {
               handleSelectImage(index);
             } }
+            alt="preview"
           />
         )
       }

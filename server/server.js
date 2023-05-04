@@ -16,7 +16,7 @@ async function start() {
     console.log('Server has been started...');
   });
   try {
-    await mongose.connect('mongodb+srv://D00m:Gr0mi4@cluster0.4j32b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+    await mongose.connect("mongodb://D00m:Gr0mi4@cluster0-shard-00-00.4j32b.mongodb.net:27017,cluster0-shard-00-01.4j32b.mongodb.net:27017,cluster0-shard-00-02.4j32b.mongodb.net:27017/?ssl=true&replicaSet=atlas-14nrvh-shard-0&authSource=admin&retryWrites=true&w=majority", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
