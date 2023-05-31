@@ -1,0 +1,26 @@
+.crop-image {
+  width: 45px;
+}
+
+.crop-panel {
+  height: 48px;
+
+  .save-image {
+    width: 45px;
+  }
+
+  .cancel-image {
+    width: 32px;
+  }
+}
+
+.vehicle-photo {
+  min-width: 450px;
+}
+
+.compact-size {
+  width: 295px;
+  height: 265px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.25);
+}
