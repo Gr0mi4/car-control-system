@@ -8,6 +8,7 @@ import Delete from '../../assets/icons/delete.svg';
 
 import { VehiclePhoto } from '../../components/VehiclePhoto/VehiclePhoto';
 import { GalleryModal } from './components/GalleryModal/GalleryModal';
+import { Crop } from '../../components/Crop/Crop';
 import { VehicleDetails } from './components/VehicleDetails/VehicleDetails';
 import { NotesOverview } from './components/notes/NotesOverview/NotesOverview';
 
@@ -19,6 +20,8 @@ export const VehicleItem = () => {
   const [ vehicleNotes, setVehicleNotes ] = useState([]);
 
   const [ galleryModalVisible, setGalleryModalVisible ] = useState(false);
+
+  const [ cropModalVisible, setCropModalVisible ] = useState(false);
 
   const [ vehicleAdditionalImages, setVehicleAdditionalImages ] = useState([]);
 
@@ -166,6 +169,9 @@ export const VehicleItem = () => {
           updateVehicleImage={ updateVehicleInfo }
           uploadAdditionalImage={ uploadAdditionalImage }
           showGallery={ showGallery }
+          showCrop={ () => {
+            setCropModalVisible(true);
+          } }
         />
         <VehicleDetails
           vehicleInfo={ vehicleInfo }
@@ -189,6 +195,17 @@ export const VehicleItem = () => {
             setGalleryModalVisible(false);
           } }
           deleteAdditionalImage={ deleteAdditionalImage }
+        />
+      }
+      { cropModalVisible &&
+        <Crop
+          show={ () => {
+            setCropModalVisible(true);
+          } }
+          image={ vehicleInfo.image }
+          onClose={ () => {
+            setCropModalVisible(false);
+          } }
         />
       }
       <button className="delete-vehicle button" onClick={ deleteVehicle }>

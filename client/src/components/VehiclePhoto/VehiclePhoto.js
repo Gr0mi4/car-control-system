@@ -3,12 +3,14 @@ import './style.scss';
 import { useHttp } from '../../hooks/http.hook';
 
 import { NoImagePlug } from './NoImagePlug/NoImagePlug';
+import { Crop } from '../Crop/Crop';
 
 import Delete from '../../assets/icons/delete.svg';
 import Upload from '../../assets/icons/upload.svg';
 import AddImage from '../../assets/icons/add-image.svg';
 
 import { useState } from 'react';
+import CropImage from '../../assets/icons/crop.svg';
 
 const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const API_KEY = process.env.REACT_APP_CLOUD_API_KEY;
@@ -26,6 +28,7 @@ export const VehiclePhoto = (
 
   const [ src, setSrc ] = useState('');
   const [ previewMode, setPreviewMode ] = useState(false);
+  const [ cropMode, setCropMode ] = useState(false);
 
   const [ file, setFile ] = useState({});
   const [ signature, setSignature ] = useState(null);
@@ -37,7 +40,7 @@ export const VehiclePhoto = (
     const file = event.target.files[0];
     setFile(event.target.files[0]);
     try {
-      request('/api/vehicle/getVariables', 'GET')
+      request('/api/images/getVariables', 'GET')
         .then((res) => {
           setSrc(URL.createObjectURL(file));
           setPreviewMode(true);
@@ -50,8 +53,6 @@ export const VehiclePhoto = (
           // Image instantly uploaded if it would be first one
           if (vehicleCreationMode || (!src && !imageLink)) {
             uploadPhoto(signature, timestamp, event.target.files[0]);
-          } else {
-
           }
         });
     } catch (e) {
@@ -102,9 +103,29 @@ export const VehiclePhoto = (
       { src || imageLink
         ?
         <div className="main-image-wrapper">
-          <img className="main-image" src={ src || imageLink } alt="Vehicle" onClick={ showGallery }/>
-          { imageLink &&
+          <Crop
+            saveImage={ (newUrl) => updateVehicleImage('image', newUrl) }
+            imageLink={ imageLink }
+            cropMode={ cropMode }
+            setCropMode={ setCropMode }
+          >
+            <img
+              className="main-image"
+              src={ src || imageLink }
+              alt="Vehicle"
+              onClick={ () => cropMode ? null : showGallery() }
+            />
+          </Crop>
+          { imageLink && !cropMode &&
             <div className="image-panel">
+              { !cropMode &&
+                <img
+                  src={ CropImage }
+                  alt="crop"
+                  className="crop-image icon-button"
+                  onClick={ () => setCropMode(true) }
+                />
+              }
               <label htmlFor="file-upload">
                 <img src={ AddImage } alt="add" className="add-image icon-button"/>
               </label>

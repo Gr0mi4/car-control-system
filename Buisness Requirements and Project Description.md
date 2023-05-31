@@ -24,6 +24,11 @@ MVP Requirements:
   calendar
   is ready.
 
+V 1.5 Requiremnts:
+
+- Photo Crop for avatar (Add spinner while loading)
+- Notes improve (Dates, money spend, smth else)
+
 Screens description
 
 Main Screen: Place where you are can select vehicle, that you'll be working with, add new one, delete it.
@@ -44,7 +49,7 @@ VehicleItem Screen: Screen where you can have a look on a Vehicle's details, add
 
 Capitan's Journal. Place where you can create notes, add there photos, links and stuff.
 
-Photos handling. On upload icon click you will just get windows upoload window, and by clicking save, you will
+Photos handling. On upload icon click you will just get windows upload window, and by clicking save, you will
 see a gallery with ability to check results, resize photos, change names and deleted ones that you do no like.
 All photos would be stored in one array, you will select witch would be main in edit modal. By default it would be
 first one.
