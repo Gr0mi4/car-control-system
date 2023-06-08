@@ -5,6 +5,9 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.use(express.json());
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/vehicle', require('./routes/vehicle.routes'));

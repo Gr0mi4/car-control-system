@@ -1,6 +1,6 @@
 const fs = require('fs');
 const client = require('https');
-const { v2: cloudinary } = require('cloudinary');
+const myCloudinary = require('../utils/cloudinarySettings');
 
 function downloadImage(url, filepath) {
   return new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ function downloadImage(url, filepath) {
       }
     });
   });
-};
+}
 
 function convertCropToPx(originalHeight, originalWidth, crop) {
   console.log(crop, originalHeight, originalWidth);
@@ -30,13 +30,8 @@ function convertCropToPx(originalHeight, originalWidth, crop) {
 
 async function uploadImage(filePath) {
   return new Promise((resolve, reject) => {
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
     try {
-      cloudinary.uploader.upload(filePath)
+      myCloudinary.uploader.upload(filePath)
         .then((res) => {
           console.log('secureUrl from Cloudinary received', res.secure_url);
           resolve(res.secure_url);
