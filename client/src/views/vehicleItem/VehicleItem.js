@@ -94,7 +94,7 @@ export const VehicleItem = () => {
           setVehicleInfo(parseResults(results));
         });
     } catch (e) {
-
+      console.log(e);
     }
   }
 

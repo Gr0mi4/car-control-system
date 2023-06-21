@@ -50,12 +50,13 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
     Save
   </button>;
 
-  return (<ModalWindow
-    header={ modalHeader }
-    body={ modalBody }
-    footer={ modalFooter }
-    show={ show }
-    onClose={ onClose }
-  />);
-
+  return (
+    <ModalWindow
+      header={ modalHeader }
+      body={ modalBody }
+      footer={ modalFooter }
+      show={ show }
+      onClose={ onClose }
+    />
+  );
 };

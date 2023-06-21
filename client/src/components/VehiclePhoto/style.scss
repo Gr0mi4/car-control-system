@@ -1,3 +1,14 @@
+.vehicle-photo {
+  min-width: 450px;
+}
+
+.compact-size {
+  width: 295px;
+  height: 265px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
 .main-image-wrapper {
   display: flex;
   background-color: #fff;
@@ -35,31 +46,6 @@
 
     img {
       width: 35px;
-    }
-  }
-
-
-  .radio-wrapper {
-    margin-top: 4px;
-    border-radius: 5px;
-
-    .label {
-      padding: 2px 4px;
-      border: 1px solid black;
-      cursor: pointer;
-
-      &:first-of-type {
-        border-radius: 5px 0 0 5px;
-      }
-
-      &:nth-of-type(2) {
-        border-radius: 0 5px 5px 0;
-      }
-    }
-
-    [type=radio]:checked + label {
-      background-color: #000;
-      color: #fff;
     }
   }
 }

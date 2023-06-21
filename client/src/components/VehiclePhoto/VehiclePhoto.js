@@ -1,9 +1,8 @@
 import './style.scss';
 
-import { useHttp } from '../../hooks/http.hook';
-
 import { NoImagePlug } from './NoImagePlug/NoImagePlug';
 import { Crop } from '../Crop/Crop';
+import { UploadAsSelector } from './UploadAsSelector/UpladAsSelector';
 
 import Delete from '../../assets/icons/delete.svg';
 import Upload from '../../assets/icons/upload.svg';
@@ -11,9 +10,6 @@ import AddImage from '../../assets/icons/add-image.svg';
 
 import { useState } from 'react';
 import CropImage from '../../assets/icons/crop.svg';
-
-const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
-const API_KEY = process.env.REACT_APP_CLOUD_API_KEY;
 
 export const VehiclePhoto = (
   {
@@ -24,78 +20,51 @@ export const VehiclePhoto = (
     uploadAdditionalImage,
     showGallery
   }) => {
-  const { request } = useHttp();
-
   const [ src, setSrc ] = useState('');
   const [ previewMode, setPreviewMode ] = useState(false);
   const [ cropMode, setCropMode ] = useState(false);
 
   const [ file, setFile ] = useState({});
-  const [ signature, setSignature ] = useState(null);
-  const [ timestamp, setTimestamp ] = useState(null);
 
-  const [ uploadedImageType, setUploadedImageType ] = useState('mainImage');
+  const [ uploadImageType, setUploadImageType ] = useState('mainImage');
 
   async function handleSelectImage(event) {
-    const file = event.target.files[0];
     setFile(event.target.files[0]);
-    try {
-      request('/api/images/getVariables', 'GET')
-        .then((res) => {
-          setSrc(URL.createObjectURL(file));
-          setPreviewMode(true);
-          const results = JSON.parse(res);
-          setSignature(results.signature);
-          setTimestamp(results.timestamp);
-          return { signature: results.signature, timestamp: results.timestamp };
-        })
-        .then(({ signature, timestamp }) => {
-          // Image instantly uploaded if it would be first one
-          if (vehicleCreationMode || (!src && !imageLink)) {
-            uploadPhoto(signature, timestamp, event.target.files[0]);
-          }
-        });
-    } catch (e) {
-      console.error(e);
+    setSrc(URL.createObjectURL(event.target.files[0]));
+    setPreviewMode(true);
+    if (vehicleCreationMode || (!src && !imageLink)) {
+      await uploadPhoto(event.target.files[0]);
     }
   }
 
-  async function uploadPhoto(signature, timestamp, file) {
+  async function uploadPhoto(file) {
     const form = new FormData();
     form.append('file', file);
-    if (signature && timestamp) {
-      fetch(
-        `https://api.cloudinary.com/v1_1/${ CLOUD_NAME }/image/upload?api_key=${ API_KEY }&timestamp=${ timestamp }&signature=${ signature }`,
-        { method: 'POST', body: form })
-        .then(res => {
-          return res.text();
-        })
-        .then(res => {
-          const result = JSON.parse(res);
-          if (uploadedImageType === 'mainImage') {
-            updateVehicleImage('image', result.secure_url);
-          } else {
-            uploadAdditionalImage(result.secure_url, 'someName');
-          }
-          setPreviewMode(false);
+    fetch('/api/images/uploadImage', { method: 'POST', body: form })
+      .then(res => res.text())
+      .then(res => {
+        const result = JSON.parse(res);
+        if (uploadImageType === 'mainImage') {
+          updateVehicleImage('image', result.url);
+        } else {
+          uploadAdditionalImage(result.url, 'someName');
+          // Returning main app because additional in gallery now
           setSrc('');
-        });
-    } else {
-      console.error('No signature or Timestamp', signature, timestamp);
-    }
+        }
+        setPreviewMode(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   function handleDeleteImage() {
+    setSrc('');
     if (previewMode) {
-      setSrc('');
       setPreviewMode(false);
     } else {
       updateVehicleImage('image', '');
     }
-  }
-
-  function handleRadioClick(event) {
-    setUploadedImageType(event.target.name);
   }
 
   return (
@@ -112,7 +81,7 @@ export const VehiclePhoto = (
             <img
               className="main-image"
               src={ src || imageLink }
-              alt="Vehicle"
+              alt="Main vehicle image"
               onClick={ () => cropMode ? null : showGallery() }
             />
           </Crop>
@@ -131,35 +100,13 @@ export const VehiclePhoto = (
               </label>
               <input onChange={ handleSelectImage } id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
               { previewMode &&
-                <div>
-                  <p>Upload as:</p>
-                  <div className="radio-wrapper">
-                    <input
-                      type="radio"
-                      name="mainImage"
-                      id="main-image-radio"
-                      value={ uploadedImageType }
-                      checked={ uploadedImageType === 'mainImage' }
-                      onChange={ handleRadioClick }
-                    />
-                    <label htmlFor="main-image-radio" className="label">Main Image</label>
-                    <input
-                      type="radio"
-                      name="additionalImage"
-                      id="additional-image-radio"
-                      value={ uploadedImageType }
-                      checked={ uploadedImageType === 'additionalImage' }
-                      onChange={ handleRadioClick }
-                    />
-                    <label htmlFor="additional-image-radio" className="label">Additional Image</label>
-                  </div>
-                </div>
+                <UploadAsSelector { ...{ setUploadImageType, uploadImageType } }/>
               }
               <button onClick={ handleDeleteImage } className="img-delete icon-button">
                 <img className="delete-icon" src={ Delete } alt="delete"/>
               </button>
               { previewMode && !vehicleCreationMode &&
-                <button onClick={ () => uploadPhoto(signature, timestamp, file) } className="img-upload icon-button">
+                <button onClick={ () => uploadPhoto(file) } className="img-upload icon-button">
                   <img className="upload-icon" src={ Upload } alt="upload"/>
                 </button>
               }

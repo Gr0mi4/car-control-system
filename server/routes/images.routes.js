@@ -1,13 +1,11 @@
 const { Router } = require('express');
 const sharp = require('sharp');
+const fs = require('fs');
 
 const Image = require('../models/Images');
 const cloudinary = require('cloudinary').v2;
 
-const dotenv = require('dotenv');
-dotenv.config();
-
-const { downloadImage, convertCropToPx, uploadImage } = require('../utils');
+const { downloadImage, convertCropToPx, uploadImage, saveImageToLocal } = require('../utils');
 
 const router = Router();
 
@@ -75,12 +73,13 @@ router.post('/cropImage', async (req, res) => {
   try {
     // Getting needed params
     const { imageLink, crop } = req.body;
-    //Downloading image from cloudinary
-    await downloadImage(imageLink, 'cropFile.jpeg');
-    const originalFile = await sharp('cropFile.jpeg');
+    const outputFilePath = 'cropOutput.jpg';
+    const originalFilePath = 'cropFile.jpg';
+    // Downloading image from cloudinary
+    await downloadImage(imageLink, originalFilePath);
+    const originalFile = await sharp(originalFilePath);
     // Getting original width and height to calculate crops dimensions
     const { width, height } = await originalFile.metadata();
-    const outputFilePath = 'cropOutput.jpeg';
     // Converting % into pixels for Crop
     const cropParams = convertCropToPx(height, width, crop);
 
@@ -88,10 +87,29 @@ router.post('/cropImage', async (req, res) => {
     await originalFile.extract(cropParams).toFile(outputFilePath);
     // Downloading new image on a server and returning URL to the FE
     const croppedUrl = await uploadImage(outputFilePath);
+    // Deleting unnecessary files
+    await fs.unlink(outputFilePath, () => {
+    });
+    await fs.unlink(originalFilePath, () => {
+    });
+
     res.status(200).json(croppedUrl);
   } catch (e) {
     console.log('Crop failed', e);
     res.status(500).json({ message: 'Failed to crop it', e });
+  }
+});
+
+router.post('/uploadImage', saveImageToLocal.single('file'), async (req, res) => {
+  try {
+    const newImageUrl = await uploadImage('images/temporaryImage.jpg');
+    await fs.unlink('images/temporaryImage.jpg', () => {
+      console.log('Item deleted');
+    });
+    res.status(200).json({ message: 'Everything is OK', url: newImageUrl });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: 'Failed to upload new image', e });
   }
 });
 

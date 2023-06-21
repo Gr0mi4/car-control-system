@@ -1,0 +1,25 @@
+.upload-as-selector {
+  .radio-wrapper {
+    margin-top: 4px;
+    border-radius: 5px;
+
+    .label {
+      padding: 2px 4px;
+      border: 1px solid black;
+      cursor: pointer;
+
+      &:first-of-type {
+        border-radius: 5px 0 0 5px;
+      }
+
+      &:nth-of-type(2) {
+        border-radius: 0 5px 5px 0;
+      }
+    }
+
+    [type=radio]:checked + label {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+}

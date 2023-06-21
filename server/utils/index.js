@@ -1,6 +1,18 @@
 const fs = require('fs');
 const client = require('https');
 const myCloudinary = require('../utils/cloudinarySettings');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, 'temporaryImage.jpg');
+  },
+});
+
+const saveImageToLocal = multer({ storage: storage });
 
 function downloadImage(url, filepath) {
   return new Promise((resolve, reject) => {
@@ -43,4 +55,4 @@ async function uploadImage(filePath) {
   });
 }
 
-module.exports = { downloadImage, convertCropToPx, uploadImage };
+module.exports = { downloadImage, convertCropToPx, uploadImage, saveImageToLocal };
