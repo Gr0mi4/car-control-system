@@ -1,82 +1,48 @@
+import './style.scss';
+
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
+import { login, register } from '../../store/dispatchers/user';
+import { checkAuth } from '../../store/actions/user';
+import { USER_NOT_EXIST } from '../../store/constants/user';
+
 import { useHttp } from '../../hooks/http.hook';
-import { useAuth } from '../../hooks/auth.hook';
-
-import { useState, useEffect } from 'react';
-
-import { Redirect } from 'react-router-dom'
-
-import { useDispatch } from 'react-redux';
-
-import { setUser } from '../../store/reducers/userSlice';
-
-import { InputForm } from './components/InputForm/InputForm'
-
 import { loginValidation, passwordValidation } from './utils/validation';
 
-import './style.scss'
+import { InputForm } from './components/InputForm/InputForm';
+import { CreateUserForm } from './components/CreateUserForm/createUserForm';
 
 export const AuthPage = () => {
-  const [username, setUsername] = useState('Incognito')
-  const [password, setPassword] = useState('')
-  const [result, setResult] = useState(null)
+  const dispatch = useDispatch();
 
-  const {request, error, setError} = useHttp()
-  const dispatch = useDispatch()
+  const user = useSelector(state => state.user);
+  const userId = useSelector(state => state.user.id);
 
-  const {login} = useAuth()
+  const { error, setError } = useHttp();
 
+  const userAuthenticated = !!userId;
 
-  const checkIfUserIsLoggedIn = function () {
-    const storageName = 'userData'
-    const data = JSON.parse(localStorage.getItem(storageName))
-    if (data && data.token) {
-      setResult('User Found')
-      dispatch(setUser({name: data.username, id: data.id}))
-    }
-  }
-
-  const usernameChangeHandler = event => {
-    setResult(null)
-    setUsername(event.target.value)
-  }
-
-  const passwordChangeHandler = event => {
-    setResult(null)
-    setPassword(event.target.value)
-  }
 
   useEffect(() => {
-    checkIfUserIsLoggedIn()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    dispatch(checkAuth());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const handleLogin = async (event, username, password) => {
+    event.preventDefault();
     if (!loginValidation(username) && !passwordValidation(password)) {
-      await request('/api/auth/check', 'POST', {username, password})
-        .then(res => {
-          const result = JSON.parse(res)
-          dispatch(setUser({name: username, id: result.id}))
-          login(result.token, result.id, result.username)
-          setResult(JSON.parse(res).message)
-        })
-        .catch(err => {
-        })
+      dispatch(login({ username, password }));
     } else {
-      loginValidation(username) ? setError(loginValidation(username)) : setError(passwordValidation(password))
+      loginValidation(username) ? setError(loginValidation(username)) : setError(passwordValidation(password));
     }
-  }
+  };
 
   const createUser = async () => {
-    await request('/api/auth/register', 'POST', {username, password, id: Math.random()})
-      .then(res => {
-        const result = JSON.parse(res)
-        dispatch(setUser({name: result.username, id: result.id}))
-        login(result.token, result.id, result.username)
-      })
-      .then(() => {
-        setResult('User Created')
-      })
-  }
+    // If we want to create user in this flow (it's stupid) user already tried to login
+    const { username, password } = user;
+    dispatch(register({ username, password, id: Math.random() }));
+  };
 
   return (
     <div>
@@ -85,28 +51,17 @@ export const AuthPage = () => {
         <h3 className="secondary-title">Here you can manage all your vehicles in one place</h3>
       </div>
       <section className="action-block">
-        <InputForm
-          handleSendForm={handleLogin}
-          handleUsernameChange={usernameChangeHandler}
-          handlePasswordChange={passwordChangeHandler}
-          error={error}
-        />
-        {(result === 'User Found' || result === 'User Created') &&
-        <Redirect to="/mainScreen/"/>
+        <InputForm handleSendForm={ handleLogin }/>
+        { (userAuthenticated) &&
+          <Redirect to="/mainScreen/"/>
         }
-        {result === 'No such user' &&
-        <div className="create-user-block">
-          <h3 className="no-such-user-title">
-            Sorry, we don’t have user with such name in our database.
-            Create it, or choose another one
-          </h3>
-          <button className="create-user-button" onClick={createUser}>Create User</button>
-        </div>
+        { user.authStatus === USER_NOT_EXIST &&
+          <CreateUserForm createUser={ createUser }/>
         }
+        { error && <div className="error validation">{ error }</div> }
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default AuthPage
-
+export default AuthPage;

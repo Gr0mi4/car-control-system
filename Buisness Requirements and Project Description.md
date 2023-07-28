@@ -28,6 +28,9 @@ V 1.5 Requiremnts:
 
 - Photo Crop for avatar (Add spinner while loading)
 - Notes improve (Dates, money spend, smth else)
+- Ability to delete users for an admin
+- Add Images Names
+- Ability to change shown image in modal by keyboard
 
 Screens description
 

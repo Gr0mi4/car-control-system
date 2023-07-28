@@ -1,18 +1,27 @@
 import './style.scss';
-import moment from 'moment';
+
 import { useState } from 'react';
-import Delete from '../../../../../assets/icons/delete.svg';
-import Pencil from '../../../../../assets/icons/pencil.svg';
+import { useDispatch } from 'react-redux';
+
+import { deleteNote } from '../../../../../store/dispatchers/vehicle';
+
 import { ConfirmationModal } from '../../../../../components/ModalWindow/ConfirmationModal/ConfirmationModal';
 
-export const NoteItem = (props) => {
+import Delete from '../../../../../assets/icons/delete.svg';
+import Pencil from '../../../../../assets/icons/pencil.svg';
+
+import moment from 'moment';
+
+export const NoteItem = ({ text, date, name, noteId, editNote }) => {
   const [ noteOpened, changeNoteState ] = useState(false);
   const [ confirmDeleteModalVisible, setConfirmDeleteModalVisible ] = useState(false);
 
-  const formattedDate = moment.utc(new Date(props.date)).format('DD-MM-YYYY');
+  const dispatch = useDispatch();
+
+  const formattedDate = moment.utc(new Date(date)).format('DD-MM-YYYY');
 
   const deleteMessage =
-    <p>You want to delete <b>{ props.name }</b> created <b>{ formattedDate }</b> ?
+    <p>You want to delete <b>{ name }</b> created <b>{ formattedDate }</b> ?
       <br/>
       This action can't be undone
     </p>;
@@ -28,14 +37,14 @@ export const NoteItem = (props) => {
   return (
     <div className="note">
       <div className="note-header" onClick={ handleNoteClick }>
-        <h3 className="note-name">{ props.name }</h3>
+        <h3 className="note-name">{ name }</h3>
         <span>{ formattedDate }</span>
         { noteOpened &&
           <div className="buttons-block">
             <button className="delete-note icon-button" onClick={ () => setConfirmDeleteModalVisible(true) }>
               <img className="delete-icon" src={ Delete } alt="delete"/>
             </button>
-            <button className="icon-button" onClick={ () => props.editNote(props.noteId) }>
+            <button className="icon-button" onClick={ () => editNote(noteId) }>
               <img className="pencil-icon" src={ Pencil } alt="pencil"/>
             </button>
           </div>
@@ -44,14 +53,14 @@ export const NoteItem = (props) => {
       { noteOpened &&
         <div className="textarea">
           <p>
-            { props.text }
+            { text }
           </p>
         </div>
       }
       { confirmDeleteModalVisible &&
         <ConfirmationModal
           show={ confirmDeleteModalVisible }
-          actionCallback={ () => props.deleteNote(props.noteId) }
+          actionCallback={ () => dispatch(deleteNote(noteId)) }
           message={ deleteMessage }
           onClose={ () => setConfirmDeleteModalVisible(false) }
         />

@@ -1,10 +1,15 @@
 import './style.scss';
 
-import { ModalWindow } from '../../../../components/ModalWindow/ModalWindow';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { addNewVehicle } from '../../../../store/dispatchers/vehicleList';
+
+import { ModalWindow } from '../../../../components/ModalWindow/ModalWindow';
 import { VehiclePhoto } from '../../../../components/VehiclePhoto/VehiclePhoto';
 
 export const AddVehicleModal = ({ show, onClose, onSave }) => {
+  const dispatch = useDispatch();
 
   const [ brand, setBrand ] = useState('');
   const [ model, setModel ] = useState('');
@@ -32,6 +37,23 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
     setImageSrc(url);
   };
 
+  const deleteAllData = () => {
+    setBrand('');
+    setModel('');
+    setModification('');
+    setType('car');
+    setImageSrc('');
+  };
+
+  const saveNewVehicle = () => {
+    dispatch(addNewVehicle({ brand, model, modification, type, image: imageSrc }))
+      .then(() => {
+        onSave();
+        onClose();
+        deleteAllData();
+      });
+  };
+
   const modalHeader = <h1>Add Vehicle</h1>;
   const modalBody =
     <div className="add-vehicle-modal-body">
@@ -45,10 +67,7 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
       <input className="input half-size" type="text" onChange={ modificationChangeHandler } value={ modification }/>
       <VehiclePhoto className="compact-size" vehicleCreationMode={ true } updateVehicleImage={ getVehicleSrc }/>
     </div>;
-  const modalFooter = <button onClick={ () => onSave(brand, model, modification, type, imageSrc) }
-                              className="save button">
-    Save
-  </button>;
+  const modalFooter = <button onClick={ saveNewVehicle } className="save button">Save</button>;
 
   return (
     <ModalWindow

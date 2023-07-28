@@ -1,12 +1,16 @@
 import './style.scss';
 
-export const ImagesPreviews = ({ srcArray, picIndex, handleSelectImage }) => {
+import { useSelector } from 'react-redux';
+
+export const ImagesPreviews = ({ picIndex, handleSelectImage }) => {
+  const imageArray = useSelector(state => state.vehicle.images);
+
   return (
     <div className="preview-wrapper">
       {
-        srcArray.map((item, index) =>
+        imageArray.map((item, index) =>
           <img
-            src={ item }
+            src={ item.src }
             className={ picIndex === index ? 'selected image-preview' : 'image-preview' }
             key={ index }
             onClick={ () => {

@@ -12,9 +12,10 @@ const router = Router();
 router.post('/uploadAdditionalImage', async (req, res) => {
   try {
     const { vehicleId, src, name } = req.body;
-    const image = new Image({ vehicleId, src, name, date: new Date().getTime() });
+    const saveDate = new Date().getTime();
+    const image = new Image({ vehicleId, src, name, date: saveDate });
     await image.save();
-    res.status(201).json({ message: 'Image uploaded' });
+    res.status(201).json({ date: saveDate, name, src, vehicleId, _id: vehicleId, message: 'Successful upload' });
   } catch (e) {
     console.log(e);
     res.status(500).json('Something went wrong');

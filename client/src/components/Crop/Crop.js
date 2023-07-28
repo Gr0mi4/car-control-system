@@ -1,18 +1,22 @@
 import './style.scss';
 import 'react-image-crop/dist/ReactCrop.css';
 
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import ReactCrop from 'react-image-crop';
 
-import { useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 
 import Save from '../../assets/icons/save.svg';
 import Cross from '../../assets/icons/cross.svg';
 
-export const Crop = ({ imageLink, saveImage, children, cropMode, setCropMode }) => {
+export const Crop = ({ saveImage, children, cropMode, setCropMode }) => {
   const [ crop, setCrop ] = useState(null);
 
   const { request } = useHttp();
+
+  const vehicleInfo = useSelector(state => state.vehicle.info);
+  const imageLink = vehicleInfo.image;
 
   function handleCrop(crop, percentCrop) {
     if (cropMode) {

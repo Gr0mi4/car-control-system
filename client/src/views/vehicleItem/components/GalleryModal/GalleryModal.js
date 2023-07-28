@@ -1,15 +1,24 @@
 import './style.scss';
 
-import { ModalWindow } from './../../../../components/ModalWindow/ModalWindow';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { removeVehicleAdditionalImage } from '../../../../store/dispatchers/vehicle';
+
+import { ModalWindow } from './../../../../components/ModalWindow/ModalWindow';
+import { ImagesPreviews } from './ImagesPreviews/ImagesPreviews';
+
 import Delete from '../../../../assets/icons/delete.svg';
 import ArrowRight from '../../../../assets/icons/arrow-right.svg';
 import ArrowLeft from '../../../../assets/icons/arrow-left.svg';
-import { ImagesPreviews } from './ImagesPreviews/ImagesPreviews';
 
-export const GalleryModal = ({ show, onClose, imageArray, deleteAdditionalImage }) => {
+export const GalleryModal = ({ show, onClose }) => {
   const [ picIndex, setPicIndex ] = useState(0);
   const [ srcArray, setSrcArray ] = useState([]);
+
+  const imageArray = useSelector(state => state.vehicle.images);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     parseImages(imageArray);
@@ -29,7 +38,7 @@ export const GalleryModal = ({ show, onClose, imageArray, deleteAdditionalImage 
         setPicIndex(picIndex - 1);
       }
     }
-    deleteAdditionalImage(imageArray[picIndex]._id);
+    dispatch(removeVehicleAdditionalImage(imageArray[picIndex]._id));
     parseImages(imageArray);
   }
 
@@ -54,7 +63,6 @@ export const GalleryModal = ({ show, onClose, imageArray, deleteAdditionalImage 
           <img src={ ArrowLeft } alt="arrow-left"/>
         </button>
         <ImagesPreviews
-          srcArray={ srcArray }
           picIndex={ picIndex }
           handleSelectImage={ (index) => setPicIndex(index) }
         />

@@ -1,5 +1,8 @@
 import './style.scss';
 
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { NoImagePlug } from './NoImagePlug/NoImagePlug';
 import { Crop } from '../Crop/Crop';
 import { UploadAsSelector } from './UploadAsSelector/UpladAsSelector';
@@ -8,16 +11,15 @@ import Delete from '../../assets/icons/delete.svg';
 import Upload from '../../assets/icons/upload.svg';
 import AddImage from '../../assets/icons/add-image.svg';
 
-import { useState } from 'react';
 import CropImage from '../../assets/icons/crop.svg';
+
+import { updateVehicleInfo, uploadVehicleAdditionalImage } from '../../store/dispatchers/vehicle';
 
 export const VehiclePhoto = (
   {
-    imageLink,
     className,
     vehicleCreationMode,
     updateVehicleImage,
-    uploadAdditionalImage,
     showGallery
   }) => {
   const [ src, setSrc ] = useState('');
@@ -27,6 +29,11 @@ export const VehiclePhoto = (
   const [ file, setFile ] = useState({});
 
   const [ uploadImageType, setUploadImageType ] = useState('mainImage');
+
+  const vehicleInfo = useSelector(state => state.vehicle.info);
+  const imageLink = vehicleCreationMode ? null : vehicleInfo.image;
+
+  const dispatch = useDispatch();
 
   async function handleSelectImage(event) {
     setFile(event.target.files[0]);
@@ -45,9 +52,13 @@ export const VehiclePhoto = (
       .then(res => {
         const result = JSON.parse(res);
         if (uploadImageType === 'mainImage') {
-          updateVehicleImage('image', result.url);
+          if (!vehicleCreationMode) {
+            dispatch(updateVehicleInfo('image', result.url));
+          } else {
+            updateVehicleImage('image', result.url);
+          }
         } else {
-          uploadAdditionalImage(result.url, 'someName');
+          dispatch(uploadVehicleAdditionalImage(result.url, 'someName'));
           // Returning main app because additional in gallery now
           setSrc('');
         }
@@ -63,7 +74,7 @@ export const VehiclePhoto = (
     if (previewMode) {
       setPreviewMode(false);
     } else {
-      updateVehicleImage('image', '');
+      dispatch(updateVehicleInfo('image', ''));
     }
   }
 
@@ -73,7 +84,7 @@ export const VehiclePhoto = (
         ?
         <div className="main-image-wrapper">
           <Crop
-            saveImage={ (newUrl) => updateVehicleImage('image', newUrl) }
+            saveImage={ (newUrl) => dispatch(updateVehicleInfo('image', newUrl)) }
             imageLink={ imageLink }
             cropMode={ cropMode }
             setCropMode={ setCropMode }

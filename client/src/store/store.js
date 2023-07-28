@@ -1,10 +1,8 @@
+import thunk from 'redux-thunk';
 import { configureStore } from '@reduxjs/toolkit';
-import userSlice from './reducers/userSlice';
-import vehicleListSlice from './reducers/vehicleListSlice';
+import { reducer } from './reducers';
 
 export default configureStore({
-  reducer: {
-    user: userSlice,
-    vehicleList: vehicleListSlice
-  }
-})
+  reducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ thunk })
+});

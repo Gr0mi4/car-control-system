@@ -1,27 +1,33 @@
 import './style.scss';
 
-import OkIcon from '../../../../../assets/icons/ok-circled-black.svg';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-export const CustomFieldInput = (props) => {
+import { updateVehicleInfo } from '../../../../../store/dispatchers/vehicle';
+
+import OkIcon from '../../../../../assets/icons/ok-circled-black.svg';
+
+export const CustomFieldInput = () => {
   const [ inputVisible, setInputVisible ] = useState(false);
   const [ fieldName, setFieldName ] = useState('');
-  const [ fieldValue, setFieldValue ] = useState('');
+  const [ value, setValue ] = useState('');
   const [ errorVisible, setErrorVisible ] = useState(false);
   const [ errorText, setErrorText ] = useState('');
 
+  const dispatch = useDispatch();
+
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (fieldName === '' || fieldValue === '') {
+    if (fieldName === '' || value === '') {
       setErrorVisible(true);
       setErrorText('Fields can\'t be empty');
     } else {
       setErrorVisible(false);
       setErrorText('');
       setInputVisible(false);
-      props.updateVehicleInfo(fieldName, fieldValue);
+      dispatch(updateVehicleInfo(fieldName, value));
       setFieldName('');
-      setFieldValue('');
+      setValue('');
     }
   }
 
@@ -30,7 +36,7 @@ export const CustomFieldInput = (props) => {
       { inputVisible &&
         <form className="custom-field-wrapper" onSubmit={ handleSubmit }>
           <input className="vehicle-info-input" onChange={ (evt) => setFieldName(evt.target.value) }/> :
-          <input className="vehicle-info-input" onChange={ (evt) => setFieldValue(evt.target.value) }/>
+          <input className="vehicle-info-input" onChange={ (evt) => setValue(evt.target.value) }/>
           <button className="submit icon-button" onClick={ handleSubmit }>
             <img className="ok-icon" src={ OkIcon } alt="ok"/>
           </button>

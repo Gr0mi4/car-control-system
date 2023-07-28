@@ -1,16 +1,23 @@
 import './style.scss';
 
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addNote, editNote } from '../../../../../store/dispatchers/vehicle';
+
 import { NoteList } from '../NoteList/NoteList';
 import { NoteEditModal } from '../NoteEditModal/NoteEditModal';
-import { useState } from 'react';
 
-export const NotesOverview = (props) => {
+export const NotesOverview = () => {
+  const dispatch = useDispatch();
+
+  const vehicleNotes = useSelector(state => state.vehicle.notes);
 
   const [ noteEditVisible, setNoteEditVisible ] = useState(false);
   const [ selectedNote, setSelectedNote ] = useState({});
 
-  function editNote(noteId) {
-    setSelectedNote(props.vehicleNotes.find(item => item._id === noteId));
+  function changeNote(noteId) {
+    setSelectedNote(vehicleNotes.find(item => item._id === noteId));
     setNoteEditVisible(true);
   }
 
@@ -18,9 +25,8 @@ export const NotesOverview = (props) => {
     setNoteEditVisible(false);
     let action;
     // Selecting an action depending if note already exist
-    Object.keys(selectedNote).length > 0 ? action = props.editNote : action = props.addNote;
-    action(text, name, noteId)
-      .then(res => props.setVehicleNotes(JSON.parse(res)))
+    Object.keys(selectedNote).length > 0 ? action = editNote : action = addNote;
+    dispatch(action({ text, name, id: noteId }))
       .finally(() => {
         setSelectedNote({});
       });
@@ -34,8 +40,8 @@ export const NotesOverview = (props) => {
   return (
     <div className="notes-overview">
       <h2 className="overview-header">Notes</h2>
-      { props.vehicleNotes.length &&
-        <NoteList notesArray={ props.vehicleNotes } deleteNote={ props.deleteNote } editNote={ editNote }/>
+      { vehicleNotes.length &&
+        <NoteList openNote={ changeNote }/>
       }
       <button className="add button" onClick={ () => setNoteEditVisible(true) }>New note</button>
       { noteEditVisible &&

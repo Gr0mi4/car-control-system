@@ -1,25 +1,36 @@
 import './style.scss';
 
-import OkIcon from '../../../../../assets/icons/ok-circled-black.svg';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { updateVehicleInfo, deleteVehicleCustomProp } from '../../../../../store/dispatchers/vehicle';
+
+import OkIcon from '../../../../../assets/icons/ok-circled-black.svg';
 import Delete from '../../../../../assets/icons/delete.svg';
 
-export const VehicleDetailsInput = (props) => {
+export const VehicleDetailsInput = ({ value, fieldName, canDeleteField }) => {
   const [ editable, setEditable ] = useState(false);
-  const [ value, setValue ] = useState(props.value);
+  const [ innerValue, setInnerValue ] = useState(value);
+
+  const dispatch = useDispatch();
 
   function handleInputChange(event) {
-    setValue(event.target.value);
+    setInnerValue(event.target.value);
   }
 
   function handleSubmit() {
     setEditable(false);
-    props.updateValue(value);
+    dispatch(updateVehicleInfo(fieldName, innerValue));
   }
 
   function handleBlur(evt) {
-    if (evt.relatedTarget && evt.relatedTarget.className === 'delete-field icon-button') {
-      props.deleteCustomField();
+    if (evt.relatedTarget) {
+      if (evt.relatedTarget.id === 'submit-field') {
+        handleSubmit();
+      }
+      if (evt.relatedTarget.id === 'delete-field') {
+        dispatch(deleteVehicleCustomProp(fieldName));
+      }
     }
     setEditable(false);
   }
@@ -32,14 +43,17 @@ export const VehicleDetailsInput = (props) => {
             <input className="vehicle-info-input"
                    onChange={ handleInputChange }
                    onBlur={ handleBlur }
-                   value={ value }
+                   value={ innerValue }
                    autoFocus
             />
-            <button className="submit-button">
+            <button className="submit-button" id="submit-field">
               <img className="ok-icon" src={ OkIcon } alt="ok-icon"/>
             </button>
-            { props.canDeleteField &&
-              <button onClick={ props.deleteCustomField } className="delete-field icon-button">
+            { canDeleteField &&
+              <button
+                onClick={ () => dispatch(deleteVehicleCustomProp(fieldName)) }
+                className="delete-field icon-button" id="delete-field"
+              >
                 <img className="delete-icon" src={ Delete } alt="delete"/>
               </button> }
           </form>)
