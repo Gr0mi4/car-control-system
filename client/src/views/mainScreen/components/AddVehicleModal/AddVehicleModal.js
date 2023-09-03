@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addNewVehicle } from '../../../../store/dispatchers/vehicleList';
 
 import { ModalWindow } from '../../../../components/ModalWindow/ModalWindow';
-import { VehiclePhoto } from '../../../../components/VehiclePhoto/VehiclePhoto';
+import { VehicleImagePreview } from './VehicleImagePreview/VehicleImagePreview';
 
 export const AddVehicleModal = ({ show, onClose, onSave }) => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
   const [ modification, setModification ] = useState('');
   const [ type, setType ] = useState('car');
   const [ imageSrc, setImageSrc ] = useState('');
+  const [ saveDisabled, setSaveDisabled ] = useState(false);
 
   const brandChangeHandler = event => {
     setBrand(event.target.value);
@@ -46,12 +47,16 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
   };
 
   const saveNewVehicle = () => {
-    dispatch(addNewVehicle({ brand, model, modification, type, image: imageSrc }))
-      .then(() => {
-        onSave();
-        onClose();
-        deleteAllData();
-      });
+    if (!saveDisabled) {
+      setSaveDisabled(true);
+      dispatch(addNewVehicle({ brand, model, modification, type, image: imageSrc }))
+        .then(() => {
+          onSave();
+          onClose();
+          deleteAllData();
+          setSaveDisabled(false);
+        });
+    }
   };
 
   const modalHeader = <h1>Add Vehicle</h1>;
@@ -65,9 +70,18 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
       <input className="input" type="text" onChange={ modelChangeHandler } value={ model }/>
       <label className="label">Modification</label>
       <input className="input half-size" type="text" onChange={ modificationChangeHandler } value={ modification }/>
-      <VehiclePhoto className="compact-size" vehicleCreationMode={ true } updateVehicleImage={ getVehicleSrc }/>
+      <VehicleImagePreview
+        setSaveDisabled={ setSaveDisabled }
+        setImageSrc={ setImageSrc }
+      />
     </div>;
-  const modalFooter = <button onClick={ saveNewVehicle } className="save button">Save</button>;
+  const modalFooter =
+    <button
+      onClick={ saveNewVehicle }
+      className={ saveDisabled ? "save button disabled" : "save button" }
+    >
+      Save
+    </button>;
 
   return (
     <ModalWindow

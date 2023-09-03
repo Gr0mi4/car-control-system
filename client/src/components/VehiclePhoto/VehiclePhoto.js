@@ -15,31 +15,23 @@ import CropImage from '../../assets/icons/crop.svg';
 
 import { updateVehicleInfo, uploadVehicleAdditionalImage } from '../../store/dispatchers/vehicle';
 
-export const VehiclePhoto = (
-  {
-    className,
-    vehicleCreationMode,
-    updateVehicleImage,
-    showGallery
-  }) => {
+export const VehiclePhoto = ({ className, showGallery }) => {
+  const dispatch = useDispatch();
+
   const [ src, setSrc ] = useState('');
   const [ previewMode, setPreviewMode ] = useState(false);
   const [ cropMode, setCropMode ] = useState(false);
-
   const [ file, setFile ] = useState({});
-
   const [ uploadImageType, setUploadImageType ] = useState('mainImage');
 
   const vehicleInfo = useSelector(state => state.vehicle.info);
-  const imageLink = vehicleCreationMode ? null : vehicleInfo.image;
-
-  const dispatch = useDispatch();
+  const imageLink = vehicleInfo.image;
 
   async function handleSelectImage(event) {
     setFile(event.target.files[0]);
     setSrc(URL.createObjectURL(event.target.files[0]));
     setPreviewMode(true);
-    if (vehicleCreationMode || (!src && !imageLink)) {
+    if (!src && !imageLink) {
       await uploadPhoto(event.target.files[0]);
     }
   }
@@ -52,11 +44,7 @@ export const VehiclePhoto = (
       .then(res => {
         const result = JSON.parse(res);
         if (uploadImageType === 'mainImage') {
-          if (!vehicleCreationMode) {
-            dispatch(updateVehicleInfo('image', result.url));
-          } else {
-            updateVehicleImage('image', result.url);
-          }
+          dispatch(updateVehicleInfo('image', result.url));
         } else {
           dispatch(uploadVehicleAdditionalImage(result.url, 'someName'));
           // Returning main app because additional in gallery now
@@ -80,7 +68,7 @@ export const VehiclePhoto = (
 
   return (
     <div className={ className ? className : 'vehicle-photo' }>
-      { src || imageLink
+      { imageLink || src
         ?
         <div className="main-image-wrapper">
           <Crop
@@ -91,7 +79,7 @@ export const VehiclePhoto = (
           >
             <img
               className="main-image"
-              src={ src || imageLink }
+              src={ imageLink || src }
               alt="Main vehicle image"
               onClick={ () => cropMode ? null : showGallery() }
             />
@@ -110,13 +98,11 @@ export const VehiclePhoto = (
                 <img src={ AddImage } alt="add" className="add-image icon-button"/>
               </label>
               <input onChange={ handleSelectImage } id="file-upload" type="file" accept=".jpg, .png, .jpeg"/>
-              { previewMode &&
-                <UploadAsSelector { ...{ setUploadImageType, uploadImageType } }/>
-              }
+              { previewMode && <UploadAsSelector { ...{ setUploadImageType, uploadImageType } }/> }
               <button onClick={ handleDeleteImage } className="img-delete icon-button">
                 <img className="delete-icon" src={ Delete } alt="delete"/>
               </button>
-              { previewMode && !vehicleCreationMode &&
+              { previewMode &&
                 <button onClick={ () => uploadPhoto(file) } className="img-upload icon-button">
                   <img className="upload-icon" src={ Upload } alt="upload"/>
                 </button>

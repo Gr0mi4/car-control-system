@@ -21,6 +21,7 @@
     font-family: Montserrat;
     font-size: 20px;
     font-weight: 600;
+    text-align: left;
   }
 
   .input {
@@ -51,5 +52,9 @@
     font-weight: 500;
     font-family: Montserrat;
     color: #fff;
+
+    &.disabled {
+      background-color: #636570;
+    }
   }
 }
