@@ -22,7 +22,7 @@ export const GalleryModal = ({ show, onClose }) => {
 
   useEffect(() => {
     parseImages(imageArray);
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  }, [ imageArray ]);
 
   function parseImages(imageArray) {
     setSrcArray(imageArray.map(item => typeof item === 'string' ? item : item.src));
@@ -39,7 +39,6 @@ export const GalleryModal = ({ show, onClose }) => {
       }
     }
     dispatch(removeVehicleAdditionalImage(imageArray[picIndex]._id));
-    parseImages(imageArray);
   }
 
   function nextImage() {

@@ -79,7 +79,7 @@ export const VehiclePhoto = ({ className, showGallery }) => {
           >
             <img
               className="main-image"
-              src={ imageLink || src }
+              src={ previewMode ? src : imageLink || src }
               alt="Main vehicle image"
               onClick={ () => cropMode ? null : showGallery() }
             />

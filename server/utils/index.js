@@ -55,4 +55,19 @@ async function uploadImage(filePath) {
   });
 }
 
-module.exports = { downloadImage, convertCropToPx, uploadImage, saveImageToLocal };
+async function destroyImageOnServer(publicId) {
+  return new Promise((resolve, reject) => {
+    try {
+      myCloudinary.uploader.destroy(publicId)
+        .then((res) => {
+          console.log('Image deleted from server', res);
+          resolve();
+        });
+    } catch (e) {
+      console.log(e);
+      reject(e);
+    }
+  });
+}
+
+module.exports = { downloadImage, convertCropToPx, uploadImage, saveImageToLocal, destroyImageOnServer };

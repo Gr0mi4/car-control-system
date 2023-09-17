@@ -50,26 +50,6 @@ router.post('/deleteAdditionalImages', async (req, res) => {
   }
 });
 
-router.get('/getVariables', async (req, res) => {
-  const data = await createImageUpload();
-  if (data) {
-    res.status(201).json({ message: 'Everything is ok', timestamp: data.timestamp, signature: data.signature });
-  } else {
-    res.status(500).json({ message: 'Variables was not generated' });
-  }
-});
-
-async function createImageUpload() {
-  const timestamp = new Date().getTime();
-  const signature = cloudinary.utils.api_sign_request(
-    {
-      timestamp,
-    },
-    'Wj4Bp15zZGPnUe11gQHfsviAFNM'
-  );
-  return { timestamp, signature };
-}
-
 router.post('/cropImage', async (req, res) => {
   try {
     // Getting needed params
