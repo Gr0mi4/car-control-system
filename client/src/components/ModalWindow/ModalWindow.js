@@ -3,7 +3,7 @@ import './style.scss';
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 
-import CrossIcon from '../../assets/icons/cross.svg';
+import CrossIcon from 'icons/cross.svg';
 
 export const ModalWindow = (props) => ReactDOM.createPortal(Modal(props), document.getElementById('root'));
 

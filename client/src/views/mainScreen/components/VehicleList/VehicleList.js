@@ -3,7 +3,7 @@ import './style.scss';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { VehicleItem } from '../../../vehicleItem/VehicleItem';
+import { VehicleItem } from 'views/vehicleItem/VehicleItem';
 
 export const VehicleList = () => {
   const vehicleList = useSelector(state => state.vehicleList);

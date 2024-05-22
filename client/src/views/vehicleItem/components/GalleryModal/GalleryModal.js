@@ -3,14 +3,14 @@ import './style.scss';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { removeVehicleAdditionalImage } from '../../../../store/dispatchers/vehicle';
+import { removeVehicleAdditionalImage } from 'store/dispatchers/vehicle';
 
-import { ModalWindow } from './../../../../components/ModalWindow/ModalWindow';
+import { ModalWindow } from 'components/ModalWindow/ModalWindow';
 import { ImagesPreviews } from './ImagesPreviews/ImagesPreviews';
 
-import Delete from '../../../../assets/icons/delete.svg';
-import ArrowRight from '../../../../assets/icons/arrow-right.svg';
-import ArrowLeft from '../../../../assets/icons/arrow-left.svg';
+import Delete from 'icons/delete.svg';
+import ArrowRight from 'icons/arrow-right.svg';
+import ArrowLeft from 'icons/arrow-left.svg';
 
 export const GalleryModal = ({ show, onClose }) => {
   const [ picIndex, setPicIndex ] = useState(0);

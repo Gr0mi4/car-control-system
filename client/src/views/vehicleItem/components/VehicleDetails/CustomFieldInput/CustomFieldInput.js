@@ -3,9 +3,9 @@ import './style.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateVehicleInfo } from '../../../../../store/dispatchers/vehicle';
+import { updateVehicleInfo } from 'store/dispatchers/vehicle';
 
-import OkIcon from '../../../../../assets/icons/ok-circled-black.svg';
+import OkIcon from 'icons/ok-circled-black.svg';
 
 export const CustomFieldInput = () => {
   const [ inputVisible, setInputVisible ] = useState(false);

@@ -3,7 +3,7 @@ import './style.scss';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { WRONG_PASSWORD } from '../../../../store/constants/user';
+import { WRONG_PASSWORD } from 'store/constants/user';
 
 export const InputForm = ({ handleSendForm }) => {
   const user = useSelector(state => state.user);

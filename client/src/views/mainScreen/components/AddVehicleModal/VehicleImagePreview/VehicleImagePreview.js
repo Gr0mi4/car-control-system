@@ -2,9 +2,9 @@ import './style.scss';
 
 import { useState } from 'react';
 
-import { NoImagePlug } from './../../../../../components/VehiclePhoto/NoImagePlug/NoImagePlug';
+import { NoImagePlug } from 'components/VehiclePhoto/NoImagePlug/NoImagePlug';
 
-import Delete from '../../../../../assets/icons/delete.svg';
+import Delete from 'icons/delete.svg';
 
 export const VehicleImagePreview = ({ setSaveDisabled, setImageSrc }) => {
   const [ imageUrl, setImageUrl ] = useState('');

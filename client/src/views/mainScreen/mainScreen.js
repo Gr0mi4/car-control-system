@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { getUserVehicles } from '../../store/dispatchers/vehicleList';
+import { getUserVehicles } from 'store/dispatchers/vehicleList';
 
 import { VehicleList } from './components/VehicleList/VehicleList';
 import { AddVehicleModal } from './components/AddVehicleModal/AddVehicleModal';
 
-import PlusIcon from '../../assets/icons/plus.png';
+import PlusIcon from 'icons/plus.png';
 
 export const MainScreen = () => {
   const dispatch = useDispatch();

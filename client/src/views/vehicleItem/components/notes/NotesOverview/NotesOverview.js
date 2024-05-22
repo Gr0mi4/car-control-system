@@ -3,7 +3,7 @@ import './style.scss';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addNote, editNote } from '../../../../../store/dispatchers/vehicle';
+import { addNote, editNote } from 'store/dispatchers/vehicle';
 
 import { NoteList } from '../NoteList/NoteList';
 import { NoteEditModal } from '../NoteEditModal/NoteEditModal';

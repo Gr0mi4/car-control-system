@@ -3,10 +3,10 @@ import './Header.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { setUser, deleteUSerFromLocalStore } from '../../store/actions/user';
+import { setUser, deleteUSerFromLocalStore } from 'store/actions/user';
 
-import LogoutIcon from './../../assets/icons/logout.png';
-import BackIcon from './../../assets/icons/back.png';
+import LogoutIcon from 'icons/logout.png';
+import BackIcon from 'icons/back.png';
 
 export const Header = ({ previousScreen }) => {
   const user = useSelector(state => state.user.username);

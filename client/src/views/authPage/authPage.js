@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { login, register } from '../../store/dispatchers/user';
-import { checkAuth } from '../../store/actions/user';
-import { USER_NOT_EXIST } from '../../store/constants/user';
+import { login, register } from 'store/dispatchers/user';
+import { checkAuth } from 'store/actions/user';
+import { USER_NOT_EXIST } from 'store/constants/user';
 
-import { useHttp } from '../../hooks/http.hook';
+import { useHttp } from 'hooks/http.hook';
 import { loginValidation, passwordValidation } from './utils/validation';
 
 import { InputForm } from './components/InputForm/InputForm';

@@ -3,12 +3,12 @@ import './style.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { deleteNote } from '../../../../../store/dispatchers/vehicle';
+import { deleteNote } from 'store/dispatchers/vehicle';
 
-import { ConfirmationModal } from '../../../../../components/ModalWindow/ConfirmationModal/ConfirmationModal';
+import { ConfirmationModal } from 'components/ModalWindow/ConfirmationModal/ConfirmationModal';
 
-import Delete from '../../../../../assets/icons/delete.svg';
-import Pencil from '../../../../../assets/icons/pencil.svg';
+import Delete from 'icons/delete.svg';
+import Pencil from 'icons/pencil.svg';
 
 import moment from 'moment';
 

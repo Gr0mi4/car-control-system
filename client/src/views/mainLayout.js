@@ -4,13 +4,13 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import { checkAuth } from '../store/actions/user';
+import { checkAuth } from 'store/actions/user';
 
 import AuthPage from './authPage/authPage';
 import MainScreen from './mainScreen/mainScreen';
 
 import { VehicleItem } from './vehicleItem/VehicleItem';
-import { Header } from '../components/Header/Header';
+import { Header } from 'components/Header/Header';
 
 export const MainLayout = () => {
   const dispatch = useDispatch();

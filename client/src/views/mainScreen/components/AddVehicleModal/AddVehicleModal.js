@@ -3,9 +3,9 @@ import './style.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addNewVehicle } from '../../../../store/dispatchers/vehicleList';
+import { addNewVehicle } from 'store/dispatchers/vehicleList';
 
-import { ModalWindow } from '../../../../components/ModalWindow/ModalWindow';
+import { ModalWindow } from 'components/ModalWindow/ModalWindow';
 import { VehicleImagePreview } from './VehicleImagePreview/VehicleImagePreview';
 
 export const AddVehicleModal = ({ show, onClose, onSave }) => {

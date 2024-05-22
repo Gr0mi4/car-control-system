@@ -1,7 +1,7 @@
 import './style.scss';
 import moment from 'moment';
 
-import { ModalWindow } from '../../../../../components/ModalWindow/ModalWindow';
+import { ModalWindow } from 'components/ModalWindow/ModalWindow';
 import { useState } from 'react';
 
 export const NoteEditModal = ({ show, onClose, onSave, note }) => {

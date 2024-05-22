@@ -3,17 +3,16 @@ import './style.scss';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { updateVehicleInfo, uploadVehicleAdditionalImage } from 'store/dispatchers/vehicle';
+
 import { NoImagePlug } from './NoImagePlug/NoImagePlug';
-import { Crop } from '../Crop/Crop';
+import { Crop } from 'components/Crop/Crop';
 import { UploadAsSelector } from './UploadAsSelector/UpladAsSelector';
 
-import Delete from '../../assets/icons/delete.svg';
-import Upload from '../../assets/icons/upload.svg';
-import AddImage from '../../assets/icons/add-image.svg';
-
-import CropImage from '../../assets/icons/crop.svg';
-
-import { updateVehicleInfo, uploadVehicleAdditionalImage } from '../../store/dispatchers/vehicle';
+import Delete from 'icons/delete.svg';
+import Upload from 'icons/upload.svg';
+import AddImage from 'icons/add-image.svg';
+import CropImage from 'icons/crop.svg';
 
 export const VehiclePhoto = ({ className, showGallery }) => {
   const dispatch = useDispatch();

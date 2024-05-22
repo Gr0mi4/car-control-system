@@ -1,5 +1,6 @@
 import './style.scss';
-import PlusCircled from '../../../assets/icons/plus-circled.svg';
+
+import PlusCircled from 'icons/plus-circled.svg';
 
 export const NoImagePlug = ({ handleSelectImage }) => {
   return (

@@ -4,16 +4,16 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getVehicleInfo, getVehicleImages, getVehicleNotes } from '../../store/dispatchers/vehicle';
+import { getVehicleInfo, getVehicleImages, getVehicleNotes } from 'store/dispatchers/vehicle';
 
-import { VehiclePhoto } from '../../components/VehiclePhoto/VehiclePhoto';
+import { VehiclePhoto } from 'components/VehiclePhoto/VehiclePhoto';
 import { GalleryModal } from './components/GalleryModal/GalleryModal';
-import { Crop } from '../../components/Crop/Crop';
+import { Crop } from 'components/Crop/Crop';
 import { VehicleDetails } from './components/VehicleDetails/VehicleDetails';
 import { NotesOverview } from './components/notes/NotesOverview/NotesOverview';
-import { deleteCurrentVehicle } from '../../store/dispatchers/vehicleList';
+import { deleteCurrentVehicle } from 'store/dispatchers/vehicleList';
 
-import Delete from '../../assets/icons/delete.svg';
+import Delete from 'icons/delete.svg';
 
 export const VehicleItem = () => {
   const { id } = useParams();

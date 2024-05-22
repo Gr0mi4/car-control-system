@@ -3,10 +3,10 @@ import './style.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateVehicleInfo, deleteVehicleCustomProp } from '../../../../../store/dispatchers/vehicle';
+import { updateVehicleInfo, deleteVehicleCustomProp } from 'store/dispatchers/vehicle';
 
-import OkIcon from '../../../../../assets/icons/ok-circled-black.svg';
-import Delete from '../../../../../assets/icons/delete.svg';
+import OkIcon from 'icons/ok-circled-black.svg';
+import Delete from 'icons/delete.svg';
 
 export const VehicleDetailsInput = ({ value, fieldName, canDeleteField }) => {
   const [ editable, setEditable ] = useState(false);

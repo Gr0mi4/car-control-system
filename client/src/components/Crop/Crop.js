@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ReactCrop from 'react-image-crop';
 
-import { useHttp } from '../../hooks/http.hook';
+import { useHttp } from 'hooks/http.hook';
 
-import Save from '../../assets/icons/save.svg';
-import Cross from '../../assets/icons/cross.svg';
+import Save from 'icons/save.svg';
+import Cross from 'icons/cross.svg';
 
 export const Crop = ({ saveImage, children, cropMode, setCropMode }) => {
   const [ crop, setCrop ] = useState(null);
