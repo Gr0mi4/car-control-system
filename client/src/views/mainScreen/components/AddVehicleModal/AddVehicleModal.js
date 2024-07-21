@@ -16,7 +16,18 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
   const [ modification, setModification ] = useState('');
   const [ type, setType ] = useState('car');
   const [ imageSrc, setImageSrc ] = useState('');
-  const [ saveDisabled, setSaveDisabled ] = useState(false);
+  const [ pendingRequest, setPendingRequest ] = useState(false);
+  const [ showValidationError, setShowValidationError ] = useState(false);
+
+  function vehicleDataValid(brand, model, type) {
+    if (brand && model && type) {
+      setShowValidationError(false);
+      return true;
+    } else {
+      setShowValidationError(true);
+      return false;
+    }
+  }
 
   const brandChangeHandler = event => {
     setBrand(event.target.value);
@@ -34,10 +45,6 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
     setType(event.target.value);
   };
 
-  const getVehicleSrc = (fieldName, url) => {
-    setImageSrc(url);
-  };
-
   const deleteAllData = () => {
     setBrand('');
     setModel('');
@@ -47,14 +54,14 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
   };
 
   const saveNewVehicle = () => {
-    if (!saveDisabled) {
-      setSaveDisabled(true);
+    if (!pendingRequest && vehicleDataValid(brand, model, type)) {
+      setPendingRequest(true);
       dispatch(addNewVehicle({ brand, model, modification, type, image: imageSrc }))
         .then(() => {
           onSave();
           onClose();
           deleteAllData();
-          setSaveDisabled(false);
+          setPendingRequest(false);
         });
     }
   };
@@ -71,17 +78,20 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
       <label className="label">Modification</label>
       <input className="input half-size" type="text" onChange={ modificationChangeHandler } value={ modification }/>
       <VehicleImagePreview
-        setSaveDisabled={ setSaveDisabled }
+        setPendingRequest={ setPendingRequest }
         setImageSrc={ setImageSrc }
       />
     </div>;
   const modalFooter =
-    <button
-      onClick={ saveNewVehicle }
-      className={ saveDisabled ? "save button disabled" : "save button" }
-    >
-      Save
-    </button>;
+    <div>
+      { showValidationError && <div className="error">Please specify Type, Brand and Model</div> }
+      <button
+        onClick={ saveNewVehicle }
+        className={ pendingRequest ? "save button disabled" : "save button" }
+      >
+        Save
+      </button>
+    </div>;
 
   return (
     <ModalWindow

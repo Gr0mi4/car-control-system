@@ -44,6 +44,10 @@
   display: flex;
   justify-content: center;
 
+  .error {
+    margin-bottom: 16px;
+  }
+
   .save.button {
     width: 200px;
     height: 60px;
