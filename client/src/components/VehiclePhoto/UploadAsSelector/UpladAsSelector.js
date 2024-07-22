@@ -3,7 +3,7 @@ import './style.scss';
 export const UploadAsSelector = ({ uploadImageType, setUploadImageType }) => {
   return (
     <div className="upload-as-selector">
-      <p>Upload as:</p>
+      <p>Upload Image as:</p>
       <div className="radio-wrapper">
         <input
           type="radio"
@@ -13,7 +13,7 @@ export const UploadAsSelector = ({ uploadImageType, setUploadImageType }) => {
           checked={ uploadImageType === 'mainImage' }
           onChange={ (evt) => setUploadImageType(evt.target.name) }
         />
-        <label htmlFor="main-image-radio" className="label">Main Image</label>
+        <label htmlFor="main-image-radio" className="label">Main</label>
         <input
           type="radio"
           name="additionalImage"
@@ -22,7 +22,7 @@ export const UploadAsSelector = ({ uploadImageType, setUploadImageType }) => {
           checked={ uploadImageType === 'additionalImage' }
           onChange={ (evt) => setUploadImageType(evt.target.name) }
         />
-        <label htmlFor="additional-image-radio" className="label">Additional Image</label>
+        <label htmlFor="additional-image-radio" className="label">Additional</label>
       </div>
     </div>
   );
