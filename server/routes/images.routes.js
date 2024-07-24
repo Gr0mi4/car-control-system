@@ -3,7 +3,6 @@ const sharp = require('sharp');
 const fs = require('fs');
 
 const Image = require('../models/Images');
-const cloudinary = require('cloudinary').v2;
 
 const { downloadImage, convertCropToPx, uploadImage, saveImageToLocal } = require('../utils');
 

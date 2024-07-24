@@ -40,7 +40,7 @@ export const NotesOverview = () => {
   return (
     <div className="notes-overview">
       <h2 className="overview-header">Notes</h2>
-      { vehicleNotes.length &&
+      { !!vehicleNotes.length &&
         <NoteList openNote={ changeNote }/>
       }
       <button className="add button" onClick={ () => setNoteEditVisible(true) }>New note</button>
