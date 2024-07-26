@@ -38,7 +38,7 @@ export const NoteItem = ({ text, date, name, noteId, editNote }) => {
     <div className="note">
       <div className="note-header" onClick={ handleNoteClick }>
         <h3 className="note-name">{ name }</h3>
-        <span>{ formattedDate }</span>
+        <h5>{ formattedDate }</h5>
         { noteOpened &&
           <div className="buttons-block">
             <button className="delete-note icon-button" onClick={ () => setConfirmDeleteModalVisible(true) }>

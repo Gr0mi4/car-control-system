@@ -31,6 +31,7 @@ V 1.5 Requiremnts:
 - Ability to delete users for an admin
 - Add Images Names
 - Ability to change shown image in modal by keyboard
+- Spinner on the main page in case you have a lot of vehicles
 
 Screens description
 

@@ -22,6 +22,7 @@ export const MainLayout = () => {
   }
 
   useEffect(() => {
+    document.title = 'Vehicle Control System';
     dispatch(checkAuth());
     redirect();
   }, []);

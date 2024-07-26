@@ -6,7 +6,7 @@ import { NoImagePlug } from 'components/VehiclePhoto/NoImagePlug/NoImagePlug';
 
 import Delete from 'icons/delete.svg';
 
-export const VehicleImagePreview = ({ setSaveDisabled, setImageSrc }) => {
+export const VehicleImagePreview = ({ setPendingRequest, setImageSrc }) => {
   const [ imageUrl, setImageUrl ] = useState('');
 
   async function handleSelectImage(event) {
@@ -18,7 +18,7 @@ export const VehicleImagePreview = ({ setSaveDisabled, setImageSrc }) => {
     form.append('file', event.target.files[0]);
 
     // Disabling the save button for modal
-    setSaveDisabled(true);
+    setPendingRequest(true);
 
     // Uploading image and getting link
     fetch('/api/images/uploadImage', { method: 'POST', body: form })
@@ -26,7 +26,7 @@ export const VehicleImagePreview = ({ setSaveDisabled, setImageSrc }) => {
       .then(res => {
         const result = JSON.parse(res);
         setImageSrc(result.url);
-        setSaveDisabled(false);
+        setPendingRequest(false);
       })
       .catch((e) => {
         console.log(e);

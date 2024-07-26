@@ -1,6 +1,8 @@
 .vehicle-item {
   margin: 50px 65px;
   position: relative;
+  // 188px = 50x2 vehicle margin, 45+43 header padding and height
+  height: calc(100vh - 188px);
 }
 
 .vehicle-info-wrapper {

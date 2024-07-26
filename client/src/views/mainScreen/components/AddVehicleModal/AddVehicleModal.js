@@ -29,6 +29,11 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
     }
   }
 
+  function closeModal() {
+    deleteAllData();
+    onClose();
+  }
+
   const brandChangeHandler = event => {
     setBrand(event.target.value);
   };
@@ -51,7 +56,9 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
     setModification('');
     setType('car');
     setImageSrc('');
+    setShowValidationError(false);
   };
+
 
   const saveNewVehicle = () => {
     if (!pendingRequest && vehicleDataValid(brand, model, type)) {
@@ -99,7 +106,7 @@ export const AddVehicleModal = ({ show, onClose, onSave }) => {
       body={ modalBody }
       footer={ modalFooter }
       show={ show }
-      onClose={ onClose }
+      onClose={ closeModal }
     />
   );
 };

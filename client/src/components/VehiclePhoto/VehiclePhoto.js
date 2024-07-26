@@ -27,11 +27,14 @@ export const VehiclePhoto = ({ className, showGallery }) => {
   const imageLink = vehicleInfo.image;
 
   async function handleSelectImage(event) {
-    setFile(event.target.files[0]);
-    setSrc(URL.createObjectURL(event.target.files[0]));
-    setPreviewMode(true);
-    if (!src && !imageLink) {
-      await uploadPhoto(event.target.files[0]);
+    // Check in case user canceled image selection
+    if (event.target.files[0]) {
+      setFile(event.target.files[0]);
+      setSrc(URL.createObjectURL(event.target.files[0]));
+      setPreviewMode(true);
+      if (!src && !imageLink) {
+        await uploadPhoto(event.target.files[0]);
+      }
     }
   }
 

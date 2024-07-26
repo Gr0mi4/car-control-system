@@ -9,6 +9,8 @@ Validation on password and Login is working and showing errors
 Main Screen:
 Select Vehicle
 Create Vehicle
+Add image while creating vehicle
+Field Validation (can't create vehicle without brand model and type)
 
 Vehicle Screen:
 Add Main Photo

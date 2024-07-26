@@ -33,7 +33,7 @@ export const NoteEditModal = ({ show, onClose, onSave, note }) => {
     <div className="modal-body">
       <div className="label-wrapper">
         <label className="text-label">Note text:</label>
-        <span>Date: { moment().format('DD-MM-YYYY') }</span>
+        <p>Date: { moment().format('DD-MM-YYYY') }</p>
       </div>
       <textarea value={ text } className="text input" onChange={ textChangeHandler }></textarea>
       { errorVisible && <p className="error">Fields can't be empty</p> }
