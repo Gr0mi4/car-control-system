@@ -8,6 +8,7 @@ import { CustomFieldInput } from './CustomFieldInput/CustomFieldInput';
 export const VehicleDetails = () => {
   // Utility fields that shouldn't be shown
   const hiddenInfoFields = [ 'userId', 'image', '__v', '_id' ];
+  const defaultFields = [ 'brand', 'type', 'model', 'modification' ];
 
   const vehicleInfo = useSelector(state => state.vehicle.info);
 
@@ -24,7 +25,7 @@ export const VehicleDetails = () => {
                 <VehicleDetailsInput
                   value={ vehicleInfo[fieldName] }
                   fieldName={ fieldName }
-                  canDeleteField={ index > 4 }
+                  defaultFields={ defaultFields }
                 />
               </div>);
           }

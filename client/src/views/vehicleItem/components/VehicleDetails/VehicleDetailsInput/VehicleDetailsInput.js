@@ -8,7 +8,7 @@ import { updateVehicleInfo, deleteVehicleCustomProp } from 'store/dispatchers/ve
 import OkIcon from 'icons/ok-circled-black.svg';
 import Delete from 'icons/delete.svg';
 
-export const VehicleDetailsInput = ({ value, fieldName, canDeleteField }) => {
+export const VehicleDetailsInput = ({ value, fieldName, defaultFields }) => {
   const [ editable, setEditable ] = useState(false);
   const [ innerValue, setInnerValue ] = useState(value);
 
@@ -49,7 +49,7 @@ export const VehicleDetailsInput = ({ value, fieldName, canDeleteField }) => {
             <button className="submit-button" id="submit-field">
               <img className="ok-icon" src={ OkIcon } alt="ok-icon"/>
             </button>
-            { canDeleteField &&
+            { !defaultFields.includes(fieldName) &&
               <button
                 onClick={ () => dispatch(deleteVehicleCustomProp(fieldName)) }
                 className="delete-field icon-button" id="delete-field"
